@@ -17,19 +17,27 @@
   },
   "topbarLinks": [
     {
-      "name": "Documentation",
-      "url": "https://docs.insitechat.ai"
+      "name": "Support",
+      "url": "https://insitechat.ai/contact"
     }
   ],
   "topbarCtaButton": {
     "name": "Get Started Free",
     "url": "https://insitechat.ai/register"
   },
-  "tabs": [],
-  "anchors": [],
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    },
+    {
+      "name": "Changelog",
+      "url": "changelog"
+    }
+  ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Getting Started",
       "pages": [
         "introduction",
         "quickstart",
@@ -37,37 +45,44 @@
       ]
     },
     {
-      "group": "Training",
+      "group": "Data Sources",
       "pages": [
-        "training/website-crawler",
-        "training/document-upload",
-        "training/custom-qa",
-        "training/syncing-content"
+        "data-sources/website-crawler",
+        "data-sources/document-upload",
+        "data-sources/google-drive",
+        "data-sources/notion",
+        "data-sources/dropbox",
+        "data-sources/youtube",
+        "data-sources/custom-qa",
+        "data-sources/syncing-content"
+      ]
+    },
+    {
+      "group": "Channels",
+      "pages": [
+        "channels/embed-widget",
+        "channels/wordpress",
+        "channels/shopify",
+        "channels/telegram"
       ]
     },
     {
       "group": "Integrations",
       "pages": [
-        "integrations/google-drive",
-        "integrations/notion",
-        "integrations/dropbox",
         "integrations/slack",
         "integrations/zapier",
-        "integrations/telegram",
         "integrations/hubspot",
         "integrations/crisp",
         "integrations/freshchat",
-        "integrations/zendesk-chat",
-        "integrations/wordpress",
-        "integrations/shopify"
+        "integrations/zendesk-chat"
       ]
     },
     {
-      "group": "Deployment",
+      "group": "Customization",
       "pages": [
-        "deployment/embed-widget",
-        "deployment/customization",
-        "deployment/lead-capture"
+        "customization/branding",
+        "customization/lead-capture",
+        "customization/quick-prompts"
       ]
     },
     {
@@ -86,6 +101,23 @@
         "use-cases/education",
         "use-cases/healthcare"
       ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/overview",
+        "api-reference/authentication",
+        "api-reference/chatbots",
+        "api-reference/chat",
+        "api-reference/sources",
+        "api-reference/webhooks"
+      ]
+    },
+    {
+      "group": "Changelog",
+      "pages": [
+        "changelog/overview"
+      ]
     }
   ],
   "footerSocials": {
@@ -94,5 +126,8 @@
   },
   "feedback": {
     "thumbsRating": true
+  },
+  "api": {
+    "baseUrl": "https://backend.insitechat.ai/api"
   }
 }

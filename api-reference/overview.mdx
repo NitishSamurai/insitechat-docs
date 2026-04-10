@@ -1,0 +1,110 @@
+---
+title: "API Overview"
+description: "Learn how to integrate InsiteChat into your application using the REST API."
+---
+
+# API Overview
+
+The InsiteChat API lets you programmatically manage chatbots, send messages, retrieve sources, and configure webhooks. It follows REST conventions and returns JSON responses.
+
+## Base URL
+
+All API requests are made to:
+
+```
+https://backend.insitechat.ai/api/v1
+```
+
+## Authentication
+
+Every request must include your API key in the `Authorization` header:
+
+```bash
+Authorization: Bearer sk-your-api-key-here
+```
+
+See the [Authentication](/api-reference/authentication) page for details on creating and managing API keys.
+
+## Response Format
+
+All responses are returned as JSON. Successful responses include the requested data at the top level:
+
+```json
+{
+  "id": "bot_abc123",
+  "name": "My Chatbot",
+  "created_at": "2026-03-15T10:30:00Z"
+}
+```
+
+Error responses include a consistent error object:
+
+```json
+{
+  "error": {
+    "code": "invalid_api_key",
+    "message": "The API key provided is invalid or has been revoked."
+  }
+}
+```
+
+## HTTP Status Codes
+
+| Code | Description |
+|------|-------------|
+| `200` | Success |
+| `201` | Resource created |
+| `400` | Bad request — check your request body |
+| `401` | Unauthorized — invalid or missing API key |
+| `403` | Forbidden — API key lacks permission |
+| `404` | Resource not found |
+| `429` | Rate limit exceeded |
+| `500` | Internal server error |
+
+## Rate Limits
+
+API requests are rate-limited to **100 requests per minute** per API key.
+
+When you exceed the limit, the API returns a `429` status code. The response includes a `Retry-After` header indicating how many seconds to wait before retrying.
+
+<Info>
+If you need higher rate limits for your use case, contact us at [support@insitechat.ai](mailto:support@insitechat.ai).
+</Info>
+
+## How to Get an API Key
+
+<Steps>
+  <Step title="Log in to InsiteChat">
+    Go to [insitechat.ai](https://insitechat.ai) and log in to your account.
+  </Step>
+  <Step title="Open Developer settings">
+    Navigate to **Dashboard** → **Developer** → **API Keys**.
+  </Step>
+  <Step title="Create a new key">
+    Click **Create API Key**, give it a descriptive name, and click **Generate**.
+  </Step>
+  <Step title="Copy your key">
+    Copy the key immediately. For security, the full key is only shown once.
+  </Step>
+</Steps>
+
+<Warning>
+Treat your API key like a password. Do not expose it in client-side code, public repositories, or browser requests. Always make API calls from your server.
+</Warning>
+
+## Available Endpoints
+
+<CardGroup cols={2}>
+  <Card title="Chatbots" href="/api-reference/chatbots">
+    List and retrieve your chatbots.
+  </Card>
+  <Card title="Chat" href="/api-reference/chat">
+    Send messages and get AI responses.
+  </Card>
+  <Card title="Sources" href="/api-reference/sources">
+    List training sources for a chatbot.
+  </Card>
+  <Card title="Webhooks" href="/api-reference/webhooks">
+    Receive real-time event notifications.
+  </Card>
+</CardGroup>

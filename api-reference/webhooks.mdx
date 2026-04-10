@@ -1,0 +1,85 @@
+---
+title: "Webhooks"
+description: "Receive real-time events from your chatbot via outgoing webhooks."
+---
+
+## Overview
+
+InsiteChat sends HTTP POST requests to your webhook URL when events occur. Use webhooks to integrate with Zapier, Make.com, n8n, or your own backend.
+
+## Events
+
+| Event | Description |
+|---|---|
+| `lead.captured` | A visitor submitted the lead form |
+| `message.received` | A visitor sent a message |
+| `conversation.started` | A new chat session began |
+| `conversation.escalated` | A visitor requested human help |
+
+## Payload Format
+
+```json
+{
+  "event": "lead.captured",
+  "chatbot_id": "uuid",
+  "timestamp": "2026-04-10T12:00:00Z",
+  "data": {
+    "lead_id": "uuid",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+1234567890"
+  }
+}
+```
+
+## Signature Verification
+
+Every webhook is signed with **HMAC-SHA256**. The signature is in the `X-InsiteChat-Signature` header.
+
+### Python
+
+```python
+import hmac
+import hashlib
+
+def verify_signature(payload_bytes, signature, secret):
+    expected = hmac.new(
+        secret.encode(),
+        payload_bytes,
+        hashlib.sha256
+    ).hexdigest()
+    return hmac.compare_digest(expected, signature)
+```
+
+### Node.js
+
+```javascript
+const crypto = require('crypto');
+
+function verifySignature(payloadBuffer, signature, secret) {
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(payloadBuffer)
+    .digest('hex');
+  return crypto.timingSafeEqual(
+    Buffer.from(expected),
+    Buffer.from(signature)
+  );
+}
+```
+
+## Retry Policy
+
+Failed deliveries are retried up to 3 times with exponential backoff:
+
+| Attempt | Delay |
+|---|---|
+| 1st retry | 1 minute |
+| 2nd retry | 5 minutes |
+| 3rd retry | 15 minutes |
+
+A delivery is considered failed if the response status code is not 2xx or the request times out (10 seconds).
+
+## Delivery Log
+
+All webhook deliveries are logged in the dashboard. Go to your chatbot -> Webhooks tab -> click "Delivery log" on any webhook to see status, HTTP codes, and retry attempts.

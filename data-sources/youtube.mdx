@@ -1,0 +1,71 @@
+---
+title: "YouTube"
+description: "Add YouTube videos as training data for your chatbot. InsiteChat automatically extracts transcripts and indexes the content."
+---
+
+# YouTube
+
+Train your chatbot on video content by adding YouTube URLs. InsiteChat automatically extracts the transcript, splits it into chunks, and embeds the content so your chatbot can answer questions about the video.
+
+## How It Works
+
+When you add a YouTube video, InsiteChat:
+
+1. Fetches the video's captions/transcript
+2. Splits the transcript into semantic chunks
+3. Generates embeddings for each chunk
+4. Stores them in your chatbot's knowledge base
+
+Your chatbot can then answer questions based on what was said in the video.
+
+## Add a YouTube Source
+
+<Steps>
+  <Step title="Open your dashboard">
+    Log in to InsiteChat and select the chatbot you want to train.
+  </Step>
+  <Step title="Go to Sources">
+    In the left sidebar, click **Sources**, then click **Add source**.
+  </Step>
+  <Step title="Choose YouTube">
+    Select **YouTube** as the source type.
+  </Step>
+  <Step title="Paste the video URL">
+    Enter the full YouTube video URL (e.g., `https://www.youtube.com/watch?v=dQw4w9WgXcQ`).
+  </Step>
+  <Step title="Extract transcript">
+    Click **Add**. InsiteChat fetches the transcript and begins processing automatically.
+  </Step>
+  <Step title="Wait for indexing">
+    The source card shows a progress indicator. Once it changes to **Ready**, the video content is live in your chatbot's knowledge base.
+  </Step>
+</Steps>
+
+## Supported Formats
+
+You can paste any standard YouTube URL:
+
+- `https://www.youtube.com/watch?v=VIDEO_ID`
+- `https://youtu.be/VIDEO_ID`
+
+<Info>
+InsiteChat extracts the transcript text only. Video frames and audio are not processed — only the spoken content captured in captions.
+</Info>
+
+## Language Support
+
+<Warning>
+Only English captions are supported at this time. Videos without English captions (auto-generated or manual) cannot be indexed.
+</Warning>
+
+If a video has both auto-generated and manually uploaded English captions, InsiteChat prefers the manual captions for better accuracy.
+
+## Tips for Best Results
+
+<Tip>
+Videos with clear, well-structured spoken content — such as tutorials, product walkthroughs, and presentations — produce the best chatbot responses. Heavily visual content with minimal narration will yield limited training data.
+</Tip>
+
+## Keeping Content Up to Date
+
+YouTube sources are indexed once at the time they are added. If the video's captions are updated, you can re-sync the source from the **Sources** page to pick up changes.

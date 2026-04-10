@@ -1,0 +1,56 @@
+---
+title: "Sources"
+description: "List training sources for a chatbot via the API."
+---
+
+## List Sources
+
+Retrieve all training sources for a chatbot.
+
+```
+GET /v1/chatbots/{chatbot_id}/sources
+```
+
+### Headers
+
+| Header | Value |
+|---|---|
+| Authorization | `Bearer YOUR_API_KEY` |
+
+### Response
+
+```json
+{
+  "sources": [
+    {
+      "id": "uuid",
+      "type": "url",
+      "title": "https://example.com",
+      "url": "https://example.com",
+      "status": "done",
+      "page_count": 42,
+      "last_synced_at": "2026-04-10T12:00:00Z",
+      "created_at": "2026-04-01T10:00:00Z"
+    }
+  ]
+}
+```
+
+### Source Types
+
+| Type | Description |
+|---|---|
+| `url` | Website URL (crawled) |
+| `file` | Uploaded file (PDF, Word, etc.) |
+| `text` | Raw text content |
+| `youtube` | YouTube video transcript |
+| `google_drive` | Google Drive files |
+| `notion` | Notion pages |
+| `dropbox` | Dropbox files |
+
+### Example
+
+```bash
+curl https://backend.insitechat.ai/api/v1/chatbots/{chatbot_id}/sources \
+  -H "Authorization: Bearer sk-your-api-key"
+```

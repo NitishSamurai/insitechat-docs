@@ -1,0 +1,45 @@
+---
+title: "Changelog"
+description: "Latest updates and improvements to InsiteChat."
+---
+
+## April 2026
+
+### Live Chat Integrations
+- **Crisp** — AI auto-reply for Crisp live chat
+- **Freshchat** — AI first-line support for Freshworks
+- **Zendesk Chat** — AI-powered ticket replies
+
+### CRM & Automation
+- **HubSpot CRM** — Auto-sync captured leads to HubSpot contacts
+- **Zapier** — Outgoing webhooks with HMAC-SHA256 signing, 3 retries
+- **Slack** — Real-time notifications for leads, conversations, escalations
+
+### Channels
+- **Telegram Bot** — Deploy chatbot as a Telegram bot with full RAG pipeline
+- **WordPress Plugin** — Install and paste Chatbot ID, no coding needed
+- **Shopify App** — Theme App Extension for Shopify stores
+
+### Infrastructure
+- **Flower Dashboard** — Celery monitoring on port 5555
+- **Webhook System** — Outgoing webhooks with delivery log and retry
+- **Shared Chat Helper** — Unified RAG pipeline with billing enforcement across all channels
+
+### Security
+- Moved all Docker secrets to .env file references
+- Rotated all exposed API keys
+- SSRF protection in web crawler
+- Email rate limiting, file upload validation, API key rate limits
+
+---
+
+## March 2026
+
+### Launch
+- Initial release of InsiteChat.ai
+- RAG pipeline: crawl, chunk, embed (OpenAI/Gemini), hybrid search (vector + BM25 with RRF fusion)
+- Google Drive, Notion, Dropbox integrations
+- Embed widget with branding customization
+- Lead capture and escalation to human
+- Plans: Free, Starter ($15/mo), Growth ($30/mo), Scale ($150/mo)
+- Razorpay payments (INR)

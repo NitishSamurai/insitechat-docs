@@ -1,0 +1,93 @@
+---
+title: "Chat"
+description: "Send messages to a chatbot and receive AI-generated responses via the InsiteChat API."
+---
+
+# Chat
+
+Use the chat endpoint to send a message to a chatbot and receive an AI-generated response. This is the core endpoint for integrating InsiteChat conversations into your application.
+
+## Send a Message
+
+### Request
+
+```
+POST /v1/chatbots/{id}/chat
+```
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | **Required.** The chatbot ID (e.g., `bot_abc123`). |
+
+### Request Body
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `message` | string | Yes | The user's message to the chatbot. |
+| `session_id` | string | No | A session identifier to maintain conversation context. If omitted, a new session is created. |
+
+```bash
+curl -X POST https://backend.insitechat.ai/api/v1/chatbots/bot_abc123/chat \
+  -H "Authorization: Bearer sk-your-api-key-here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "What is your return policy?",
+    "session_id": "sess_user123"
+  }'
+```
+
+### Response
+
+```json
+{
+  "response": "Our return policy allows returns within 30 days of purchase. Items must be in their original condition with tags attached. To start a return, go to your order history and click \"Request Return\" on the item you'd like to send back.",
+  "conversation_id": "conv_a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+}
+```
+
+### Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `response` | string | The AI-generated reply to the user's message. |
+| `conversation_id` | string | A UUID identifying this conversation. Use this to track conversations in your system. |
+
+## Multi-Turn Conversations
+
+To maintain conversation context across multiple messages, pass the same `session_id` with each request:
+
+```bash
+# First message
+curl -X POST https://backend.insitechat.ai/api/v1/chatbots/bot_abc123/chat \
+  -H "Authorization: Bearer sk-your-api-key-here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "What is your return policy?",
+    "session_id": "sess_user123"
+  }'
+
+# Follow-up message (same session_id)
+curl -X POST https://backend.insitechat.ai/api/v1/chatbots/bot_abc123/chat \
+  -H "Authorization: Bearer sk-your-api-key-here" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "message": "Does that apply to sale items too?",
+    "session_id": "sess_user123"
+  }'
+```
+
+<Tip>
+Use a consistent `session_id` per user session (e.g., based on a user ID or browser session) to give the chatbot full conversation context. Without a `session_id`, each message is treated as a new, independent conversation.
+</Tip>
+
+## Error Responses
+
+| Status | Code | Description |
+|--------|------|-------------|
+| `400` | `message_required` | The `message` field is missing or empty. |
+| `404` | `chatbot_not_found` | No chatbot found with the given ID. |
+| `429` | `rate_limit_exceeded` | Too many requests — slow down. |
+
+<Info>
+The chat endpoint counts toward your plan's monthly message limit. Check your usage in **Dashboard** → **Analytics**.
+</Info>

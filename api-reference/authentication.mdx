@@ -1,0 +1,104 @@
+---
+title: "Authentication"
+description: "Create and manage API keys to authenticate with the InsiteChat API."
+---
+
+# Authentication
+
+All InsiteChat API requests require a valid API key sent in the `Authorization` header. API keys are tied to your account and have access to all chatbots you own.
+
+## Creating an API Key
+
+<Steps>
+  <Step title="Open the Developer page">
+    In your InsiteChat dashboard, navigate to **Developer** → **API Keys**.
+  </Step>
+  <Step title="Generate a key">
+    Click **Create API Key**. Enter a descriptive name (e.g., "Production Server" or "Staging") and click **Generate**.
+  </Step>
+  <Step title="Copy the key">
+    Your new API key is displayed once. Copy it and store it securely — you will not be able to see it again.
+  </Step>
+</Steps>
+
+<Warning>
+If you lose your API key, you cannot retrieve it. Revoke the lost key and create a new one.
+</Warning>
+
+## Using Your API Key
+
+Include the API key in the `Authorization` header of every request:
+
+```bash
+curl https://backend.insitechat.ai/api/v1/chatbots \
+  -H "Authorization: Bearer sk-your-api-key-here"
+```
+
+API keys follow the format `sk-` followed by a random string. For example:
+
+```
+sk-abc123def456ghi789jkl012mno345
+```
+
+<Warning>
+Never expose your API key in client-side JavaScript, mobile app bundles, or public repositories. Always make API calls from your backend server.
+</Warning>
+
+## Key Management
+
+### List Your Keys
+
+View all active API keys from **Dashboard** → **Developer** → **API Keys**. Each key shows:
+
+- **Name** — the label you gave the key
+- **Created** — when the key was created
+- **Last used** — the most recent API call made with this key
+- **Prefix** — the first 8 characters of the key (e.g., `sk-abc123...`)
+
+### Revoke a Key
+
+To revoke an API key:
+
+1. Go to **Dashboard** → **Developer** → **API Keys**.
+2. Find the key you want to revoke.
+3. Click the **Revoke** button and confirm.
+
+Revoked keys stop working immediately. Any requests using a revoked key receive a `401 Unauthorized` response.
+
+<Info>
+You can create multiple API keys to separate access between environments (production, staging, development). Revoke keys individually without affecting others.
+</Info>
+
+## Rate Limiting
+
+API requests are rate-limited per API key:
+
+| Limit | Value |
+|-------|-------|
+| Requests per minute | 100 |
+| Burst (short window) | 20 requests in 5 seconds |
+
+When you exceed the rate limit, the API returns:
+
+```json
+{
+  "error": {
+    "code": "rate_limit_exceeded",
+    "message": "Too many requests. Please retry after 12 seconds."
+  }
+}
+```
+
+The response includes a `Retry-After` header with the number of seconds to wait.
+
+<Tip>
+Implement exponential backoff in your integration. When you receive a `429` response, wait the number of seconds specified in `Retry-After` before retrying.
+</Tip>
+
+## Error Responses
+
+| Status | Code | Description |
+|--------|------|-------------|
+| `401` | `invalid_api_key` | The API key is missing, malformed, or invalid. |
+| `401` | `revoked_api_key` | The API key has been revoked. |
+| `429` | `rate_limit_exceeded` | Too many requests — slow down. |
