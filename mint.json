@@ -2,10 +2,10 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "InsiteChat",
   "logo": {
-    "dark": "/logo.jpg",
-    "light": "/logo.jpg"
+    "dark": "/logo.png",
+    "light": "/logo.png"
   },
-  "favicon": "/logo.jpg",
+  "favicon": "/logo.png",
   "colors": {
     "primary": "#4f46e5",
     "light": "#818cf8",
