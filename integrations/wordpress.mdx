@@ -1,0 +1,57 @@
+---
+title: "WordPress"
+description: "Add an AI chatbot to your WordPress site in 2 minutes. No coding required."
+---
+
+## Overview
+
+The InsiteChat WordPress plugin lets you add an AI chatbot to any WordPress site with zero coding. Just install the plugin, paste your Chatbot ID, and your chatbot appears on every page.
+
+## Installation
+
+<Steps>
+  <Step title="Download the Plugin">
+    Download the InsiteChat WordPress plugin (`insitechat.zip`) from your InsiteChat dashboard or the WordPress Plugin Directory.
+  </Step>
+  <Step title="Install in WordPress">
+    Go to your WordPress admin → **Plugins** → **Add New** → **Upload Plugin**. Upload the zip file and click **Install Now**, then **Activate**.
+  </Step>
+  <Step title="Configure">
+    Go to **Settings** → **InsiteChat** in your WordPress admin. Enter:
+    - **Chatbot ID** — found in your InsiteChat dashboard → chatbot → Embed tab
+    - **Position** — Bottom Right or Bottom Left
+    - Click **Save Settings**
+  </Step>
+</Steps>
+
+## Features
+
+- **Zero coding** — no HTML or JavaScript editing needed
+- **Position control** — choose bottom-left or bottom-right
+- **Page exclusion** — hide the chatbot on specific pages (e.g., `/checkout`, `/cart`)
+- **Settings page** — configure everything from the WordPress admin
+- **Works with any theme** — compatible with all WordPress themes
+- **Lightweight** — adds a single iframe, no performance impact
+
+## Exclude Pages
+
+In **Settings** → **InsiteChat**, you can add URL paths to exclude (one per line):
+
+```
+/checkout
+/cart
+/thank-you
+/wp-admin
+```
+
+The chatbot will not appear on these pages.
+
+## Finding Your Chatbot ID
+
+1. Log in to [insitechat.ai](https://insitechat.ai)
+2. Go to your chatbot → **Embed** tab
+3. Copy the Chatbot ID (UUID format: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`)
+
+## Uninstalling
+
+Deactivate and delete the plugin from WordPress → **Plugins**. No data is left behind on your WordPress site.

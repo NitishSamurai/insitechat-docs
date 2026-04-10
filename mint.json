@@ -1,0 +1,98 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "InsiteChat",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#4f46e5",
+    "light": "#818cf8",
+    "dark": "#3730a3",
+    "anchors": {
+      "from": "#4f46e5",
+      "to": "#7c3aed"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Documentation",
+      "url": "https://docs.insitechat.ai"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started Free",
+    "url": "https://insitechat.ai/register"
+  },
+  "tabs": [],
+  "anchors": [],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "introduction",
+        "quickstart",
+        "plans-and-pricing"
+      ]
+    },
+    {
+      "group": "Training",
+      "pages": [
+        "training/website-crawler",
+        "training/document-upload",
+        "training/custom-qa",
+        "training/syncing-content"
+      ]
+    },
+    {
+      "group": "Integrations",
+      "pages": [
+        "integrations/google-drive",
+        "integrations/notion",
+        "integrations/dropbox",
+        "integrations/slack",
+        "integrations/zapier",
+        "integrations/telegram",
+        "integrations/hubspot",
+        "integrations/crisp",
+        "integrations/freshchat",
+        "integrations/zendesk-chat",
+        "integrations/wordpress",
+        "integrations/shopify"
+      ]
+    },
+    {
+      "group": "Deployment",
+      "pages": [
+        "deployment/embed-widget",
+        "deployment/customization",
+        "deployment/lead-capture"
+      ]
+    },
+    {
+      "group": "Managing Your Chatbot",
+      "pages": [
+        "managing/analytics",
+        "managing/conversations",
+        "managing/team-members"
+      ]
+    },
+    {
+      "group": "Use Cases",
+      "pages": [
+        "use-cases/ecommerce",
+        "use-cases/saas",
+        "use-cases/education",
+        "use-cases/healthcare"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "website": "https://insitechat.ai",
+    "twitter": "https://twitter.com/insitechat"
+  },
+  "feedback": {
+    "thumbsRating": true
+  }
+}

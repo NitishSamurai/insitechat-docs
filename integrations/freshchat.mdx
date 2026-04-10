@@ -1,0 +1,53 @@
+---
+title: "Freshchat"
+description: "AI-powered auto-replies for Freshworks Freshchat. Automate first-line support with your trained knowledge base."
+---
+
+## Overview
+
+Connect Freshchat (by Freshworks) to InsiteChat for AI-powered auto-replies. Your chatbot answers incoming support questions using your trained knowledge base, handling first-line support automatically and escalating complex queries to human agents.
+
+## Setup
+
+<Steps>
+  <Step title="Get Freshchat API Token">
+    Go to your Freshchat dashboard → **Admin** → **API Tokens**. Generate a new API token with messaging permissions.
+  </Step>
+  <Step title="Connect in InsiteChat">
+    Go to your chatbot → **Webhooks** tab → find the **Freshchat** card. Enter:
+    - **Domain** — e.g., `yourcompany.freshchat.com`
+    - **API Token** — the token from step 1
+
+    Click **Connect Freshchat**.
+  </Step>
+  <Step title="Set Up Webhook in Freshchat">
+    In your Freshchat dashboard → **Admin** → **Webhooks**, create a webhook pointing to:
+    ```
+    https://backend.insitechat.ai/api/integrations/livechat/freshchat/webhook/YOUR_CHATBOT_ID
+    ```
+    Subscribe to the `message_create` event.
+  </Step>
+  <Step title="Test It">
+    Send a test message via your Freshchat widget. InsiteChat should reply automatically.
+  </Step>
+</Steps>
+
+## How It Works
+
+1. A visitor sends a message in your Freshchat widget
+2. Freshchat forwards the message to InsiteChat via webhook
+3. InsiteChat processes the message through the RAG pipeline
+4. The AI response is posted back to the Freshchat conversation
+5. The visitor sees the reply instantly
+
+## Features
+
+- **AI first-line support** — automatically handles common questions
+- **Trained on your content** — uses your website, docs, and uploaded files
+- **Conversation context** — maintains 10-turn history per session
+- **Works with Freshdesk** — conversations escalated in Freshchat flow into Freshdesk tickets
+- **Plan quota enforcement** — messages count toward your billing limits
+
+## Disconnecting
+
+Click **Disconnect** on the Freshchat card. Remove the webhook from your Freshchat dashboard.

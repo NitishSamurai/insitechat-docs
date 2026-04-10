@@ -1,0 +1,59 @@
+---
+title: "Zendesk Chat"
+description: "AI-powered auto-replies for Zendesk tickets and chat. Reduce first response time with your trained knowledge base."
+---
+
+## Overview
+
+Connect Zendesk to InsiteChat and let AI handle first responses to support tickets. InsiteChat reads incoming tickets, searches your knowledge base for the best answer, and posts an AI-generated reply — dramatically reducing first response time.
+
+## Setup
+
+<Steps>
+  <Step title="Get Zendesk API Token">
+    Go to your Zendesk Admin Center → **Apps & Integrations** → **APIs** → **Zendesk API**. Create a new API token. You also need your admin email and subdomain.
+  </Step>
+  <Step title="Connect in InsiteChat">
+    Go to your chatbot → **Webhooks** tab → find the **Zendesk** card. Enter:
+    - **Subdomain** — e.g., `yourcompany` (from yourcompany.zendesk.com)
+    - **Admin Email** — your Zendesk admin email
+    - **API Token** — the token from step 1
+
+    Click **Connect Zendesk**.
+  </Step>
+  <Step title="Set Up Trigger in Zendesk">
+    In Zendesk Admin → **Business Rules** → **Triggers**, create a trigger that fires on new tickets or comments:
+
+    **Conditions:** Ticket is created / Comment is added (by end-user)
+
+    **Actions:** Notify webhook →
+    ```
+    https://backend.insitechat.ai/api/integrations/livechat/zendesk/webhook/YOUR_CHATBOT_ID
+    ```
+
+    Send the ticket ID and comment text in the webhook body.
+  </Step>
+  <Step title="Test It">
+    Create a test ticket. InsiteChat should post an AI reply within seconds.
+  </Step>
+</Steps>
+
+## How It Works
+
+1. A customer creates a ticket or adds a comment
+2. Zendesk trigger sends the ticket data to InsiteChat
+3. InsiteChat searches your knowledge base for the best answer
+4. An AI-generated reply is posted as a public comment on the ticket
+5. The customer sees the response instantly
+
+## Features
+
+- **AI ticket replies** — instant first response to reduce wait time
+- **Knowledge base search** — uses your trained content for accurate answers
+- **Skips agent messages** — only responds to end-user messages
+- **Plan quota enforcement** — ticket replies count toward billing limits
+- **Conversation history** — maintains context across ticket comments
+
+## Disconnecting
+
+Click **Disconnect** on the Zendesk card. Remove the trigger from your Zendesk dashboard to stop forwarding tickets.

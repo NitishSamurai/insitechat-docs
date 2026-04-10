@@ -1,0 +1,51 @@
+---
+title: "Telegram"
+description: "Deploy your AI chatbot as a Telegram bot. Users message your bot and get instant answers from your knowledge base."
+---
+
+## Overview
+
+Deploy your InsiteChat chatbot as a Telegram bot. Visitors message your bot on Telegram and receive instant AI-powered answers drawn from the same knowledge base as your website chatbot — same training data, same quality.
+
+## Setup
+
+<Steps>
+  <Step title="Create a Bot via BotFather">
+    Open Telegram and search for **@BotFather**. Send `/newbot`, give it a name and username. BotFather will give you a **bot token** (looks like `123456789:ABCdefGHI...`).
+  </Step>
+  <Step title="Connect in InsiteChat">
+    Go to your chatbot → **Webhooks** tab → find the **Telegram** card. Paste the bot token and click **Connect Telegram Bot**.
+  </Step>
+  <Step title="Start Chatting">
+    Your bot is live! Send it a message on Telegram at `t.me/your_bot_username`. It will respond using your chatbot's trained knowledge base.
+  </Step>
+</Steps>
+
+## How It Works
+
+When a user messages your Telegram bot:
+
+1. Telegram sends the message to InsiteChat via webhook
+2. InsiteChat runs the full RAG pipeline (hybrid search + context retrieval)
+3. The AI generates a response using your trained knowledge base
+4. The response is sent back to the user on Telegram
+
+All messages count toward your plan's monthly message quota — same as website chat messages.
+
+## Features
+
+- **Same knowledge base** — uses the exact same training data as your website chatbot
+- **Conversation history** — maintains context across messages (10-turn window)
+- **Auto-greeting** — sends your chatbot's greeting message on `/start`
+- **Plan quota enforcement** — respects your billing plan limits
+- **Lead + conversation webhooks** — fires the same webhook events as website chat
+
+## Disconnecting
+
+Click **Disconnect** on the Telegram card. The bot will stop responding to messages immediately.
+
+## Limitations
+
+- Responses are text-only (no rich formatting like the web widget)
+- No lead form — use a different channel for lead capture
+- Bot must be messaged first by the user (Telegram policy)

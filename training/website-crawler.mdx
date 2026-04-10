@@ -1,0 +1,55 @@
+---
+title: "Website Crawler"
+description: "Automatically crawl and index your website content to train your chatbot."
+---
+
+# Website Crawler
+
+The website crawler allows you to train your chatbot by pointing InsiteChat at a website URL. It automatically crawls, extracts, and indexes all accessible pages.
+
+## Add a Website Source
+
+<Steps>
+  <Step title="Open your dashboard">
+    Log in to InsiteChat and select the chatbot you want to train.
+  </Step>
+  <Step title="Go to Sources">
+    In the left sidebar, click **Sources**, then click **Add source**.
+  </Step>
+  <Step title="Choose Website">
+    Select **Website** as the source type.
+  </Step>
+  <Step title="Enter your URL">
+    Enter your website's root URL (e.g., `https://example.com`).
+  </Step>
+  <Step title="Start the crawl">
+    Click **Crawl**. InsiteChat begins indexing your site automatically.
+  </Step>
+  <Step title="Monitor progress">
+    Watch the progress indicator. The source card changes to **Ready** when indexing is complete.
+  </Step>
+</Steps>
+
+## What Gets Indexed
+
+The crawler captures product pages, blog posts, FAQs, and informational pages. It extracts the main text content from each page.
+
+<Warning>
+The crawler does not process images or embedded videos. Only text content is indexed.
+</Warning>
+
+## Keeping Content Up to Date
+
+You can re-sync your website content to pick up changes:
+
+- **Manual sync** — Available on all paid plans. Trigger a re-crawl at any time from the Sources page.
+- **Automatic sync** — Frequency depends on your plan:
+  - **Starter** — Monthly
+  - **Growth** — Weekly
+  - **Scale** — Every 3 days
+
+## Limitations
+
+<Warning>
+Pages behind authentication or blocked by `robots.txt` are not crawled or indexed.
+</Warning>

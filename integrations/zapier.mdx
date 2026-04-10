@@ -1,0 +1,74 @@
+---
+title: "Zapier"
+description: "Connect your AI chatbot to 6,000+ apps via Zapier webhooks. Automate leads, notifications, and workflows."
+---
+
+## Overview
+
+InsiteChat integrates with Zapier using **Webhooks by Zapier** — an instant trigger that sends event data to Zapier whenever something happens in your chatbot. From there, Zapier can route the data to 6,000+ apps like Google Sheets, HubSpot, Mailchimp, Salesforce, and more.
+
+<Info>This also works with **Make.com** (Integromat) and **n8n** — just paste any webhook URL.</Info>
+
+## Setup
+
+<Steps>
+  <Step title="Create a Zap in Zapier">
+    Go to [zapier.com](https://zapier.com) and create a new Zap. For the trigger, search for **"Webhooks by Zapier"** and choose **"Catch Hook"**. Zapier will give you a unique webhook URL.
+  </Step>
+  <Step title="Add Webhook in InsiteChat">
+    Go to your chatbot → **Webhooks** tab → click **Add Webhook**. Paste the Zapier webhook URL.
+  </Step>
+  <Step title="Select Events">
+    Choose which events to send to Zapier:
+    - `lead.captured` — visitor submits lead form
+    - `message.received` — visitor sends a message
+    - `conversation.started` — new chat session begins
+    - `conversation.escalated` — visitor requests human help
+  </Step>
+  <Step title="Test & Connect">
+    Click **Send Test** in InsiteChat, then go back to Zapier and click **Test trigger**. Zapier should receive the test payload. Add any action (Google Sheets, email, CRM, etc.) to complete your Zap.
+  </Step>
+</Steps>
+
+## Payload Format
+
+Every webhook sends a JSON payload:
+
+```json
+{
+  "event": "lead.captured",
+  "chatbot_id": "uuid-here",
+  "timestamp": "2026-04-10T12:00:00Z",
+  "data": {
+    "lead_id": "uuid",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "phone": "+1234567890"
+  }
+}
+```
+
+## Security
+
+All webhook payloads are signed with **HMAC-SHA256**. The signature is sent in the `X-InsiteChat-Signature` header. Your signing secret is shown on the webhook card in the dashboard.
+
+## Retry Policy
+
+Failed deliveries are retried up to 3 times with exponential backoff:
+- 1st retry: after 1 minute
+- 2nd retry: after 5 minutes
+- 3rd retry: after 15 minutes
+
+## Popular Automations
+
+| Trigger | Action | Use Case |
+|---|---|---|
+| Lead Captured | Google Sheets → Add Row | Log all leads in a spreadsheet |
+| Lead Captured | HubSpot → Create Contact | Auto-sync leads to CRM |
+| Conversation Escalated | Slack → Send Message | Alert team about urgent requests |
+| Lead Captured | Mailchimp → Add Subscriber | Add leads to email list |
+| Message Received | Notion → Create Page | Log conversations for review |
+
+## Delivery Log
+
+Every webhook delivery is logged. Click **Delivery log** on any webhook card to see status, HTTP response codes, and retry attempts.

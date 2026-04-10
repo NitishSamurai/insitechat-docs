@@ -1,0 +1,67 @@
+---
+title: "Document Upload"
+description: "Train your chatbot from PDFs, Word documents, PowerPoint files, spreadsheets, and more."
+---
+
+# Document Upload
+
+Document upload lets you add files from your existing content library directly to your chatbot's knowledge base. InsiteChat extracts the text and indexes it alongside any other sources you've added.
+
+## Supported File Formats
+
+| Format | Extensions |
+|--------|-----------|
+| PDF | `.pdf` |
+| Word document | `.doc`, `.docx` |
+| PowerPoint | `.ppt`, `.pptx` |
+| Plain text | `.txt` |
+| Markdown | `.md` |
+| CSV | `.csv` |
+| YouTube transcript | Paste a YouTube URL |
+| Zendesk articles | Connect via integration |
+
+## Upload a Document
+
+<Steps>
+  <Step title="Open your dashboard">
+    Log in to InsiteChat and select the chatbot you want to train.
+  </Step>
+  <Step title="Go to Sources">
+    In the left sidebar, click **Sources**, then click **Add source**.
+  </Step>
+  <Step title="Choose File upload">
+    Select **File upload** from the list of source types.
+  </Step>
+  <Step title="Select your file">
+    Click **Choose file** and select the document from your computer, or drag and drop it into the upload area.
+  </Step>
+  <Step title="Confirm the upload">
+    Click **Upload**. InsiteChat processes the file and indexes its content. The source card shows a progress indicator and changes to **Ready** when indexing is complete.
+  </Step>
+</Steps>
+
+<Tip>
+Documents with clear, descriptive headings produce better chatbot answers. InsiteChat uses headings to understand document structure and organize relevant content.
+</Tip>
+
+## Best Practices for Document Quality
+
+The quality of your chatbot's answers depends heavily on the quality of the documents you upload. Follow these guidelines to get the best results:
+
+- **Use clear headings** — Structure documents with descriptive H1, H2, and H3 headings to help InsiteChat organize content effectively.
+- **Avoid scanned images without OCR** — InsiteChat extracts text from documents. Scanned PDFs containing image-based text cannot be indexed; use selectable text or run OCR first.
+- **Keep formatting clean** — Complex tables and multi-column layouts reduce extraction accuracy. Simplify or convert to plain text/Markdown before uploading.
+- **One topic per document** — Focused documents are easier for AI analysis. Split large multi-topic documents into separate files.
+- **Check for accuracy** — Remove outdated information, correct errors, and delete obsolete sections before uploading.
+
+## File Size Limits
+
+InsiteChat supports most standard document sizes. For unusually large files, consider splitting them into smaller sections to ensure reliable processing. Specific limits appear in the upload interface.
+
+## YouTube Transcripts
+
+To index a YouTube video, select **YouTube** as the source type and paste the video URL. InsiteChat retrieves the transcript and indexes the spoken content for videos with captions.
+
+## Zendesk Articles
+
+Connect your Zendesk account from the **Sources** section to import help center articles directly. InsiteChat indexes article content immediately after import.

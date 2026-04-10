@@ -1,0 +1,49 @@
+---
+title: "HubSpot CRM"
+description: "Automatically sync captured leads to HubSpot contacts. Keep your CRM updated in real-time."
+---
+
+## Overview
+
+Connect HubSpot to InsiteChat and every lead captured through your chatbot is automatically created as a contact in HubSpot CRM. No manual data entry, no CSV exports — leads flow directly into your sales pipeline.
+
+## Setup
+
+<Steps>
+  <Step title="Connect HubSpot">
+    Go to your chatbot → **Webhooks** tab → find the **HubSpot CRM** card → click **Connect HubSpot**. You'll be redirected to HubSpot to authorize the connection.
+  </Step>
+  <Step title="Authorize">
+    Select your HubSpot account and grant InsiteChat permission to create and read contacts. We only request the minimum scopes needed.
+  </Step>
+  <Step title="Leads Auto-Sync">
+    That's it. Every time a visitor submits the lead form on your chatbot, a new HubSpot contact is created automatically with their name, email, and phone number.
+  </Step>
+</Steps>
+
+## What Gets Synced
+
+When a lead is captured, InsiteChat creates a HubSpot contact with:
+
+| InsiteChat Field | HubSpot Property |
+|---|---|
+| Name | `firstname` + `lastname` (auto-split) |
+| Email | `email` |
+| Phone | `phone` |
+
+## Duplicate Handling
+
+If a contact with the same email already exists in HubSpot, InsiteChat skips the duplicate — no duplicate contacts are created.
+
+## Token Refresh
+
+HubSpot access tokens expire periodically. InsiteChat automatically refreshes the token when needed — no manual re-authentication required.
+
+## Disconnecting
+
+Click **Disconnect** on the HubSpot card. New leads will no longer sync to HubSpot. Existing contacts in HubSpot are not affected.
+
+## Requirements
+
+- A HubSpot account (free CRM works)
+- InsiteChat Starter plan or above

@@ -1,0 +1,52 @@
+---
+title: "Crisp"
+description: "Add AI auto-reply to your Crisp live chat. InsiteChat answers visitor questions using your knowledge base."
+---
+
+## Overview
+
+Connect Crisp to InsiteChat to add AI-powered auto-replies to your Crisp live chat. When a visitor sends a message, InsiteChat uses your trained knowledge base to generate an instant, accurate response — reducing agent workload and response time.
+
+## Setup
+
+<Steps>
+  <Step title="Get Crisp API Credentials">
+    Go to your Crisp dashboard → **Settings** → **API Keys** (or create a Plugin). You need:
+    - **Website ID** — found in Settings → Website Settings
+    - **Token ID** — your plugin/API token identifier
+    - **Token Key** — your plugin/API token secret
+  </Step>
+  <Step title="Connect in InsiteChat">
+    Go to your chatbot → **Webhooks** tab → find the **Crisp** card. Enter your Website ID, Token ID, and Token Key. Click **Connect Crisp**.
+  </Step>
+  <Step title="Set Up Webhook in Crisp">
+    In your Crisp dashboard, set up a webhook pointing to:
+    ```
+    https://backend.insitechat.ai/api/integrations/livechat/crisp/webhook/YOUR_CHATBOT_ID
+    ```
+    Subscribe to the `message:send` event.
+  </Step>
+  <Step title="Test It">
+    Send a test message via your Crisp widget. InsiteChat should reply automatically within seconds.
+  </Step>
+</Steps>
+
+## How It Works
+
+1. A visitor sends a message in your Crisp chat widget
+2. Crisp forwards the message to InsiteChat via webhook
+3. InsiteChat runs the full RAG pipeline (search + context + AI response)
+4. The response is posted back to the Crisp conversation as an operator message
+5. The visitor sees the AI reply instantly
+
+## Features
+
+- **Full RAG pipeline** — same hybrid search and AI quality as the website widget
+- **Conversation history** — maintains context within the session
+- **Plan quota enforcement** — messages count toward your billing plan
+- **Seamless handoff** — human agents can take over anytime in Crisp
+- **Works alongside operators** — AI replies only to visitor messages, not agent messages
+
+## Disconnecting
+
+Click **Disconnect** on the Crisp card. Remove the webhook from your Crisp dashboard to stop forwarding messages.
