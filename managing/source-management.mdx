@@ -1,0 +1,80 @@
+---
+title: "Source Management"
+description: "Search, filter, and bulk manage your chatbot's training sources."
+---
+
+# Source Management
+
+The **Sources** tab provides tools for managing all your chatbot's training data — website URLs, files, text snippets, and cloud integrations.
+
+## Search & Filter
+
+### Search Bar
+
+Type in the search bar to filter sources by title or URL. Results update instantly as you type.
+
+### Status Filter
+
+Click status buttons to show only sources with a specific status:
+
+| Status | Meaning |
+|--------|---------|
+| **All** | Show everything |
+| **Pending** | Queued for processing |
+| **Crawling** | Actively fetching pages |
+| **Processing** | Embedding and indexing content |
+| **Done** | Successfully trained |
+| **Failed** | Error occurred (hover for details) |
+
+Each status button shows a count of how many sources have that status.
+
+## Bulk Actions
+
+### Select Sources
+
+- Click the **checkbox** next to any source to select it
+- Click the **select all** checkbox at the top to select all visible (filtered) sources
+- Click **Clear selection** to deselect all
+
+### Available Bulk Actions
+
+When one or more sources are selected, a bulk action bar appears:
+
+| Action | What it does |
+|--------|-------------|
+| **Re-sync** | Queues all selected sources for re-processing. Uses force mode to bypass cache. |
+| **Delete** | Soft-deletes all selected sources and archives their documents. Requires confirmation. |
+
+<Tip>
+Use bulk re-sync after a major website update to refresh all URL sources at once, rather than clicking re-sync on each one individually.
+</Tip>
+
+## Per-Source Actions
+
+Each source card has two action buttons:
+
+- **Re-sync** (refresh icon) — Re-process this single source
+- **Delete** (trash icon) — Remove this source and its trained data
+
+## Error Handling
+
+When a source fails to process, an error message is displayed on the source card. Hover over truncated error messages to see the full text.
+
+Common failure reasons:
+- Website returned an error (403, 404, 500)
+- Content too short (less than 50 characters)
+- Monthly page quota exceeded
+- File format not supported
+- Network timeout during crawl
+
+## Source Types
+
+| Type | Icon | How it's added |
+|------|------|---------------|
+| Website URL | Globe | Enter URL, optionally with advanced crawl config |
+| Text | FileText | Paste text content with a title |
+| File | File | Upload PDF, DOCX, PPTX, TXT, MD, CSV |
+| YouTube | Play | Enter video URL to extract transcript |
+| Google Drive | HardDrive | Connect account and select files |
+| Notion | FileText | Connect workspace and select pages |
+| Dropbox | Cloud | Connect account and select files |

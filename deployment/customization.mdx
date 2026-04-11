@@ -1,0 +1,142 @@
+---
+title: "Widget Customization"
+description: "Fully customize your chatbot's appearance — colors, fonts, icon, auto-open, RTL, personas, localization, and branding."
+---
+
+# Widget Customization
+
+Customize every aspect of your chat widget to match your brand and user experience needs. All customization is done from the **Embed** tab in your chatbot dashboard.
+
+## Appearance
+
+| Setting | Description |
+|---------|-------------|
+| **Brand color** | Primary color for the header, user bubbles, and send button. 9 presets or custom hex. |
+| **Text color** | Color of text on colored backgrounds (header, user messages, send button). Default: white. |
+| **Font size** | Base font size for the widget. Range: 12–20px. Default: 14px. |
+| **Display name** | Name shown in the chat header. |
+| **Greeting message** | First message visitors see. Supports markdown (bold, bullets, links). |
+| **Input placeholder** | Placeholder text in the message input field. |
+| **Chat icon / logo** | Upload a custom image (PNG, JPG, WebP, SVG, max 2MB) to replace the default chat bubble icon. |
+
+## Position & Icon
+
+| Setting | Description |
+|---------|-------------|
+| **Widget position** | Bottom-left or bottom-right of the page. |
+| **Icon size** | Choose from S (40px), M (48px), L (56px), XL (64px), or 2XL (72px). |
+| **Bottom distance** | Pixels from the bottom edge of the screen. |
+| **Side distance** | Pixels from the left or right edge. |
+
+## Auto-Open
+
+Automatically open the chat widget after a configurable delay.
+
+| Setting | Description |
+|---------|-------------|
+| **Desktop auto-open** | Toggle on/off with delay in seconds (0–60). |
+| **Mobile auto-open** | Separate toggle and delay for mobile devices. |
+
+Auto-open triggers once per browser session (uses `sessionStorage`). Visitors who manually close the widget won't see it auto-open again until they start a new session.
+
+## Chat Modes
+
+| Mode | Behavior |
+|------|----------|
+| **AI** | Fully automated AI responses. Escalation button appears after 2 messages. |
+| **Agent** | All messages routed to human agents via webhook. AI returns a waiting message. |
+| **Hybrid** | AI responds, but "Talk to a human" button is always visible. |
+
+## Personas
+
+Define your chatbot's personality:
+
+- **Default** — Neutral, helpful tone
+- **Friendly** — Warm, welcoming, empathetic
+- **Professional** — Formal, precise, business-appropriate
+- **Casual** — Relaxed, conversational, approachable
+- **Inspirational** — Enthusiastic, motivational, uplifting
+- **Custom** — Write your own personality description
+
+## RTL Mode
+
+Enable right-to-left text direction for Arabic, Hebrew, Urdu, and other RTL languages. When enabled, the entire widget layout flips — text alignment, message bubbles, and input direction all adjust automatically.
+
+## Localization
+
+Customize all 14 UI text strings for any language:
+
+| String | Default | Purpose |
+|--------|---------|---------|
+| Status text | "Online" | Shown in the header |
+| Input placeholder | "Type a message..." | Message input field |
+| Escalation button | "Talk to a human" | Human handoff |
+| Lead form title | "Want us to follow up?" | Lead form header |
+| Lead form subtitle | "Leave your details..." | Lead form description |
+| Name field | "Name" | Lead form |
+| Email field | "Email *" | Lead form |
+| Phone field | "Phone" | Lead form |
+| Submit button | "Submit" | Lead form |
+| Submitting text | "Sending..." | Submit in progress |
+| Success message | "Thanks! We'll be in touch." | After lead submit |
+| Escalation success | "Sent! The team will follow up soon." | After escalation |
+| Error message | "Sorry, something went wrong." | Generic error |
+| Branding prefix | "Powered by" | Watermark |
+
+## Quick Prompts (Starter Questions)
+
+Add up to **5 starter questions** that appear as clickable buttons before the visitor sends their first message. These help guide visitors toward common topics and reduce the "blank page" problem.
+
+<Steps>
+  <Step title="Go to the Embed tab">
+    Select your chatbot and click the **Embed** tab.
+  </Step>
+  <Step title="Find the Starter Questions section">
+    Scroll down to **Starter Questions** below the customization options.
+  </Step>
+  <Step title="Add your prompts">
+    Type a question and click **Add**. You can add up to 5 starter questions.
+  </Step>
+  <Step title="Remove if needed">
+    Click the **×** button next to any question to remove it.
+  </Step>
+  <Step title="Save">
+    Click **Save Customization**. Quick prompts appear immediately in your chat widget.
+  </Step>
+</Steps>
+
+Quick prompts appear **only before the first message**. Once the visitor starts a conversation, AI-generated follow-up suggestions take over (if Smart Follow-ups are enabled).
+
+<Tip>
+Use quick prompts to surface your most common questions — pricing, getting started, features, or support topics. This reduces time-to-first-message and improves engagement.
+</Tip>
+
+## Smart Follow-ups
+
+When enabled, the AI generates relevant follow-up questions after each response, displayed as clickable suggestion buttons. Configure the number of suggestions (1–5).
+
+## Source Citations
+
+Toggle to show clickable source links below bot responses, so visitors can verify answers against the original content.
+
+## Hide Feedback
+
+Toggle off the thumbs-up / thumbs-down feedback buttons on bot messages. Useful if you prefer a cleaner interface or don't need per-message feedback.
+
+## Watermark / Branding
+
+| Plan | Watermark behavior |
+|------|--------------------|
+| **Free** | "Powered by InsiteChat.ai" — locked |
+| **Starter** | "Powered by InsiteChat.ai" — locked |
+| **Growth+** | Customizable text and link, or hidden entirely |
+
+Growth and above can set a custom watermark text (e.g., "Powered by Your Company") and a custom link URL.
+
+## Session Timeout
+
+Auto-expire conversations after a period of inactivity (0–1440 minutes). When a visitor returns after the timeout, they start a fresh conversation. Set to 0 to disable.
+
+## Conversation History
+
+When enabled, visitors can see and resume their past conversations via a clock icon in the header. Past sessions are stored in the visitor's browser (localStorage, max 10 sessions).

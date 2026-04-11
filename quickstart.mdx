@@ -9,30 +9,52 @@ Get your AI chatbot up and running in six simple steps.
 
 ## 1. Create Your Account
 
-Register at [insitechat.ai/register](https://insitechat.ai/register). Your account is activated immediately — no waiting for approval.
+Register at [insitechat.ai/register](https://insitechat.ai/register) with email/password, or click **Continue with Google** for 1-click signup (no email verification needed). Your account is activated immediately.
 
 ## 2. Create a Chatbot
 
-From your dashboard, click **New chatbot** and give it a name. This name appears in the chat widget your visitors see.
+From your dashboard, click **New chatbot**. Choose from **6 pre-built templates** (Customer Support, Sales, Technical, Education, Enterprise, FAQ) to pre-fill the system prompt — or write your own. Click **Create & add sources**.
 
 ## 3. Add a Knowledge Source
 
 Train your chatbot by providing content it can learn from:
 
-- **Website URL** — InsiteChat auto-crawls your site and indexes every accessible page.
-- **File upload** — Upload a PDF, Word document, PowerPoint, plain text, or CSV file.
+- **Website URL** — InsiteChat auto-crawls your site. Configure CSS selectors, URL filters, and recursion depth for precise control.
+- **Sitemap** — Enter a sitemap.xml URL to index every page on your site.
+- **File upload** — Upload PDFs, Word docs, PowerPoints, text files, or CSVs.
+- **Cloud integrations** — Connect Google Drive, Notion, or Dropbox.
+- **YouTube** — Add video URLs to extract transcripts.
 
-## 4. Customize the Appearance
+<Tip>
+Use **Advanced options** when adding a URL source to configure CSS selectors (extract only `main` content, skip `footer`), URL path filters, and auto-sync frequency.
+</Tip>
 
-Set the chatbot's display name, welcome message, and brand colors so it looks right at home on your site.
+## 4. Customize the Widget
+
+Go to the **Embed** tab to customize:
+
+- Brand color, text color, and font size
+- Chat icon size and position
+- Display name and greeting message
+- Starter questions (quick prompts) to guide visitors
+- Auto-open behavior for desktop and mobile
+- Persona (Friendly, Professional, Casual, or custom)
+- RTL mode for right-to-left languages
+- Lead capture form timing and custom fields
 
 ## 5. Embed on Your Website
 
-Copy the JavaScript snippet from your dashboard and paste it into your website's HTML, just before the closing `</body>` tag.
+Copy the embed code from the **Embed** tab and paste it into your website HTML.
 
-## 6. Test and Refine
+## 6. Monitor & Improve
 
-Open your site, ask the chatbot a few questions, and review its answers. If something isn't quite right, add more content or create custom Q&A pairs.
+Check your chatbot's **Overview** dashboard to track:
+
+- Content metrics (links, files, Q&A pairs)
+- Conversation stats (total messages, feedback percentages)
+- Training status (ready, in progress, issues)
+
+Review conversations, add Q&A pairs for missed questions, and use bulk sync to keep content fresh.
 
 <Tip>
 Custom Q&A pairs take priority over auto-extracted content, so the answers are always exactly what you intend.
@@ -41,13 +63,13 @@ Custom Q&A pairs take priority over auto-extracted content, so the answers are a
 ## Next Steps
 
 <CardGroup cols={3}>
-  <Card title="Website Crawler" icon="spider" href="/data-sources/website-crawler">
-    Fine-tune crawling controls.
+  <Card title="Website Crawler" icon="spider" href="/training/website-crawler">
+    Advanced crawling controls.
   </Card>
-  <Card title="Embed Widget" icon="code" href="/channels/embed-widget">
-    Advanced embedding options.
+  <Card title="Widget Customization" icon="palette" href="/deployment/customization">
+    Colors, fonts, RTL, auto-open.
   </Card>
-  <Card title="Plans & Pricing" icon="credit-card" href="/plans-and-pricing">
-    Compare tiers and upgrade.
+  <Card title="Lead Management" icon="users" href="/deployment/lead-capture">
+    Lead forms, tags, bulk actions.
   </Card>
 </CardGroup>

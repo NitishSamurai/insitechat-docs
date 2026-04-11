@@ -1,52 +1,72 @@
 ---
-title: "Analytics"
-description: "Track chatbot performance, understand customer inquiries, and improve your chatbot with data."
+title: "Dashboard & Analytics"
+description: "Monitor chatbot performance with the overview dashboard — content metrics, conversation stats, feedback analytics, and training status."
 ---
 
-# Analytics
+# Dashboard & Analytics
 
-Track chatbot performance, understand customer inquiries, and leverage data for continuous improvement.
+Each chatbot has an **Overview** dashboard that gives you an at-a-glance view of performance, content, and status. Access it by clicking on any chatbot from your chatbots list.
 
-## Key Metrics
+## Chatbot Overview Dashboard
 
-The analytics dashboard displays six primary metrics:
+The Overview tab is the first thing you see when you select a chatbot. It shows:
 
-| Metric | What it measures |
-|--------|-----------------|
-| **Total conversations** | Number of chat sessions |
-| **Total messages** | Cumulative message exchanges |
-| **Most asked questions** | Frequently asked customer topics |
-| **Unanswered questions** | Questions your chatbot couldn't answer — knowledge gaps |
-| **User satisfaction** | Thumbs up / thumbs down ratings from visitors |
-| **Message volume over time** | Usage trends and patterns |
+### Training Status
 
-## Access Analytics
+A color-coded indicator showing your chatbot's readiness:
 
-Open your dashboard and click the **Analytics** tab in the left sidebar.
+| Status | Color | Meaning |
+|--------|-------|---------|
+| **Ready** | Green | All sources processed. Chatbot is fully operational. |
+| **Training** | Blue | Some sources are still being processed. Chatbot works with trained content. |
+| **Partial Issues** | Orange | Some sources failed. Chatbot works with successfully trained content. |
+| **No Knowledge** | Gray | No content added yet. Add links, files, or Q&A pairs to get started. |
 
-## Improve Your Chatbot with Analytics
+The status also shows a breakdown: how many sources are done, processing, and failed, plus total pages indexed.
 
-<Steps>
-  <Step title="Open Analytics">
-    Go to your dashboard and click **Analytics** in the sidebar.
-  </Step>
-  <Step title="Review top questions">
-    See which questions visitors ask most often. Ensure your chatbot handles these well.
-  </Step>
-  <Step title="Check unanswered questions">
-    Identify questions your chatbot couldn't answer — these are knowledge gaps.
-  </Step>
-  <Step title="Add Q&A pairs or update sources">
-    Create custom Q&A pairs for unanswered questions, or update your content sources with the missing information.
-  </Step>
-  <Step title="Re-sync your sources">
-    If you updated source content, trigger a re-sync from the Sources page in your dashboard.
-  </Step>
-</Steps>
+### Content Metrics
+
+Three cards showing your training data at a glance:
+
+| Metric | What it shows |
+|--------|--------------|
+| **Links** | Total URL sources + total pages indexed |
+| **Files** | Total file sources uploaded |
+| **Q&A Pairs** | Total custom question-answer pairs |
+
+### Conversation Metrics
+
+Three cards showing chatbot performance:
+
+| Metric | What it shows |
+|--------|--------------|
+| **Total Messages** | All messages exchanged + total conversation count |
+| **Positive Feedback** | Percentage of bot responses rated helpful (thumbs up) |
+| **Negative Feedback** | Percentage of bot responses rated unhelpful (thumbs down) |
 
 <Tip>
-Unanswered questions are the most valuable signal for improving your chatbot. They reveal exactly where your knowledge base has gaps that need attention.
+Use negative feedback percentage to identify areas for improvement. If it's above 10%, review your conversations to find common failure patterns and add Q&A pairs to address them.
 </Tip>
+
+### Installation Quick Access
+
+The Overview also provides:
+
+- **Chatbot ID** with a copy button — needed for API calls, WordPress plugins, and integrations
+- **Embed code** snippet with a copy button — paste into your website to deploy
+
+## Conversations
+
+Access the **Conversations** tab to review individual chat sessions:
+
+- View full message transcripts (user + bot)
+- See message count and timestamp per conversation
+- Export conversations as CSV
+- Delete conversations (soft delete)
+
+## Feedback
+
+Visitors can rate bot responses with thumbs up/down buttons (unless hidden via widget customization). Feedback data feeds into the positive/negative percentages on the Overview dashboard.
 
 ## Message Limits by Plan
 
@@ -57,4 +77,14 @@ Unanswered questions are the most valuable signal for improving your chatbot. Th
 | Growth | 10,000 |
 | Scale | 40,000 |
 
-When you approach your message limit, consider upgrading via **Settings > Billing**.
+Only visitor messages count — bot responses are free.
+
+## Email Notifications
+
+InsiteChat automatically sends email alerts for:
+
+- **Plan limit warnings** — When any resource (messages, pages, chatbots) reaches 80%+ usage (checked daily)
+- **Source failures** — When a training source fails to process after all retries
+- **Monthly usage report** — Sent on the 1st of each month with a summary of your chatbot stats
+
+All notifications are rate-limited to prevent spam (limit warnings: max 1/day, source failures: max 10/hour).

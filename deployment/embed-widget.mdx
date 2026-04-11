@@ -1,0 +1,354 @@
+---
+title: "Embed Widget"
+description: "Add your AI chatbot to any website — JavaScript embed, iFrame, or direct link. Platform-specific instructions for WordPress, Shopify, Wix, Squarespace, Webflow, and custom HTML."
+---
+
+# Embed Widget
+
+Add your InsiteChat chatbot to any website with a single code snippet. The widget adds a chat icon to the corner of your page — visitors click it to open a full chat interface. No plugins or developers required.
+
+## Getting Started
+
+<Steps>
+  <Step title="Open your chatbot">
+    Log in to InsiteChat and select the chatbot you want to deploy.
+  </Step>
+  <Step title="Copy your Chatbot ID">
+    Go to the **Overview** tab. Your unique Chatbot ID is displayed with a **Copy** button. You'll need this for integrations and API calls.
+  </Step>
+  <Step title="Choose an embed method">
+    Go to the **Embed** tab and choose from three options: Script tag (recommended), iFrame, or direct link.
+  </Step>
+  <Step title="Paste into your website">
+    Follow the platform-specific instructions below.
+  </Step>
+  <Step title="Test">
+    Visit your site, click the chat icon, and send a test message.
+  </Step>
+</Steps>
+
+<Info>
+**Your Chatbot ID is required for:**
+- WordPress and Shopify plugins
+- API calls and developer integrations
+- Webhook configuration
+- Third-party platform setup
+</Info>
+
+## Embed Options
+
+<Tabs>
+  <Tab title="Script Tag (Recommended)">
+    The script tag is the best option for most websites. It creates an iframe that automatically positions the chatbot and supports all features.
+
+    **Why choose script embed:**
+    - Automatic positioning based on your widget settings (left/right, icon size, distance)
+    - Responsive — adapts when chat opens/closes
+    - Supports all customization features (auto-open, RTL, personas, etc.)
+    - Minimal performance impact with deferred loading
+
+    **Code snippet:**
+
+    ```html
+    <script>
+      (function(){
+        var d=document,s=d.createElement('iframe');
+        s.src='https://insitechat.ai/embed/YOUR_CHATBOT_ID';
+        s.style.cssText='position:fixed;bottom:0;right:0;width:420px;height:650px;border:none;z-index:9999;';
+        s.allow='clipboard-write';
+        d.body.appendChild(s);
+      })();
+    </script>
+    ```
+
+    <Note>
+    Replace `YOUR_CHATBOT_ID` with your actual Chatbot ID. The Embed tab provides this code pre-filled with your ID.
+    </Note>
+  </Tab>
+
+  <Tab title="iFrame Embed">
+    Use the iFrame embed when you need specific positioning or when JavaScript is restricted.
+
+    ```html
+    <iframe
+      src="https://insitechat.ai/embed/YOUR_CHATBOT_ID"
+      style="position:fixed;bottom:0;right:0;width:420px;height:650px;border:none;z-index:9999;"
+      allow="clipboard-write"
+    ></iframe>
+    ```
+
+    <Tip>
+    Adjust `width`, `height`, `bottom`, and `right` values to fit your design. Change `right` to `left` if your widget is configured for the left side.
+    </Tip>
+  </Tab>
+
+  <Tab title="Direct Link">
+    Share your chatbot as a standalone page — useful for email signatures, QR codes, or social media bios.
+
+    ```
+    https://insitechat.ai/embed/YOUR_CHATBOT_ID
+    ```
+
+    Opens as a full-page chat interface. No embedding required.
+  </Tab>
+</Tabs>
+
+## Platform-Specific Instructions
+
+<AccordionGroup>
+  <Accordion title="WordPress" icon="wordpress">
+    <Tabs>
+      <Tab title="Plugin (Recommended)">
+        <Steps>
+          <Step title="Install plugin">
+            In your WordPress admin, go to **Plugins > Add New Plugin**. Search for a header/footer code plugin like **WPCode** or **Insert Headers and Footers**. Click **Install Now**, then **Activate**.
+          </Step>
+          <Step title="Open settings">
+            Go to **Code Snippets > Header & Footer** (or the plugin's settings page).
+          </Step>
+          <Step title="Paste code">
+            Paste the InsiteChat embed code in the **Footer** section.
+          </Step>
+          <Step title="Save">
+            Click **Save Changes**. The chatbot appears on all pages immediately.
+          </Step>
+        </Steps>
+      </Tab>
+      <Tab title="Theme Editor (Advanced)">
+        <Warning>
+        Theme editor changes may be lost during theme updates. Use the plugin method for a safer approach.
+        </Warning>
+
+        <Steps>
+          <Step title="Open theme editor">
+            Go to **Appearance > Theme Editor**.
+          </Step>
+          <Step title="Edit footer">
+            Select your active theme and open `footer.php`.
+          </Step>
+          <Step title="Add code">
+            Paste the embed code just before the closing `</body>` tag.
+          </Step>
+          <Step title="Update">
+            Click **Update File**.
+          </Step>
+        </Steps>
+      </Tab>
+    </Tabs>
+  </Accordion>
+
+  <Accordion title="Shopify" icon="shopify">
+    <Steps>
+      <Step title="Access themes">
+        From your Shopify admin, go to **Online Store > Themes**.
+      </Step>
+      <Step title="Edit code">
+        Find your current theme and click **Actions > Edit code**.
+      </Step>
+      <Step title="Open theme.liquid">
+        In the Layout section, click on `theme.liquid`.
+      </Step>
+      <Step title="Add embed code">
+        Scroll to the bottom and paste the embed code just before the closing `</body>` tag.
+      </Step>
+      <Step title="Save">
+        Click **Save**. The chatbot appears on all pages of your store.
+      </Step>
+    </Steps>
+
+    <Tip>
+    To add the chatbot to specific pages only, edit individual page templates instead of `theme.liquid`.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="Squarespace" icon="square">
+    <Steps>
+      <Step title="Open settings">
+        Log in to Squarespace and click **Settings** in the main menu.
+      </Step>
+      <Step title="Code injection">
+        Click **Advanced**, then **Code Injection**.
+      </Step>
+      <Step title="Add code">
+        In the **FOOTER** section, paste the embed code.
+      </Step>
+      <Step title="Save">
+        Click **Save**.
+      </Step>
+    </Steps>
+
+    <Info>
+    Code Injection is available on Squarespace Business plans and higher. Personal plans require an upgrade.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Wix" icon="wix">
+    <Steps>
+      <Step title="Open editor">
+        Open your Wix Editor.
+      </Step>
+      <Step title="Access settings">
+        Click **Settings** in the top menu.
+      </Step>
+      <Step title="Custom code">
+        Go to **Custom Code** in the Advanced section.
+      </Step>
+      <Step title="Add code">
+        Click **+ Add Custom Code** and paste the embed code.
+      </Step>
+      <Step title="Configure">
+        Set "Add Code to Pages" to **All Pages** and "Place Code in" to **Body - end**.
+      </Step>
+      <Step title="Apply">
+        Click **Apply**.
+      </Step>
+    </Steps>
+  </Accordion>
+
+  <Accordion title="Webflow" icon="wind">
+    <Steps>
+      <Step title="Open project settings">
+        Open your Webflow project and go to **Project Settings** (gear icon).
+      </Step>
+      <Step title="Custom code tab">
+        Click on the **Custom Code** tab.
+      </Step>
+      <Step title="Add footer code">
+        In the **Footer Code** section, paste the embed code.
+      </Step>
+      <Step title="Save and publish">
+        Click **Save Changes** and publish your site.
+      </Step>
+    </Steps>
+
+    <Tip>
+    You can also add the code to specific pages by using a Webflow Embed element and pasting the code there.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="Custom HTML / Static Sites" icon="code">
+    For any website where you can edit HTML:
+
+    <Steps>
+      <Step title="Copy embed code">
+        Copy the script embed code from the Embed tab.
+      </Step>
+      <Step title="Open HTML">
+        Open your website's HTML file in a text editor.
+      </Step>
+      <Step title="Paste code">
+        Add the code just before the closing `</body>` tag.
+      </Step>
+      <Step title="Save and upload">
+        Save the file and upload to your web server.
+      </Step>
+    </Steps>
+
+    **Full example:**
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>My Website</title>
+    </head>
+    <body>
+        <h1>Welcome to my website</h1>
+
+        <!-- InsiteChat embed — paste before </body> -->
+        <script>
+          (function(){
+            var d=document,s=d.createElement('iframe');
+            s.src='https://insitechat.ai/embed/YOUR_CHATBOT_ID';
+            s.style.cssText='position:fixed;bottom:0;right:0;width:420px;height:650px;border:none;z-index:9999;';
+            s.allow='clipboard-write';
+            d.body.appendChild(s);
+          })();
+        </script>
+    </body>
+    </html>
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Verifying Installation
+
+<Steps>
+  <Step title="Clear browser cache">
+    Clear your cache or use Ctrl+Shift+R / Cmd+Shift+R for a hard refresh.
+  </Step>
+  <Step title="Open incognito window">
+    Visit your website in an incognito/private browser window.
+  </Step>
+  <Step title="Locate chat icon">
+    Look for the chat bubble icon in the bottom corner of the page.
+  </Step>
+  <Step title="Open and test">
+    Click the icon to open the chatbot. Send a test message to verify it responds correctly.
+  </Step>
+  <Step title="Check customization">
+    Verify that your brand color, logo, display name, and greeting message appear as configured in the Embed tab.
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Chatbot not appearing" icon="eye-slash">
+    - Verify the embed code is present in your page source (right-click > View Page Source, search for "insitechat")
+    - Check the browser console (F12) for JavaScript errors
+    - Ensure your chatbot has been trained with at least one source
+    - Confirm the chatbot is active (not deleted or disabled)
+    - Try a different browser or device
+  </Accordion>
+
+  <Accordion title="Chatbot appears but doesn't respond" icon="message-slash">
+    - Verify your chatbot has trained content (check Sources tab — at least one source should be "done")
+    - Check the Overview dashboard — training status should be "Ready"
+    - Test in the **Preview** tab first to isolate whether the issue is with the chatbot or the embed
+  </Accordion>
+
+  <Accordion title="Multiple chat icons appearing" icon="copy">
+    - Check that you haven't added the embed code multiple times
+    - Verify you're only using one embed method (script OR iframe, not both)
+    - Search your page source for duplicate InsiteChat scripts
+  </Accordion>
+
+  <Accordion title="Widget position is wrong" icon="arrows-up-down-left-right">
+    - Go to the **Embed** tab and check the **Widget Position** setting (left/right)
+    - Adjust **Bottom distance** and **Side distance** in the Chat Icon section
+    - If using iFrame embed, adjust the CSS `bottom`, `right`/`left` values manually
+  </Accordion>
+
+  <Accordion title="Auto-open not working" icon="window-maximize">
+    - Auto-open only triggers once per browser session (uses sessionStorage)
+    - Check that auto-open is enabled in the Embed tab for the correct device (desktop vs mobile)
+    - The delay must pass before the widget opens — check the configured delay value
+    - Try clearing sessionStorage or opening a new incognito window
+  </Accordion>
+</AccordionGroup>
+
+## Widget Features Reference
+
+All these features are configured in the **Embed** tab and work automatically once the widget is embedded:
+
+| Feature | Description |
+|---------|-------------|
+| Brand color & text color | Custom colors for header, bubbles, and buttons |
+| Font size | 12–20px base font size |
+| Chat icon size & position | S to 2XL, configurable distance from edges |
+| Auto-open | Separate desktop/mobile toggles with delay |
+| RTL mode | Right-to-left layout for Arabic, Hebrew, etc. |
+| Personas | Pre-built or custom personality |
+| Chat modes | AI, Agent, or Hybrid |
+| Localization | 14 customizable UI strings |
+| Quick prompts | Up to 5 starter questions before first message |
+| Smart follow-ups | AI-generated suggestion buttons after responses |
+| Source citations | Clickable source links below responses |
+| Hide feedback | Toggle off thumbs-up/down on bot messages |
+| Lead capture | Custom forms with configurable timing |
+| Session timeout | Auto-expire conversations after inactivity |
+| Conversation history | Visitors can resume past sessions |
+| Watermark | Customizable on Growth+ plans |
+
+See [Widget Customization](/deployment/customization) for detailed configuration instructions.

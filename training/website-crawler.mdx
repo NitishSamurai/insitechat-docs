@@ -1,0 +1,148 @@
+---
+title: "Website Crawler"
+description: "Automatically crawl and index your website content with advanced controls — CSS selectors, URL filters, depth, and custom headers."
+---
+
+# Website Crawler
+
+The website crawler allows you to train your chatbot by pointing InsiteChat at a website URL. It automatically crawls, extracts, and indexes all accessible pages. Configure advanced options like CSS selectors, URL path filters, recursion depth, and custom HTTP headers.
+
+## Add a Website Source
+
+<Steps>
+  <Step title="Open your dashboard">
+    Log in to InsiteChat and select the chatbot you want to train.
+  </Step>
+  <Step title="Go to Sources">
+    Click the **Sources** tab, then click **Add source**.
+  </Step>
+  <Step title="Choose URL">
+    Select **URL** as the source type.
+  </Step>
+  <Step title="Enter your URL">
+    Enter your website's root URL (e.g., `https://example.com`) or a sitemap URL (e.g., `https://example.com/sitemap.xml`).
+  </Step>
+  <Step title="Configure advanced options (optional)">
+    Click **Advanced options** to configure crawling behavior — see below for details.
+  </Step>
+  <Step title="Add source">
+    Click **Add source**. InsiteChat begins indexing your site automatically.
+  </Step>
+</Steps>
+
+## Advanced Crawling Options
+
+Click **Advanced options** when adding a URL source to access these controls:
+
+### Recursion Depth
+
+Control how deep the crawler follows links from your starting URL.
+
+- **0 (unlimited)** — Crawls all discoverable pages (default)
+- **1** — Only the starting page
+- **2** — Starting page + pages linked from it
+- **3–5** — Progressively deeper link following
+
+<Tip>
+Use depth 1–2 for targeted crawls (e.g., just your pricing page and its subpages). Use 0 for full-site indexing.
+</Tip>
+
+### URL Path Filters
+
+Control which pages get crawled based on their URL path.
+
+**Include paths** — Only pages matching these patterns will be crawled:
+```
+/blog
+/docs
+/help
+```
+
+**Exclude paths** — Pages matching these patterns will be skipped:
+```
+/blog/drafts
+/internal
+/admin
+```
+
+Patterns match as substrings in the URL path. One pattern per line.
+
+### CSS Selectors
+
+Extract content from specific parts of your pages, or exclude unwanted sections.
+
+**Include selectors** — Only content from these elements will be extracted:
+```
+main
+.content
+#article
+```
+
+**Exclude selectors** — Content from these elements will be removed:
+```
+footer
+.sidebar
+#comments
+nav
+```
+
+<Note>
+If you specify include selectors, only those elements are extracted. If you only specify exclude selectors, everything except those elements is extracted. If both are specified, includes take priority.
+</Note>
+
+### Custom HTTP Headers
+
+Add custom headers for accessing protected or authenticated content:
+
+```
+Authorization: Bearer your-api-token
+Cookie: session=abc123
+User-Agent: MyBot/1.0
+```
+
+One header per line, format: `Header-Name: value`.
+
+<Warning>
+Be careful with authentication tokens. Only use this for content you own or have permission to access.
+</Warning>
+
+### Auto-Sync Frequency
+
+Set how often this source automatically re-syncs:
+
+| Option | Minimum Plan Required |
+|--------|----------------------|
+| Never (manual only) | All plans |
+| Monthly | Starter |
+| Weekly | Growth |
+| Daily | Scale |
+
+<Note>
+You cannot select a frequency higher than your plan allows. For example, Growth plan users can choose never, monthly, or weekly — but not daily.
+</Note>
+
+## Bulk Source Management
+
+The Sources page includes tools for managing multiple sources at once:
+
+- **Search** — Filter sources by title or URL
+- **Status filter** — Show only pending, crawling, processing, done, or failed sources
+- **Bulk select** — Check multiple sources with checkboxes
+- **Bulk re-sync** — Re-sync all selected sources at once
+- **Bulk delete** — Delete all selected sources at once
+
+## What Gets Indexed
+
+The crawler captures product pages, blog posts, FAQs, and informational pages. It extracts the main text content from each page (or only the content matching your CSS selectors, if configured).
+
+<Warning>
+The crawler does not process images or embedded videos. Only text content is indexed. Pages behind authentication are not crawled unless you provide custom headers.
+</Warning>
+
+## Limitations
+
+- Pages blocked by `robots.txt` are not crawled
+- Maximum crawl time per source: 10 minutes
+- Pages with less than 50 characters of text are skipped
+- Duplicate content (same text on multiple URLs) is automatically deduplicated
+- Crawl page limits depend on your plan (Free: 30, Starter: 200, Growth: 1,000, Scale: 5,000)

@@ -1,0 +1,72 @@
+---
+title: "Lead Capture & Management"
+description: "Collect visitor information with customizable forms, manage leads with status tracking, tags, and bulk actions."
+---
+
+# Lead Capture & Management
+
+Collect visitor names, emails, and phone numbers directly inside the chat widget. Manage leads with status tracking, tagging, starring, search, bulk actions, and CSV export.
+
+## Lead Collection
+
+### Set Up Lead Forms
+
+<Steps>
+  <Step title="Go to Embed tab">
+    Select your chatbot and click the **Embed** tab.
+  </Step>
+  <Step title="Configure timing">
+    Choose when the lead form appears:
+    - **After messages** — After a configurable number of visitor messages (default: 3)
+    - **At start** — Immediately when the chat opens
+    - **Before escalation** — When the visitor requests human assistance
+  </Step>
+  <Step title="Add custom fields">
+    Beyond the default name/email/phone fields, add custom fields with:
+    - **Text** input
+    - **Number** input
+    - **Dropdown** with custom options
+    - Mark fields as required or optional
+  </Step>
+  <Step title="Save">
+    Click **Save Customization**. The lead form is now active on your widget.
+  </Step>
+</Steps>
+
+## Lead Management Dashboard
+
+Access the **Leads** tab in your chatbot to manage all captured leads.
+
+### Status Tracking
+
+Each lead has a status that you can update:
+
+| Status | Description |
+|--------|-------------|
+| **New** | Just captured, not yet reviewed |
+| **Contacted** | You've reached out to the lead |
+| **Qualified** | Lead meets your criteria |
+| **Converted** | Lead became a customer |
+| **Archived** | No longer active |
+
+### Features
+
+- **Search** — Find leads by name, email, or phone
+- **Filter** — Filter by status or starred leads
+- **Star** — Mark important leads for quick access
+- **Tags** — Create custom tags with colors and assign to leads
+- **Detail panel** — Click any lead to see full contact info, custom fields, tags, and the complete conversation transcript
+- **Bulk actions** — Select multiple leads to star, unstar, archive, or delete in batch
+- **CSV export** — Download all leads (including custom field columns) for use in CRM, email marketing, or analytics
+
+### Conversation Context
+
+Each lead's detail panel shows the full conversation transcript from the chat session where the lead was captured. This gives your sales team complete context when following up.
+
+<Tip>
+Ask for less up front. Collecting just an email address reduces form abandonment. You can always follow up for additional details later.
+</Tip>
+
+<Note>
+Leads are soft-deleted when removed — they can be recovered if needed. The lead capture endpoint has built-in rate limiting (10 submissions per IP per minute) and duplicate email detection (5-minute dedup window) to prevent spam.
+</Note>

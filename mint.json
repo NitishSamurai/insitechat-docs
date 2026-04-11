@@ -37,7 +37,7 @@
   ],
   "navigation": [
     {
-      "group": "Getting Started",
+      "group": "Get Started",
       "pages": [
         "introduction",
         "quickstart",
@@ -45,52 +45,56 @@
       ]
     },
     {
-      "group": "Data Sources",
+      "group": "Training Your Chatbot",
       "pages": [
-        "data-sources/website-crawler",
-        "data-sources/document-upload",
-        "data-sources/google-drive",
-        "data-sources/notion",
-        "data-sources/dropbox",
-        "data-sources/youtube",
-        "data-sources/custom-qa",
-        "data-sources/syncing-content"
+        "training/website-crawler",
+        "training/document-upload",
+        "training/custom-qa",
+        "training/syncing-content",
+        "managing/source-management"
       ]
     },
     {
-      "group": "Channels",
+      "group": "Customization & Deployment",
       "pages": [
-        "channels/embed-widget",
-        "channels/wordpress",
-        "channels/shopify",
-        "channels/telegram"
+        "deployment/customization",
+        "deployment/embed-widget",
+        "deployment/lead-capture"
       ]
     },
     {
-      "group": "Integrations",
-      "pages": [
-        "integrations/slack",
-        "integrations/zapier",
-        "integrations/hubspot",
-        "integrations/crisp",
-        "integrations/freshchat",
-        "integrations/zendesk-chat"
-      ]
-    },
-    {
-      "group": "Customization",
-      "pages": [
-        "customization/branding",
-        "customization/lead-capture",
-        "customization/quick-prompts"
-      ]
-    },
-    {
-      "group": "Managing Your Chatbot",
+      "group": "Dashboard & Analytics",
       "pages": [
         "managing/analytics",
         "managing/conversations",
         "managing/team-members"
+      ]
+    },
+    {
+      "group": "Data Source Integrations",
+      "pages": [
+        "integrations/google-drive",
+        "integrations/notion",
+        "integrations/dropbox"
+      ]
+    },
+    {
+      "group": "Platform Integrations",
+      "pages": [
+        "integrations/wordpress",
+        "integrations/shopify",
+        "integrations/telegram",
+        "integrations/slack",
+        "integrations/zapier",
+        "integrations/hubspot"
+      ]
+    },
+    {
+      "group": "Live Chat Integrations",
+      "pages": [
+        "integrations/crisp",
+        "integrations/freshchat",
+        "integrations/zendesk-chat"
       ]
     },
     {

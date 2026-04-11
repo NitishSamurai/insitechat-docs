@@ -1,86 +1,87 @@
 ---
-title: "Introduction to InsiteChat"
-description: "An AI-powered chatbot platform that transforms your content into intelligent customer conversations."
+title: "Introduction"
+description: "InsiteChat trains a custom AI chatbot on your website, docs, and files — with advanced crawling, full widget customization, lead management, and a real-time analytics dashboard."
 ---
 
-InsiteChat is an AI-powered chatbot platform that helps you automate customer support, capture leads, and engage visitors 24/7. Train your chatbot on your website content, documents, and knowledge base to provide instant, accurate responses to customer questions.
+# Introduction
 
-## What InsiteChat Does
+InsiteChat lets you build an AI chatbot that answers customer questions using your own content. No coding required. Setup takes under 5 minutes.
 
-<CardGroup cols={3}>
-  <Card title="Instant Answers" icon="message-bot">
-    Answers customer questions instantly using your website, documentation, and knowledge base.
+## Key Capabilities
+
+<CardGroup cols={2}>
+  <Card title="Advanced Website Crawler" icon="globe">
+    Crawl your website with CSS selectors, URL filters, recursion depth, custom headers, and per-source auto-sync (daily/weekly/monthly).
   </Card>
-  <Card title="Lead Capture" icon="address-book">
-    Captures and qualifies leads with customizable forms embedded in the chat widget.
+  <Card title="Multi-Source Training" icon="file-arrow-up">
+    Upload PDFs, Word docs, PowerPoints, CSVs. Connect Google Drive, Notion, Dropbox. Add YouTube transcripts and plain text.
   </Card>
-  <Card title="Human Handoff" icon="user-headset">
-    Seamlessly escalates complex conversations to your team via email with full transcript.
+  <Card title="Full Widget Customization" icon="palette">
+    Brand colors, text color, font size, icon sizing, auto-open triggers, RTL mode, personas, localization (14 strings), and white-label watermark.
+  </Card>
+  <Card title="Lead Capture & Management" icon="user-plus">
+    Custom lead forms with configurable timing. Status tracking, tagging, starring, bulk actions, conversation transcripts, and CSV export.
+  </Card>
+  <Card title="Chatbot Dashboard" icon="chart-line">
+    Overview with content metrics, conversation stats (messages, feedback %), training status indicators, and quick-access embed code.
+  </Card>
+  <Card title="Smart AI Features" icon="sparkles">
+    Follow-up question suggestions, source citations, AI/Agent/Hybrid chat modes, custom personas, and session management.
+  </Card>
+  <Card title="Bulk Source Management" icon="list-check">
+    Search, filter by status, select multiple sources, and bulk re-sync or delete. Error details on hover.
   </Card>
   <Card title="13+ Integrations" icon="plug">
-    Connect with Slack, Zapier, Telegram, HubSpot, Crisp, Freshchat, Zendesk, and more.
+    Slack, Zapier, Telegram, HubSpot, WordPress, Shopify, Crisp, Freshchat, Zendesk, Google Drive, Notion, Dropbox, and more.
   </Card>
-  <Card title="Auto-Sync" icon="arrows-rotate">
-    Automatically re-crawls your website on a schedule to keep answers up to date.
+  <Card title="Google Sign-in & Onboarding" icon="key">
+    1-click Google OAuth signup. 6 chatbot templates, guided onboarding checklist, and inline URL crawl — go live in under 5 minutes.
   </Card>
-  <Card title="Multi-Channel" icon="globe">
-    Deploy on your website, WordPress, Shopify, Telegram, or connect to live chat platforms.
+  <Card title="Email Notifications" icon="envelope">
+    Automatic alerts for source failures, monthly usage reports, and plan limit warnings. All rate-limited to prevent spam.
   </Card>
 </CardGroup>
-
-## Key Features
-
-<AccordionGroup>
-  <Accordion title="AI-Powered Conversations">
-    InsiteChat uses advanced AI with hybrid search (semantic + keyword) and Reciprocal Rank Fusion to find the most relevant context from your content. Custom Q&A pairs take priority for human-verified answers.
-  </Accordion>
-  <Accordion title="Multi-Channel Deployment">
-    Deploy your chatbot as a website widget, WordPress plugin, Shopify app, or Telegram bot. Each channel uses the same trained knowledge base and enforces the same billing limits.
-  </Accordion>
-  <Accordion title="Rich Data Sources">
-    Train on websites (automatic crawling), file uploads (PDF, Word, PowerPoint, CSV), Google Drive, Notion, Dropbox, and YouTube transcripts. All sources stay synced with auto-refresh.
-  </Accordion>
-  <Accordion title="Live Chat Integrations">
-    Add AI auto-reply to your existing live chat — Crisp, Freshchat, or Zendesk. The AI handles first-line support and human agents can take over anytime.
-  </Accordion>
-  <Accordion title="Automation & CRM">
-    Send events to Zapier (6,000+ apps), get Slack notifications for leads and escalations, and auto-sync leads to HubSpot CRM. All via webhooks with HMAC-SHA256 signing.
-  </Accordion>
-  <Accordion title="Customization">
-    Customize brand colors, display name, greeting message, input placeholder, widget position, and quick prompts. Remove InsiteChat branding on paid plans.
-  </Accordion>
-</AccordionGroup>
 
 ## How It Works
 
 <Steps>
   <Step title="Train">
-    Add your content — crawl your website, upload documents, or connect Google Drive, Notion, and Dropbox. InsiteChat chunks, embeds, and indexes everything automatically.
+    Add your content — website URLs (with advanced crawl config), documents, cloud storage, YouTube videos, or plain text. InsiteChat extracts, chunks, and embeds everything into a searchable knowledge base.
   </Step>
   <Step title="Customize">
-    Set your brand colors, greeting message, system prompt, and quick prompts. Configure lead capture forms and escalation settings.
+    Configure your widget appearance (colors, fonts, icon, position), behavior (chat mode, persona, auto-open, RTL), lead capture (timing, custom fields), and localization. Preview changes in real-time.
   </Step>
   <Step title="Deploy">
-    Add a single line of code to your website, install the WordPress plugin, or connect to Telegram, Crisp, Freshchat, or Zendesk.
+    Copy one embed snippet and paste it into your website. Works with WordPress, Shopify, Wix, Squarespace, Webflow, or any custom site. Your chatbot is live instantly.
   </Step>
   <Step title="Monitor">
-    Review conversations, track analytics, capture leads, and get real-time notifications via Slack or Zapier.
+    Track performance on the Overview dashboard — content metrics, message volume, feedback percentages, and training status. Manage leads, review conversations, and refine answers over time.
   </Step>
 </Steps>
 
-## Next Steps
+## Under the Hood
 
-<CardGroup cols={2}>
+InsiteChat uses **hybrid search** (semantic + keyword) with **Reciprocal Rank Fusion** for context retrieval. Custom Q&A pairs are prioritized over auto-extracted content. Content is chunked into 512-token segments with 50-token overlap for optimal retrieval. Supports 95+ languages with automatic detection.
+
+## Get Started
+
+<CardGroup cols={3}>
   <Card title="Quick Start" icon="rocket" href="/quickstart">
     Create and deploy your first chatbot in under 5 minutes.
   </Card>
-  <Card title="Data Sources" icon="database" href="/data-sources/website-crawler">
-    Learn how to train your chatbot on your content.
+  <Card title="Website Crawler" icon="spider" href="/training/website-crawler">
+    Advanced crawling with CSS selectors, URL filters, and auto-sync.
   </Card>
-  <Card title="Integrations" icon="plug" href="/integrations/slack">
-    Connect Slack, Zapier, HubSpot, and live chat platforms.
+  <Card title="Widget Customization" icon="palette" href="/deployment/customization">
+    Colors, fonts, RTL, auto-open, personas, and localization.
+  </Card>
+  <Card title="Embed Widget" icon="code" href="/deployment/embed-widget">
+    Deploy on WordPress, Shopify, Wix, Webflow, or any site.
+  </Card>
+  <Card title="Lead Management" icon="users" href="/deployment/lead-capture">
+    Lead forms, status tracking, tags, and bulk actions.
   </Card>
   <Card title="Plans & Pricing" icon="credit-card" href="/plans-and-pricing">
-    Compare plans and find the right fit for your business.
+    Compare plans and feature availability.
   </Card>
 </CardGroup>

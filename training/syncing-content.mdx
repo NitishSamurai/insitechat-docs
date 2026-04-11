@@ -1,0 +1,95 @@
+---
+title: "Syncing Content"
+description: "Keep your chatbot's knowledge base current with manual sync, bulk sync, and per-source auto-sync."
+---
+
+# Syncing Content
+
+When your website or documents change, your chatbot's knowledge base needs to be updated. InsiteChat offers **manual sync**, **bulk sync**, and **per-source auto-sync**.
+
+## How Syncing Works
+
+When a sync runs, InsiteChat re-crawls or re-processes your sources and compares the new content against what was previously indexed. Only pages or documents that have changed are re-processed. Content that hasn't changed is left as-is, so syncs are fast even for large knowledge bases.
+
+## Manual Sync
+
+Manual sync is available on all plans, including Free.
+
+<Steps>
+  <Step title="Go to Sources">
+    Select your chatbot and click the **Sources** tab.
+  </Step>
+  <Step title="Find your source">
+    Use the **search bar** to find a source by title or URL, or use the **status filter** buttons to narrow the list.
+  </Step>
+  <Step title="Sync">
+    Click the refresh icon on the source card. The status changes to **pending** and then **crawling** as the sync runs.
+  </Step>
+</Steps>
+
+## Bulk Sync
+
+Re-sync multiple sources at once:
+
+1. Use the **checkboxes** to select the sources you want to sync
+2. Click **Re-sync** in the bulk action bar
+3. All selected sources are queued for processing
+
+This is useful after a major website update when you want to refresh all URL sources simultaneously.
+
+## Per-Source Auto-Sync
+
+When adding a URL source, you can set an auto-sync frequency for that specific source:
+
+| Frequency | Minimum Plan | How it works |
+|-----------|-------------|--------------|
+| **Never** | All plans | Manual sync only |
+| **Monthly** | Starter | Re-crawls every 30 days |
+| **Weekly** | Growth | Re-crawls every 7 days |
+| **Daily** | Scale | Re-crawls every day |
+
+<Note>
+You cannot select a frequency higher than your plan allows. A Growth plan user can choose monthly or weekly, but not daily. If you downgrade your plan, sources set to a higher frequency will fall back to the plan's maximum.
+</Note>
+
+### How Auto-Sync Runs
+
+- Auto-sync runs hourly via a background dispatcher
+- Sources are staggered across the day to distribute load
+- Only changed content is re-processed (incremental sync)
+- The URL cache is bypassed during auto-sync to detect changes
+- Trial users are excluded from auto-sync
+
+## Plan-Based Defaults
+
+If you don't set a per-source frequency, the plan default applies:
+
+| Plan | Default auto-sync |
+|------|------------------|
+| Free | None |
+| Starter | Monthly (30 days) |
+| Growth | Weekly (7 days) |
+| Scale | Every 3 days |
+
+## Choosing the Right Strategy
+
+**Free plan:** Use manual sync after publishing major content updates.
+
+**Starter plan:** Monthly auto-sync covers most use cases. Trigger manual syncs for time-sensitive changes.
+
+**Growth plan:** Set frequently-changing sources (blog, docs) to weekly auto-sync. Set stable sources (about page, pricing) to monthly or never.
+
+**Scale plan:** Daily auto-sync keeps your chatbot tightly aligned with your content. Use bulk sync for immediate updates across all sources.
+
+## What Gets Re-Processed
+
+Only changed content is re-processed on each sync:
+
+- **Website sources** — Pages where the text content hash has changed
+- **New pages** — Discovered pages that weren't in the previous crawl
+- **Removed pages** — Pages no longer accessible are archived from the knowledge base
+- **Unchanged pages** — Skipped entirely for efficiency
+
+## Failure Notifications
+
+If a source fails to sync after all retries, you'll receive an **email notification** with the error details and a link to the Sources page. You can then review the error, fix the issue (e.g., update the URL or check access), and trigger a manual re-sync.
