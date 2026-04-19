@@ -1,0 +1,311 @@
+---
+title: "All Features"
+description: "Complete list of every feature in InsiteChat.ai — training, AI intelligence, widget customization, leads, analytics, integrations, team, billing, and developer tools."
+---
+
+# All Features
+
+Every capability InsiteChat.ai ships with today, organized by area. Use this as a single source of truth — every item below maps to a real feature in the product.
+
+## Training & Knowledge Base
+
+<CardGroup cols={2}>
+  <Card title="Advanced Website Crawler" icon="globe" href="/training/website-crawler">
+    Crawl any URL with CSS selectors (include / exclude), URL path filters, custom HTTP headers, recursion depth (0–5), and `sitemap.xml` support.
+  </Card>
+  <Card title="Auto-Sync Scheduling" icon="rotate" href="/training/syncing-content">
+    Per-source daily / weekly / monthly auto-refresh, with frequency caps enforced by plan.
+  </Card>
+  <Card title="Document Upload" icon="file-arrow-up" href="/training/document-upload">
+    Drag-and-drop PDF, DOCX, PPTX, TXT, MD, and CSV files.
+  </Card>
+  <Card title="Plain Text Source" icon="paragraph">
+    Paste FAQs, policies, or any free-form text with custom titles.
+  </Card>
+  <Card title="YouTube Transcripts" icon="youtube">
+    Train on video content — paste a YouTube URL and the transcript is imported automatically.
+  </Card>
+  <Card title="Cloud Storage Connectors" icon="cloud">
+    Google Drive, Notion, Dropbox, OneDrive, and SharePoint pickers with OAuth.
+  </Card>
+  <Card title="Custom Q&A — Override AI Answers" icon="circle-question" href="/training/custom-qa">
+    Pre-written question/answer pairs that **always override** auto-extracted content. Top 2 matches injected first into the AI's context — guaranteed.
+  </Card>
+  <Card title="Automatic Paraphrase Matching" icon="wand-magic-sparkles" href="/training/custom-qa">
+    Each Q&A question is embedded as a 768-dim vector — one pair matches every way a visitor could ask it ("refund policy?", "money back?", "how do refunds work?").
+  </Card>
+  <Card title="Bulk Source Management" icon="list-check" href="/managing/source-management">
+    Search, status filtering, multi-select, bulk re-sync, bulk delete, hover error details, and retry on failure.
+  </Card>
+</CardGroup>
+
+## Conversation Intelligence
+
+<CardGroup cols={2}>
+  <Card title="Three Chat Modes">
+    AI (knowledge-base answers), Agent (tool use), and Hybrid (auto-route between the two).
+  </Card>
+  <Card title="Hybrid Search">
+    Semantic (vector) + keyword search combined via Reciprocal Rank Fusion for accurate retrieval.
+  </Card>
+  <Card title="Source Citations">
+    Every answer can show the underlying sources it pulled from.
+  </Card>
+  <Card title="Smart Follow-Ups">
+    Auto-generate 1–5 contextual follow-up questions after each response (configurable count).
+  </Card>
+  <Card title="Custom Instructions">
+    System-prompt-level rules, tone guidelines, safety constraints, and temperature control (0.0–2.0).
+  </Card>
+  <Card title="Multiple Instruction Sets">
+    Save and switch between named instruction profiles without retraining.
+  </Card>
+  <Card title="13 Built-in Personas">
+    Default, Professional, Informative, Engaging, Inspirational, Playful, Sales Expert, Consultant, Problem Solver, Urgent, Empathetic, Neutral, Default Classic.
+  </Card>
+  <Card title="Custom Personas">
+    Create unlimited personas with title, description, and prompt. Switch the active persona in one click.
+  </Card>
+  <Card title="Multi-Language Support">
+    Auto-detect and respond in 95+ languages. Explicit picker for English, Hindi, and Hinglish with auto-translated fallbacks.
+  </Card>
+  <Card title="Custom Fallback Message">
+    Configure exactly what the bot says when it can't find an answer.
+  </Card>
+</CardGroup>
+
+## Widget Customization & Branding
+
+<CardGroup cols={2}>
+  <Card title="Brand Color & Text Color" href="/deployment/customization">
+    Pick from a preset palette or use any custom hex.
+  </Card>
+  <Card title="Custom Display Name & Logo">
+    Name, avatar upload, and greeting message — all per chatbot.
+  </Card>
+  <Card title="Font Size & Icon Sizing">
+    Adjustable message font size and chat-bubble icon size.
+  </Card>
+  <Card title="Position & Spacing">
+    Left or right anchor, configurable bottom and side padding from the viewport.
+  </Card>
+  <Card title="Auto-Open (Desktop & Mobile)">
+    Trigger the widget to open after a configurable delay — separate settings for desktop and mobile.
+  </Card>
+  <Card title="RTL Mode">
+    Right-to-left layout for Arabic, Hebrew, Persian, and other RTL languages.
+  </Card>
+  <Card title="Quick Prompts (Questions & Links)" href="/deployment/customization">
+    Up to 5 starter chips shown before the first message — choose **Question** to send a message or **Link** to open any URL in a new tab.
+  </Card>
+  <Card title="Persistent Follow-up Buttons" href="/deployment/customization#follow-up-buttons-persistent-ctas">
+    Up to 3 operator-controlled buttons that show after **every** bot reply — Question (sends a custom message), Link (opens a URL), or Escalate (hands off to a human with a custom confirmation).
+  </Card>
+  <Card title="AI Initial Suggestions">
+    When the widget opens, the AI auto-generates 3 short, on-domain questions a visitor would likely ask first — based on your knowledge base.
+  </Card>
+  <Card title="On-Domain Smart Follow-ups">
+    After every reply, the bot suggests 1–5 follow-up questions drawn from your QA pairs and starter prompts — guaranteed to be answerable, never invented.
+  </Card>
+  <Card title="Conversation History">
+    Toggle persistence across sessions and configure how many past messages stay in context.
+  </Card>
+  <Card title="Session Timeout">
+    Clear chat after N seconds of inactivity.
+  </Card>
+  <Card title="Localization (14 strings)">
+    Translate every UI string in the widget — placeholder, errors, buttons, and more.
+  </Card>
+  <Card title="White-Label Watermark">
+    Custom watermark text and link, or remove entirely (Growth+ plans).
+  </Card>
+  <Card title="Hide Feedback Buttons">
+    Toggle thumbs up / down off if you don't want to collect feedback.
+  </Card>
+</CardGroup>
+
+## Human Support & Escalation
+
+<CardGroup cols={2}>
+  <Card title="Inline Escalation CTAs" icon="life-ring" href="/deployment/human-support">
+    After every bot reply, show a *positive feedback* button and a *connect to an agent* button — both labels and the post-escalation confirmation are fully customizable.
+  </Card>
+  <Card title="Multi-Recipient Email Alerts" icon="envelope" href="/deployment/human-support">
+    Send escalation emails to up to 10 addresses on top of the chatbot owner. Aliases, team buckets, on-call rotations all work.
+  </Card>
+  <Card title="Human Support Dashboard" icon="headset" href="/deployment/human-support">
+    Dedicated triage view — filter by Open / Resolved, read full transcripts, mark resolved with one click, deep-link from email.
+  </Card>
+  <Card title="Escalation Analytics" icon="chart-simple" href="/deployment/human-support">
+    Total escalations, escalation rate, resolution rate, unresolved count, and average hours to resolve over the last 30 days.
+  </Card>
+  <Card title="Replace Suggestions Mode" icon="toggle-on" href="/deployment/human-support">
+    Optionally hide smart follow-ups when the escalation CTA is shown — keeps the post-reply surface focused on a single decision.
+  </Card>
+  <Card title="Conversation-Escalated Webhook" icon="bolt" href="/deployment/human-support">
+    Subscribe to `conversation.escalated` to fan-out into Slack, ticketing, or your CRM with the full conversation context.
+  </Card>
+</CardGroup>
+
+## Lead Management
+
+<CardGroup cols={2}>
+  <Card title="Custom Lead Forms" href="/deployment/lead-capture">
+    Built-in name / email / phone plus unlimited custom text and select fields.
+  </Card>
+  <Card title="Configurable Trigger Timing">
+    Show the form at conversation start, after N messages, or before escalation.
+  </Card>
+  <Card title="Lead Status Tracking">
+    Open, New, Contacted, Qualified, Converted, Archived.
+  </Card>
+  <Card title="Star Important Leads">
+    One-click star with a dedicated filter view.
+  </Card>
+  <Card title="Color-Coded Tags">
+    8 colors, unlimited tag names, assign to one or many leads.
+  </Card>
+  <Card title="Bulk Actions">
+    Star, archive / unarchive, or delete multiple leads in a single operation.
+  </Card>
+  <Card title="Search & Filter">
+    Search by name, email, custom field; filter by status or tag.
+  </Card>
+  <Card title="CSV Export">
+    Download all leads (with active filters applied) as CSV.
+  </Card>
+  <Card title="Conversation Transcripts">
+    View the full chat history attached to each lead.
+  </Card>
+</CardGroup>
+
+## Analytics & Insights
+
+<CardGroup cols={2}>
+  <Card title="Overview Dashboard" href="/managing/analytics">
+    Training status, content metrics, and conversation stats on the chatbot home tab.
+  </Card>
+  <Card title="Content Metrics">
+    Indexed links, files, Q&A pairs, and total pages.
+  </Card>
+  <Card title="Conversation Metrics">
+    Total conversations, total messages, and message-per-conversation averages.
+  </Card>
+  <Card title="Feedback Percentage">
+    Positive / negative thumbs ratios with visual indicators.
+  </Card>
+  <Card title="Training Status Badges">
+    Ready, Training, Issues, No Knowledge — at-a-glance health for each chatbot.
+  </Card>
+  <Card title="Conversation History" href="/managing/conversations">
+    Browse, search, and review every past conversation.
+  </Card>
+</CardGroup>
+
+## Team & Collaboration
+
+<CardGroup cols={2}>
+  <Card title="Team Invites" href="/managing/team-members">
+    Invite teammates by email; manage pending invitations.
+  </Card>
+  <Card title="Role-Based Access">
+    Admin, Editor, and Viewer permission levels.
+  </Card>
+  <Card title="Member Management">
+    View, change roles, revoke access, or remove members.
+  </Card>
+</CardGroup>
+
+## Integrations
+
+<CardGroup cols={2}>
+  <Card title="Data Sources" icon="database">
+    [Google Drive](/integrations/google-drive), [Notion](/integrations/notion), [Dropbox](/integrations/dropbox).
+  </Card>
+  <Card title="Platforms" icon="puzzle-piece">
+    [WordPress](/integrations/wordpress), [Shopify](/integrations/shopify), [Telegram](/integrations/telegram), [Slack](/integrations/slack), [Zapier](/integrations/zapier), [HubSpot](/integrations/hubspot).
+  </Card>
+  <Card title="Live Chat Hand-off" icon="headset">
+    [Crisp](/integrations/crisp), [Freshchat](/integrations/freshchat), [Zendesk](/integrations/zendesk-chat) — escalate to a human with full context.
+  </Card>
+  <Card title="WordPress Plugin" icon="wordpress">
+    Pre-built plugin — install and connect with your chatbot ID, no code edits.
+  </Card>
+</CardGroup>
+
+## Deployment
+
+<CardGroup cols={2}>
+  <Card title="One-Line Embed Snippet" href="/deployment/embed-widget">
+    Single `<script>` tag works on any site — WordPress, Shopify, Wix, Webflow, custom HTML.
+  </Card>
+  <Card title="Hosted Chat Page">
+    Public direct-link URL for standalone chatbot access (no embedding required).
+  </Card>
+  <Card title="Chatbot ID & Key">
+    One-click copy of the IDs you need for installation or API use.
+  </Card>
+</CardGroup>
+
+## Developer Tools
+
+<CardGroup cols={2}>
+  <Card title="Webhook Events">
+    `lead.captured`, `message.received`, `conversation.started`, `conversation.escalated`.
+  </Card>
+  <Card title="Webhook Management">
+    Create, edit, delete, and select event subscriptions per webhook.
+  </Card>
+  <Card title="HMAC Signing">
+    Per-webhook secret for signature verification on incoming payloads.
+  </Card>
+  <Card title="Delivery Logs">
+    Inspect every delivery attempt — status, response code, response body.
+  </Card>
+  <Card title="Auto-Retry">
+    Failed deliveries retry up to 3 times automatically.
+  </Card>
+</CardGroup>
+
+## Account, Billing & Plans
+
+<CardGroup cols={2}>
+  <Card title="Google OAuth Sign-in">
+    One-click signup and login with a Google account.
+  </Card>
+  <Card title="7-Day Free Trial">
+    Full access, no credit card required.
+  </Card>
+  <Card title="Tiered Plans" href="/plans-and-pricing">
+    Starter, Growth, Scale, Enterprise — with per-tier chatbot, message, and page limits.
+  </Card>
+  <Card title="Monthly or Annual Billing">
+    Annual plans get a 40% discount.
+  </Card>
+  <Card title="Usage Tracking">
+    Real-time message and page-quota usage against the active plan.
+  </Card>
+  <Card title="Plan Switching">
+    Upgrade or downgrade at any time from the dashboard.
+  </Card>
+  <Card title="Invoice History">
+    Download every past invoice and receipt.
+  </Card>
+</CardGroup>
+
+## Onboarding
+
+<CardGroup cols={2}>
+  <Card title="6 Chatbot Templates">
+    Start from a pre-built template (support, sales, docs, ecommerce, education, healthcare).
+  </Card>
+  <Card title="Inline URL Crawl">
+    Paste a URL during signup and the first crawl kicks off automatically.
+  </Card>
+  <Card title="Guided Checklist">
+    Step-by-step onboarding to get from signup to live widget in under 5 minutes.
+  </Card>
+  <Card title="Email Notifications">
+    Source-failure alerts, monthly usage reports, and plan-limit warnings — rate-limited.
+  </Card>
+</CardGroup>

@@ -17,8 +17,8 @@
   },
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "https://insitechat.ai/contact"
+      "name": "Documentation",
+      "url": "https://docs.insitechat.ai"
     }
   ],
   "topbarCtaButton": {
@@ -45,6 +45,12 @@
       ]
     },
     {
+      "group": "Features",
+      "pages": [
+        "features"
+      ]
+    },
+    {
       "group": "Training Your Chatbot",
       "pages": [
         "training/website-crawler",
@@ -59,7 +65,8 @@
       "pages": [
         "deployment/customization",
         "deployment/embed-widget",
-        "deployment/lead-capture"
+        "deployment/lead-capture",
+        "deployment/human-support"
       ]
     },
     {
@@ -105,23 +112,6 @@
         "use-cases/education",
         "use-cases/healthcare"
       ]
-    },
-    {
-      "group": "API Reference",
-      "pages": [
-        "api-reference/overview",
-        "api-reference/authentication",
-        "api-reference/chatbots",
-        "api-reference/chat",
-        "api-reference/sources",
-        "api-reference/webhooks"
-      ]
-    },
-    {
-      "group": "Changelog",
-      "pages": [
-        "changelog/overview"
-      ]
     }
   ],
   "footerSocials": {
@@ -130,8 +120,5 @@
   },
   "feedback": {
     "thumbsRating": true
-  },
-  "api": {
-    "baseUrl": "https://backend.insitechat.ai/api"
   }
 }

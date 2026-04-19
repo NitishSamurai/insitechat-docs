@@ -83,33 +83,119 @@ Customize all 14 UI text strings for any language:
 | Error message | "Sorry, something went wrong." | Generic error |
 | Branding prefix | "Powered by" | Watermark |
 
-## Quick Prompts (Starter Questions)
+## Quick Prompts (Starter Questions & Links)
 
-Add up to **5 starter questions** that appear as clickable buttons before the visitor sends their first message. These help guide visitors toward common topics and reduce the "blank page" problem.
+Add up to **5 starter items** that appear as clickable buttons before the visitor sends their first message. Each item is one of two types:
+
+- **Question** — clicking sends the text as a message to your chatbot.
+- **Link** — clicking opens a URL in a new tab (great for pricing pages, demo bookings, or your contact form).
+
+These reduce the "blank page" problem and guide visitors toward what matters most.
 
 <Steps>
   <Step title="Go to the Embed tab">
-    Select your chatbot and click the **Embed** tab.
+    Select your chatbot and open the **Embed** tab, then switch to the **Content** sub-tab.
   </Step>
-  <Step title="Find the Starter Questions section">
-    Scroll down to **Starter Questions** below the customization options.
+  <Step title="Find Starter Questions & Links">
+    Scroll to **Starter Questions & Links**.
   </Step>
-  <Step title="Add your prompts">
-    Type a question and click **Add**. You can add up to 5 starter questions.
+  <Step title="Pick a type">
+    Choose **Question** or **Link** at the top of the editor.
   </Step>
-  <Step title="Remove if needed">
-    Click the **×** button next to any question to remove it.
+  <Step title="Add the item">
+    For a question, type the question and click **Add question**. For a link, type the button label, paste the destination URL, and click **Add link**.
+  </Step>
+  <Step title="Reorder or remove">
+    Click the **×** button next to any item to remove it. You can mix questions and links freely up to 5 total.
   </Step>
   <Step title="Save">
-    Click **Save Customization**. Quick prompts appear immediately in your chat widget.
+    Click **Save Customization**. Starter items appear immediately in your chat widget.
   </Step>
 </Steps>
 
-Quick prompts appear **only before the first message**. Once the visitor starts a conversation, AI-generated follow-up suggestions take over (if Smart Follow-ups are enabled).
+Starter items appear **only before the first message**. Once the visitor sends their first message, AI-generated follow-up suggestions take over (if Smart Follow-ups are enabled).
+
+### Recommended Action Items
+
+<AccordionGroup>
+  <Accordion title="Use 3 to 5 starter items — not more, not fewer" icon="list-ol">
+    Fewer than 3 feels under-built; more than 5 overwhelms the visitor and pushes the input field below the fold on small screens. **3 questions + 1 link** is a great starting mix for most sites.
+  </Accordion>
+  <Accordion title="Write the question the way a visitor would type it" icon="keyboard">
+    **Good**: "How much does it cost?" or "Do you offer refunds?". **Bad**: "Pricing" or "Refund policy" (those are page titles, not questions). The closer the wording matches what a visitor would actually ask, the more natural the chip-to-conversation flow feels.
+  </Accordion>
+  <Accordion title="Mix questions with links for the actions you can't answer in chat" icon="arrow-up-right-from-square">
+    Some intents are better served by a destination than by chat — pricing pages, demo bookings, status pages, login. Use **Link** type for those so the visitor doesn't have to wait for the AI to repeat what's already on a page.
+  </Accordion>
+  <Accordion title="Continuously improve based on what visitors actually ask" icon="chart-line">
+    Open the **Conversations** tab weekly. If the same question keeps coming up but isn't a starter item, promote it. If a starter item never gets clicked, replace it. Starter items should reflect the *current* top intents, not what you guessed at launch.
+  </Accordion>
+  <Accordion title="Test on mobile and desktop after every change" icon="mobile-screen">
+    Long button labels wrap awkwardly on narrow screens. Keep labels under ~40 characters. After saving, open the live widget on your phone to confirm everything fits — what reads cleanly on a 1440px monitor often breaks on a 375px screen.
+  </Accordion>
+  <Accordion title="Keep links opening in a new tab" icon="window-restore">
+    Link starter items always open in a new tab so the visitor doesn't lose their chat session. If you need the visitor to *stay* in chat, use a **Question** instead — the AI can answer with a markdown link inline.
+  </Accordion>
+</AccordionGroup>
 
 <Tip>
-Use quick prompts to surface your most common questions — pricing, getting started, features, or support topics. This reduces time-to-first-message and improves engagement.
+Pair starter items with **Smart Follow-ups** (below). Starter items handle the first click; smart follow-ups carry the conversation from there.
 </Tip>
+
+## Follow-up Buttons (persistent CTAs)
+
+Add up to **3 buttons** that appear after **every** bot reply, not just the first message. Use these for the call-to-action you want available throughout the entire conversation. Each button is one of three types:
+
+- **Question** — clicking sends a pre-written message to your chatbot (the message can differ from the visible label, e.g. label "See pricing" → message "What are your pricing plans?").
+- **Link** — clicking opens a URL in a new tab.
+- **Escalate** — clicking notifies your team and shows a custom confirmation to the visitor.
+
+Unlike starter questions (which only appear before the first message) and smart follow-ups (which the AI invents per-reply), follow-up buttons are **operator-controlled and persistent** — visitors always see them, on every turn.
+
+<Steps>
+  <Step title="Go to the Embed → Content tab">
+    Open your chatbot's **Embed** tab and switch to the **Content** sub-tab.
+  </Step>
+  <Step title="Find Follow-up Buttons">
+    Scroll past **Starter Questions & Links** to the **Follow-up Buttons** section.
+  </Step>
+  <Step title="Pick a type">
+    Choose **Question**, **Link**, or **Escalate** at the top of the editor.
+  </Step>
+  <Step title="Configure the button">
+    - **Question**: enter the button label and an optional message that gets sent (defaults to the label if blank).
+    - **Link**: enter the button label and the destination URL.
+    - **Escalate**: enter the button label and an optional confirmation message shown after escalating.
+  </Step>
+  <Step title="Add and save">
+    Click **Add**, then **Save Changes**. Repeat up to 3 buttons total. Each button shows after every bot reply in the live widget.
+  </Step>
+</Steps>
+
+### When to use which
+
+<AccordionGroup>
+  <Accordion title="Use Question buttons to deepen the current conversation" icon="message">
+    Set the visible label short ("See pricing") and the sent message specific ("What are your pricing plans for the Growth plan?"). Visitors get a tidy CTA; the AI gets a precise question. This is the cleanest way to push a conversation toward your highest-converting topics without forcing the visitor to phrase the question themselves.
+  </Accordion>
+  <Accordion title="Use Link buttons for destinations chat can't replace" icon="arrow-up-right-from-square">
+    Pricing page, demo booking, status page, login. The AI can summarize, but a real page is faster than a paragraph. Links open in a new tab so the chat session stays alive.
+  </Accordion>
+  <Accordion title="Use Escalate buttons when AI can't close the deal" icon="user-headset">
+    Set the confirmation message to match your real handoff time ("A specialist will reach out within 1 business day" beats the generic default). Pair this with **Lead Capture** so you actually get an email to follow up.
+  </Accordion>
+  <Accordion title="Cap it at 2-3 buttons and lead with the highest-intent action" icon="list-ol">
+    The first button gets the most clicks. Put your **most-converting** action first (usually book-a-demo or escalate, not "see docs"). Three buttons stay readable on mobile; four pushes the input field down too far.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+Follow-up buttons are guaranteed to appear and behave the way you set them — they're operator-controlled. **Smart Follow-ups** are AI-generated and contextual to the last reply. Use both: persistent buttons for your top CTAs, smart follow-ups to keep the conversation moving on whatever the visitor just asked.
+</Tip>
+
+<Note>
+For a turn-key escalation experience — inline "Connect to an agent" CTA after every reply, multi-recipient email alerts, a dedicated triage dashboard, and analytics — see [Human Support & Escalation](/deployment/human-support).
+</Note>
 
 ## Smart Follow-ups
 

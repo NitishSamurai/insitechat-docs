@@ -1,0 +1,137 @@
+---
+title: "Human Support & Escalation"
+description: "Hand off conversations to your team with multi-recipient email alerts, a dedicated triage dashboard, escalation analytics, and configurable in-widget CTAs."
+---
+
+# Human Support & Escalation
+
+When the AI can't help — or a visitor explicitly asks for a human — InsiteChat hands the conversation to your team. Every escalation is tracked, surfaced in a dedicated dashboard, and resolvable with one click.
+
+## How Escalation Works
+
+When a visitor escalates:
+
+1. The conversation is marked **Escalated** with a timestamp
+2. Email alerts go to every configured recipient
+3. The conversation appears in the **Human Support** tab as **Open**
+4. A `conversation.escalated` webhook fires (if configured)
+5. The visitor sees a confirmation message in the widget
+
+## Escalation Triggers
+
+There are three ways a conversation gets escalated:
+
+| Trigger | Where it lives |
+|---------|----------------|
+| **Inline "Connect to an agent" CTA** | After every bot reply (when enabled) |
+| **Persistent follow-up button** with type *Escalate* | Configured in the Embed tab → Follow-up Buttons |
+| **Compact "Talk to a human" link** | Below the input box (legacy fallback, hidden when the inline CTA is on) |
+
+## Configuration
+
+Open your chatbot → **Embed** tab → **Human Support** sub-tab.
+
+<Steps>
+  <Step title="Enable inline escalation CTA">
+    Toggle **Show escalation CTA** on. After every bot reply the widget renders two buttons:
+    - A *positive feedback* button (e.g. "That answered my question 👍")
+    - A *request help* button (e.g. "Connect to an agent 👤")
+
+    Tapping the positive button records a thumbs-up and dismisses the CTA pair for that message. Tapping request-help escalates the conversation.
+  </Step>
+  <Step title="Optionally replace smart follow-ups">
+    Toggle **Replace smart follow-ups with escalation** on if you want the CTA pair to take the place of auto-generated follow-up suggestions. Off by default — both can coexist.
+  </Step>
+  <Step title="Customize labels">
+    - **Positive feedback label** — defaults to "That answered my question 👍"
+    - **Request help label** — defaults to your localized "Talk to a human" string
+    - **Confirmation message** — shown to the visitor after they escalate (defaults to the localized "Sent! The team will follow up soon.")
+  </Step>
+  <Step title="Add email recipients">
+    Enter up to **10 email addresses** that receive escalation alerts. The chatbot owner is always notified — recipients here are *added* on top. Press Enter or click **Add** to add an address; click the × on any chip to remove.
+  </Step>
+  <Step title="Save">
+    Click **Save Customization**. Settings take effect on the live widget within a few seconds.
+  </Step>
+</Steps>
+
+<Note>
+The user-level **notify_escalation** setting in account preferences is a master kill-switch. If you turn it off, you stop receiving escalation emails on every chatbot — even if you're listed as a recipient.
+</Note>
+
+## Human Support Dashboard
+
+Every chatbot has a **Human Support** tab that shows escalated conversations and triage metrics.
+
+### Stat Strip
+
+Four KPIs computed over the last 30 days:
+
+| Metric | Definition |
+|--------|-----------|
+| **Total escalations** | Conversations that hit "escalate" in the window |
+| **Unresolved** | Escalated and not yet marked resolved (highlighted amber when > 0) |
+| **Resolution rate** | `resolved / total escalations` |
+| **Escalation rate** | `escalations / total conversations` (with avg hours-to-resolve when available) |
+
+### Triage View
+
+A master-detail layout: a list on the left, the full transcript on the right.
+
+- **Filter pills** — Unresolved / Resolved / All
+- **Conversation list** — last message preview, escalation timestamp, message count, status badge
+- **Transcript pane** — full message history with timestamps, formatted markdown for assistant replies
+- **Mark resolved** / **Reopen** — one-click status toggle, instantly updates the stat strip
+- **Export** — download the transcript as CSV for record-keeping or CRM ingestion
+
+<Tip>
+Email alerts include a deep link straight to the relevant conversation: `/dashboard/chatbots/<id>/human-support?conv=<conversation-id>`. Click it from your inbox to land directly on the transcript.
+</Tip>
+
+## Email Alerts
+
+Each recipient receives a plain-text email with:
+
+- Chatbot name
+- Visitor's most recent question
+- Escalation timestamp
+- A link to the conversation in the Human Support dashboard
+
+Recipients are deduplicated case-insensitively and capped at 10 (plus the owner). Invalid addresses (no `@`) are rejected at save time.
+
+## Webhook Payload
+
+If you have a webhook subscribed to `conversation.escalated`, you'll receive:
+
+```json
+{
+  "event": "conversation.escalated",
+  "data": {
+    "conversation_id": "uuid",
+    "session_id": "embed-...",
+    "chatbot_id": "uuid",
+    "escalated_at": "2026-04-19T10:23:45Z",
+    "last_message": "Can I speak to someone?",
+    "message_count": 7
+  }
+}
+```
+
+See [Webhooks](/managing/conversations) for delivery, signing, and retry details.
+
+## Tips
+
+<CardGroup cols={2}>
+  <Card title="Set realistic expectations" icon="clock">
+    Edit the confirmation message to set a response-time expectation: "We'll reply within 1 business day."
+  </Card>
+  <Card title="Pair with a lead form" icon="user-plus">
+    Set lead-form timing to **before_escalation** so you always capture a contact method before handoff.
+  </Card>
+  <Card title="Route by team" icon="users">
+    Add team-specific aliases (sales@, support@) to the recipient list — your mail rules can fan-out further from there.
+  </Card>
+  <Card title="Watch the resolution rate" icon="chart-line">
+    A falling resolution rate suggests escalations are getting dropped — review unresolved items weekly.
+  </Card>
+</CardGroup>
