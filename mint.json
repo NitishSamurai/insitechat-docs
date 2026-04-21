@@ -90,6 +90,7 @@
       "pages": [
         "integrations/wordpress",
         "integrations/shopify",
+        "integrations/whatsapp",
         "integrations/telegram",
         "integrations/slack",
         "integrations/zapier",

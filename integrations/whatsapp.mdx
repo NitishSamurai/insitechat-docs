@@ -1,0 +1,136 @@
+---
+title: "WhatsApp"
+description: "Deploy your AI chatbot on WhatsApp using your own Meta Business credentials. No per-message markup, no reseller middleman."
+---
+
+## Overview
+
+Deploy your InsiteChat chatbot on WhatsApp so customers can message your WhatsApp Business number and get instant AI answers from the same knowledge base that powers your website chatbot.
+
+**Bring your own keys.** Unlike most platforms, InsiteChat doesn't resell Meta's WhatsApp Cloud API or mark up per-message fees. You connect your own Meta App and pay Meta directly for conversation fees. InsiteChat only charges for the AI replies against your plan's monthly message quota — the same way web chat is counted.
+
+<Note>
+WhatsApp is available on the **Growth** and **Scale** plans. Free and Starter plans show an upgrade prompt.
+</Note>
+
+## Setup
+
+Setup takes under 10 minutes. You'll need a Meta Business account with an approved WhatsApp Business number.
+
+<Steps>
+  <Step title="Create a Meta App">
+    Go to [developers.facebook.com](https://developers.facebook.com/) → **My Apps** → **Create App** → choose **Business**. Inside the app, add the **WhatsApp** product. Meta will provision a test number, or you can register your own verified business number.
+
+    From the WhatsApp → **API Setup** page, note down:
+    - **App ID** (top of the app dashboard)
+    - **Phone number ID** (shown next to your WhatsApp number)
+    - **WhatsApp Business Account ID** (WABA ID — also on API Setup)
+  </Step>
+  <Step title="Generate a Permanent Access Token">
+    The temporary token Meta shows you expires in 24 hours — you need a permanent one.
+
+    Go to **Business Settings** → **System Users** → create a system user (or use an existing one) → **Generate new token** → select your app → grant `whatsapp_business_messaging` and `whatsapp_business_management` permissions → set expiry to **Never**. Copy the token (it starts with `EAA…`).
+  </Step>
+  <Step title="Connect in InsiteChat">
+    Open your chatbot → **Webhooks** tab → find the **WhatsApp** card. Paste all four values (App ID, Phone number ID, WABA ID, Access Token) and click **Connect WhatsApp**. InsiteChat validates the credentials against Meta's API before saving.
+  </Step>
+  <Step title="Configure the Webhook in Meta">
+    After connecting, InsiteChat displays a **Callback URL** and a **Verify Token**. Copy both.
+
+    In Meta → your app → **WhatsApp** → **Configuration** → **Webhooks** → click **Edit**. Paste the Callback URL, paste the Verify Token, then click **Verify and Save**.
+
+    Meta confirms the webhook with a challenge — InsiteChat responds automatically, so the save should succeed in one click.
+  </Step>
+  <Step title="Subscribe to Messages">
+    Still on the Webhooks configuration page in Meta, under **Webhook fields**, click **Manage** and subscribe to the **messages** field. This tells Meta to forward inbound messages to InsiteChat.
+
+    That's it — send a message to your WhatsApp number from a different phone and your AI will reply within seconds.
+  </Step>
+</Steps>
+
+## How It Works
+
+When someone sends a WhatsApp message to your number:
+
+1. Meta forwards the message to InsiteChat's webhook
+2. InsiteChat queues the message for processing and acknowledges Meta within milliseconds (so Meta doesn't retry)
+3. A worker runs the full RAG pipeline — hybrid retrieval over your knowledge base, context building, LLM generation
+4. The AI's reply is sent back via Meta's Graph API to the user's WhatsApp
+
+Messages are deduplicated on Meta's `message_id` with a 5-minute window, so retries from Meta never produce a duplicate reply or double-count against your quota.
+
+Each reply your AI sends counts as one message against your plan's monthly quota — identical to web chat billing.
+
+## Features
+
+- **Same knowledge base** — uses the exact same training data as your website chatbot
+- **Conversation history** — maintains context per WhatsApp sender (10-turn window)
+- **Read receipts** — messages are marked as read so users see the blue ticks
+- **Plan quota enforcement** — respects your monthly message limit; over-quota senders get a graceful upgrade message
+- **Webhooks & integrations** — fires the same `conversation_started`, `message_received`, and `lead_captured` events as web chat, so your Zapier / Slack / HubSpot flows work identically
+- **Human handoff** (Scale & Enterprise) — see below
+
+## Human Handoff (Scale & Enterprise)
+
+On the Scale plan and above, WhatsApp conversations can escalate to a human automatically when the user asks for one.
+
+**Trigger keywords** — if a visitor sends any of the following, the handoff flow kicks in:
+
+- "talk to a human"
+- "speak to someone"
+- "human please"
+- "speak to an agent"
+- "real person"
+- "live agent"
+
+**What happens:**
+
+1. The AI sends a confirmation back on WhatsApp ("Connecting you to a human agent…")
+2. An email with the full conversation transcript is sent to the chatbot owner
+3. AI replies are **muted for 24 hours** on that specific WhatsApp thread, so a human can take over out-of-band without the AI talking on top
+
+If you don't reply within 24 hours, the AI automatically resumes on the next inbound message.
+
+<Note>
+The 24-hour mute is per WhatsApp sender — other conversations on the same number keep working normally.
+</Note>
+
+## Pricing
+
+- **InsiteChat side** — no per-message markup. Messages count against your plan's monthly quota, same rate as web chat.
+- **Meta side** — you pay Meta directly. Meta gives every business 1,000 free service conversations per month; beyond that, conversation-based pricing varies by country. See [Meta's WhatsApp pricing](https://developers.facebook.com/docs/whatsapp/pricing/) for current rates.
+
+You will never see a WhatsApp-specific surcharge on your InsiteChat invoice.
+
+## Disconnecting
+
+Click **Disconnect** on the WhatsApp card. Your Meta credentials are removed from InsiteChat immediately and the AI stops replying. Your Meta app and number are untouched — you can reconnect or delete the Meta app on your own schedule.
+
+## Limitations
+
+The V1 integration supports the most common case — inbound text messages with AI replies. The following are not yet supported:
+
+- **Media messages** — inbound audio, image, video, and document messages are ignored (text messages on the same thread still work)
+- **Outbound template messages** — you can't send proactive campaigns or re-engagement messages from InsiteChat; the bot only replies to inbound messages
+- **Multiple numbers per chatbot** — one WhatsApp number per chatbot. If you need to connect multiple numbers, contact support
+- **Interactive buttons / list messages** — replies are plain text only
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The webhook save in Meta fails with 'The URL could not be validated'">
+    Meta's verification is sensitive to the exact Verify Token. Copy it again from InsiteChat (the copy button on the card), and make sure you're pasting into the **Verify Token** field, not the Callback URL field.
+  </Accordion>
+  <Accordion title="I connected successfully but messages don't reach the AI">
+    Check the **Webhook fields** in Meta → Configuration. The `messages` field must show as **Subscribed**. If it says **Not subscribed**, click **Manage** and toggle it on.
+  </Accordion>
+  <Accordion title="My access token keeps expiring">
+    You're using a temporary token. Generate a permanent one via **Business Settings** → **System Users** — set the expiry to **Never**.
+  </Accordion>
+  <Accordion title="The AI reply never arrives on WhatsApp">
+    Most commonly this means your access token lacks the `whatsapp_business_messaging` permission. Regenerate the token with the correct scopes and reconnect.
+  </Accordion>
+  <Accordion title="Can I test without a real business number?">
+    Yes — Meta provides a free test number with every WhatsApp-enabled app. It can only message 5 pre-registered recipients (listed in your Meta dashboard) but is perfect for end-to-end testing.
+  </Accordion>
+</AccordionGroup>
