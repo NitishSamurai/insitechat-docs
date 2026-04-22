@@ -127,6 +127,12 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
 ## Human Support & Escalation
 
 <CardGroup cols={2}>
+  <Card title="Reply from the Dashboard" icon="reply" href="/deployment/human-support#reply-from-the-dashboard">
+    Take over an escalated conversation and reply directly to the visitor — works for **web widget, WhatsApp, and Telegram**. The AI auto-mutes for 24h while a human is engaged (rolling, refreshes on every reply).
+  </Card>
+  <Card title="Smart Intent Detection" icon="sparkles" href="/deployment/human-support#smart-intent-detection">
+    Detect "I need a real person" even when the visitor doesn't say the magic words. Keyword pre-filter + Gemini-powered LLM classifier with non-ASCII bypass for any language.
+  </Card>
   <Card title="Inline Escalation CTAs" icon="life-ring" href="/deployment/human-support">
     After every bot reply, show a *positive feedback* button and a *connect to an agent* button — both labels and the post-escalation confirmation are fully customizable.
   </Card>
@@ -134,7 +140,7 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
     Send escalation emails to up to 10 addresses on top of the chatbot owner. Aliases, team buckets, on-call rotations all work.
   </Card>
   <Card title="Human Support Dashboard" icon="headset" href="/deployment/human-support">
-    Dedicated triage view — filter by Open / Resolved, read full transcripts, mark resolved with one click, deep-link from email.
+    Dedicated triage view — filter by Open / Resolved, channel badge per row, read full transcripts, mark resolved with one click, deep-link from email.
   </Card>
   <Card title="Escalation Analytics" icon="chart-simple" href="/deployment/human-support">
     Total escalations, escalation rate, resolution rate, unresolved count, and average hours to resolve over the last 30 days.
@@ -142,8 +148,8 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
   <Card title="Replace Suggestions Mode" icon="toggle-on" href="/deployment/human-support">
     Optionally hide smart follow-ups when the escalation CTA is shown — keeps the post-reply surface focused on a single decision.
   </Card>
-  <Card title="Conversation-Escalated Webhook" icon="bolt" href="/deployment/human-support">
-    Subscribe to `conversation.escalated` to fan-out into Slack, ticketing, or your CRM with the full conversation context.
+  <Card title="Unified Escalation Webhook" icon="bolt" href="/deployment/human-support#unified-webhook-payload">
+    One `conversation.escalated` event for every channel with a `channel` field (`web` / `whatsapp` / `telegram`) and a `trigger` field — route to Slack, ticketing, or PagerDuty by source.
   </Card>
 </CardGroup>
 

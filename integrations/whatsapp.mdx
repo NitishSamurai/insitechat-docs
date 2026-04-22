@@ -72,27 +72,42 @@ Each reply your AI sends counts as one message against your plan's monthly quota
 
 ## Human Handoff (Scale & Enterprise)
 
-On the Scale plan and above, WhatsApp conversations can escalate to a human automatically when the user asks for one.
+On the Scale plan and above, WhatsApp conversations escalate to a human **automatically** — and once they do, you can reply right from the InsiteChat dashboard. No need to leave the app, open WhatsApp Business on your phone, or juggle a separate help-desk tool.
 
-**Trigger keywords** — if a visitor sends any of the following, the handoff flow kicks in:
+### Smart intent detection (multilingual)
 
-- "talk to a human"
-- "speak to someone"
-- "human please"
-- "speak to an agent"
-- "real person"
-- "live agent"
+We don't rely on a fixed keyword list. The handoff detector runs three layers in order:
 
-**What happens:**
+1. **Literal keyword pre-filter** — fast and free. Catches "talk to a human", "speak to someone", "human please", "speak to an agent", "real person", "live agent", "customer service", and similar variants.
+2. **Non-ASCII bypass** — if the message is in Spanish, Hindi, Arabic, French, German, Japanese, or any non-Latin script, we **skip** the keyword filter and go straight to the LLM. So "agente humano por favor" or "मानव से बात करनी है" works out of the box.
+3. **LLM intent classifier** — Gemini 2.5 Flash Lite checks intent on anything the pre-filter didn't catch (frustration, implicit asks, ambiguous phrasing). Cached by SHA-256 hash so duplicate phrases cost nothing.
+
+The result: a visitor saying *"this bot is useless, can I get a real person"* triggers handoff just as reliably as the literal "talk to a human" keyword.
+
+### Reply from the dashboard
+
+Once a WhatsApp conversation is escalated, it lands in your **Human Support** tab with a "WhatsApp" channel badge. Open the conversation, type your reply in the composer, hit **Send** — your message is delivered to the visitor's WhatsApp via Meta's Cloud API.
+
+While you're handling it:
+
+- The **AI auto-mutes for 24 hours** on that conversation. The mute is *rolling* — every reply you send refreshes it.
+- A live countdown chip in the dashboard shows when the AI will resume ("AI paused — auto-resumes in 23h 12m").
+- Marking the conversation **Resolved** or clicking **Hand back to AI** clears the mute immediately.
+
+<Warning>
+**WhatsApp's 24-hour reply window** is enforced by Meta. You can only send free-form replies within 24 hours of the visitor's last inbound message. If you try to reply later, the dashboard returns a clear error and you'll need to wait for the visitor to message you again. (Pre-approved templates outside the window are on the roadmap.)
+</Warning>
+
+### What the visitor sees
 
 1. The AI sends a confirmation back on WhatsApp ("Connecting you to a human agent…")
-2. An email with the full conversation transcript is sent to the chatbot owner
-3. AI replies are **muted for 24 hours** on that specific WhatsApp thread, so a human can take over out-of-band without the AI talking on top
+2. An email with the full conversation transcript is sent to the chatbot owner + every configured recipient
+3. Your reply arrives on WhatsApp from your business number — visitors see your display name (`User.name`) or "Support team" if not set
 
 If you don't reply within 24 hours, the AI automatically resumes on the next inbound message.
 
 <Note>
-The 24-hour mute is per WhatsApp sender — other conversations on the same number keep working normally.
+The mute is keyed per conversation (per WhatsApp sender) — other conversations on the same number keep working normally with the AI.
 </Note>
 
 ## Pricing

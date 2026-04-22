@@ -3,6 +3,44 @@ title: "Changelog"
 description: "Latest updates and improvements to InsiteChat."
 ---
 
+## April 22, 2026
+
+### Reply from the Dashboard (V1)
+Take over an escalated conversation and reply to the visitor **without leaving InsiteChat** — works for the web widget, WhatsApp, *and* Telegram.
+
+- New composer in the **Human Support** dashboard ships replies back over the originating channel
+- Web widget polls every 4s for new agent messages and renders them with a green accent + "A human has joined the chat" system bubble (one-time)
+- WhatsApp + Telegram dispatch reuses the existing `_send_text` / `_send_message` helpers — replies arrive in seconds
+- New `Message.Role.AGENT` role + `sent_by_user_id` FK for full attribution; agent replies do **not** count against your monthly LLM message quota
+- WhatsApp 24-hour reply window is enforced with a structured 422 error so you see the failure inline
+- "Hand back to AI" button + live mute countdown chip in the dashboard
+
+### Smart Handoff Intent Detection
+Visitors don't always say "talk to a human" verbatim — now they don't have to.
+
+- **Multilingual:** non-ASCII messages (Spanish, Hindi, Arabic, etc.) skip the keyword pre-filter and go straight to the LLM
+- **LLM classifier:** Gemini 2.5 Flash Lite picks up frustration, implicit asks, and ambiguous phrasing
+- **SHA-256 cached** so repeated phrases cost nothing
+- **Atomic per-conversation rate-limiting** prevents spam from blowing up classifier costs
+- Powers handoff on both WhatsApp and Telegram (Scale + Enterprise)
+
+### Unified AI Mute (Rolling 24h)
+Replaces the old WhatsApp-only `wa_paused:*` Redis key with a unified `agent_handling:{conv_id}` key that works across web, WhatsApp, and Telegram.
+
+- Mute is **rolling** — every agent reply refreshes the 24h timer
+- Auto-resumes the AI if the agent stops replying for 24h
+- Cleared instantly on **Mark resolved** or **Hand back to AI**
+
+### Unified Escalation Webhook
+The `conversation.escalated` event now fires for **every channel** (was web-only), with two new fields:
+
+- **`channel`** — `web` / `whatsapp` / `telegram`
+- **`trigger`** — `cta` / `keyword` / `smart_intent` / `manual`
+
+Existing webhook handlers continue to work; new ones can route on `channel`.
+
+---
+
 ## April 2026
 
 ### Live Chat Integrations

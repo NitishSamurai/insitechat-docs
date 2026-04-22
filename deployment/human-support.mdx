@@ -1,11 +1,11 @@
 ---
 title: "Human Support & Escalation"
-description: "Hand off conversations to your team with multi-recipient email alerts, a dedicated triage dashboard, escalation analytics, and configurable in-widget CTAs."
+description: "Hand off conversations to your team with smart multilingual intent detection, multi-recipient email alerts, in-app reply composer across web/WhatsApp/Telegram, and a unified escalation webhook."
 ---
 
 # Human Support & Escalation
 
-When the AI can't help — or a visitor explicitly asks for a human — InsiteChat hands the conversation to your team. Every escalation is tracked, surfaced in a dedicated dashboard, and resolvable with one click.
+When the AI can't help — or a visitor explicitly asks for a human — InsiteChat hands the conversation to your team. Every escalation is tracked, your team can **reply directly from the dashboard** (web widget, WhatsApp, *and* Telegram), the AI auto-mutes while a human is engaged, and the same `conversation.escalated` webhook fires for every channel with a `channel` field so you can route on it.
 
 ## How Escalation Works
 
@@ -14,18 +14,63 @@ When a visitor escalates:
 1. The conversation is marked **Escalated** with a timestamp
 2. Email alerts go to every configured recipient
 3. The conversation appears in the **Human Support** tab as **Open**
-4. A `conversation.escalated` webhook fires (if configured)
-5. The visitor sees a confirmation message in the widget
+4. A unified `conversation.escalated` webhook fires (if configured) with the originating `channel` (`web`, `whatsapp`, or `telegram`)
+5. The visitor sees a confirmation message on whichever channel they came in on
+6. Your team can reply from the dashboard composer — replies are delivered back over the same channel
+7. The AI auto-mutes on that conversation while a human is engaged (rolling 24h, refreshed on every agent reply)
 
 ## Escalation Triggers
 
-There are three ways a conversation gets escalated:
+Escalations can be triggered from any inbound channel — and we use a **smart multilingual classifier** to detect intent, not just literal keywords:
 
 | Trigger | Where it lives |
 |---------|----------------|
-| **Inline "Connect to an agent" CTA** | After every bot reply (when enabled) |
+| **Inline "Connect to an agent" CTA** | After every bot reply on the web widget (when enabled) |
 | **Persistent follow-up button** with type *Escalate* | Configured in the Embed tab → Follow-up Buttons |
-| **Compact "Talk to a human" link** | Below the input box (legacy fallback, hidden when the inline CTA is on) |
+| **Compact "Talk to a human" link** | Below the widget input box (legacy fallback, hidden when the inline CTA is on) |
+| **Smart intent on WhatsApp** | Visitor messages your WhatsApp number with phrases like "this isn't helping", "talk to someone", "agente humano por favor", "मानव से बात करनी है" — keyword pre-filter or LLM intent classifier triggers handoff |
+| **Smart intent on Telegram** | Same multilingual classifier as WhatsApp — visitors don't have to remember a magic keyword |
+| **Manual take-over from the dashboard** | Any open conversation can be taken over from the Human Support dashboard, even if the AI was handling it cleanly |
+
+## Smart Intent Detection
+
+Visitors don't always say "talk to a human" verbatim. They say "this bot is useless", "i need a real person", or write in Spanish, Hindi, French — anything. Our handoff detector handles all of it.
+
+**Three layers, in order:**
+
+1. **Literal keyword pre-filter** — fast, free, English-only. Catches "talk to human", "speak to agent", "real person", "live agent", "customer service", etc.
+2. **Non-ASCII bypass** — if the message contains non-Latin characters (e.g. Devanagari, Hangul, Arabic, Japanese), we **skip** the keyword pre-filter and go straight to the LLM. This avoids false negatives in any language.
+3. **LLM intent classifier** — Gemini 2.5 Flash Lite runs a tiny prompt: *"Does this visitor want to speak to a human? Yes/No."* Cached by SHA-256 hash of the text so duplicate messages cost nothing.
+
+<Note>
+The smart classifier is available on **Scale** and **Enterprise** plans. Free / Growth plans still support escalation via the in-widget CTAs, persistent buttons, and dashboard take-over.
+</Note>
+
+## Reply from the Dashboard
+
+Open the **Human Support** tab → click any escalated conversation → type your reply in the composer → hit **Send**. The visitor receives it on the same channel they came in on:
+
+| Visitor's channel | How they receive your reply |
+|-------------------|-----------------------------|
+| **Web widget** | Widget polls every 4 seconds while open and renders new agent messages with a green accent + "A human has joined the chat" system bubble |
+| **WhatsApp** | Delivered via your connected WhatsApp Business number (subject to Meta's 24-hour customer-service window — see below) |
+| **Telegram** | Delivered via your connected Telegram bot |
+
+### What happens to the AI while you're replying
+
+The moment you take over (or send your first reply), the AI is **muted on that conversation** for 24 hours. The mute is *rolling* — every reply you send refreshes the timer. If you stop replying for 24h the AI auto-resumes; marking the conversation **Resolved** or clicking **Hand back to AI** clears the mute immediately.
+
+The composer also shows a live countdown chip ("AI paused — auto-resumes in 23h 12m") so you always know where you stand.
+
+### WhatsApp's 24-hour reply window
+
+Meta only lets you send free-form WhatsApp messages within **24 hours of the visitor's last inbound message**. If you try to reply outside that window, the dashboard returns a structured error (`code: "wa_window_expired"`) with the inline message *"WhatsApp's 24-hour reply window has expired. The visitor must message you first."* Pre-approved template messages outside the window are on the roadmap.
+
+Web and Telegram have no such restriction — reply whenever you want.
+
+### Agent identity privacy
+
+Visitors see the agent's display name (`User.name`) if it's set, otherwise just **"Support team"**. Email addresses are never exposed.
 
 ## Configuration
 
@@ -99,23 +144,38 @@ Each recipient receives a plain-text email with:
 
 Recipients are deduplicated case-insensitively and capped at 10 (plus the owner). Invalid addresses (no `@`) are rejected at save time.
 
-## Webhook Payload
+## Unified Webhook Payload
 
-If you have a webhook subscribed to `conversation.escalated`, you'll receive:
+A single `conversation.escalated` event fires for every channel — web widget, WhatsApp, *and* Telegram. The new `channel` field tells you where it came from so you can route accordingly:
 
 ```json
 {
   "event": "conversation.escalated",
   "data": {
     "conversation_id": "uuid",
-    "session_id": "embed-...",
+    "session_id": "wa_15551234567",
     "chatbot_id": "uuid",
-    "escalated_at": "2026-04-19T10:23:45Z",
-    "last_message": "Can I speak to someone?",
-    "message_count": 7
+    "channel": "whatsapp",
+    "escalated_at": "2026-04-22T10:23:45Z",
+    "last_message": "this isn't helping, can someone real help me?",
+    "message_count": 7,
+    "trigger": "smart_intent"
   }
 }
 ```
+
+### Field reference
+
+| Field | Type | Meaning |
+|-------|------|---------|
+| `channel` | string | One of `web`, `whatsapp`, `telegram` |
+| `trigger` | string | One of `cta` (in-widget button), `keyword` (literal pre-filter), `smart_intent` (LLM classifier), `manual` (dashboard take-over) |
+| `session_id` | string | Channel-prefixed (`embed-…`, `wa_…`, `tg_…`) — useful for joining with your own logs |
+| `last_message` | string | The visitor's most recent message — handy for routing rules ("if it mentions billing → finance team") |
+
+<Tip>
+Pre-`channel` payloads (web-only) are still backward-compatible — the field is **added**, never replacing existing fields. Existing webhook handlers continue to work; new ones can opt-in by reading `channel`.
+</Tip>
 
 See [Webhooks](/managing/conversations) for delivery, signing, and retry details.
 
@@ -133,5 +193,11 @@ See [Webhooks](/managing/conversations) for delivery, signing, and retry details
   </Card>
   <Card title="Watch the resolution rate" icon="chart-line">
     A falling resolution rate suggests escalations are getting dropped — review unresolved items weekly.
+  </Card>
+  <Card title="Reply within 24h on WhatsApp" icon="message-circle">
+    WhatsApp's reply window is hard-capped by Meta. Aim to respond inside 24 hours so you don't have to wait for the visitor to message you again.
+  </Card>
+  <Card title="Use the channel field" icon="git-branch">
+    Route webhook events by `data.channel` — send WhatsApp escalations to a different Slack channel than web ones, or PagerDuty only when telegram-VIP customers escalate.
   </Card>
 </CardGroup>

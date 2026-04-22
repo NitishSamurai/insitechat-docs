@@ -39,6 +39,37 @@ All messages count toward your plan's monthly message quota — same as website 
 - **Auto-greeting** — sends your chatbot's greeting message on `/start`
 - **Plan quota enforcement** — respects your billing plan limits
 - **Lead + conversation webhooks** — fires the same webhook events as website chat
+- **Smart human handoff + reply from dashboard** (Scale & Enterprise) — see below
+
+## Human Handoff (Scale & Enterprise)
+
+Telegram conversations escalate to a human just like WhatsApp ones do — and once they do, you can reply right from the InsiteChat dashboard.
+
+### Smart intent detection (multilingual)
+
+The same multilingual classifier that powers WhatsApp handoff runs on Telegram messages. Three layers, in order:
+
+1. **Literal keyword pre-filter** — catches "talk to a human", "speak to an agent", "real person", "live agent", "customer service", and similar.
+2. **Non-ASCII bypass** — non-Latin messages (Russian, Hindi, Arabic, Korean, etc.) skip the keyword filter and go straight to the LLM, so language never blocks handoff.
+3. **LLM intent classifier** — Gemini 2.5 Flash Lite picks up frustration, implicit asks, and ambiguous phrasing the keyword filter misses. SHA-256 cached, so duplicates are free.
+
+### Reply from the dashboard
+
+Once a Telegram conversation is escalated, it appears in your **Human Support** tab with a "Telegram" channel badge. Open it, type your reply, hit **Send** — your message is delivered through your bot to the visitor's Telegram account.
+
+While you're handling it:
+
+- The **AI auto-mutes for 24 hours** on that conversation. The mute is *rolling* — every reply you send refreshes the timer.
+- A live countdown chip shows when the AI will resume.
+- Marking **Resolved** or clicking **Hand back to AI** clears the mute immediately.
+
+<Note>
+Telegram does **not** have a 24-hour reply window like WhatsApp does — you can reply to a Telegram conversation at any time after escalation, even days later.
+</Note>
+
+### Webhook payload
+
+Telegram escalations fire the same `conversation.escalated` event as web and WhatsApp, with `channel: "telegram"`. See [Human Support & Escalation → Webhook Payload](/deployment/human-support#unified-webhook-payload) for the full schema.
 
 ## Disconnecting
 
@@ -49,3 +80,4 @@ Click **Disconnect** on the Telegram card. The bot will stop responding to messa
 - Responses are text-only (no rich formatting like the web widget)
 - No lead form — use a different channel for lead capture
 - Bot must be messaged first by the user (Telegram policy)
+- Inbound media (photos, voice, files) is ignored — text messages on the same thread still work
