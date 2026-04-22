@@ -40,7 +40,6 @@
     },
     {
       "group": "Training Your Chatbot",
-      "collapsed": true,
       "pages": [
         "training/website-crawler",
         "training/document-upload",
@@ -51,7 +50,6 @@
     },
     {
       "group": "Customization & Deployment",
-      "collapsed": true,
       "pages": [
         "deployment/customization",
         "deployment/embed-widget",
@@ -61,7 +59,6 @@
     },
     {
       "group": "Dashboard & Conversations",
-      "collapsed": true,
       "pages": [
         "managing/analytics",
         "managing/conversations"
@@ -69,7 +66,6 @@
     },
     {
       "group": "Integrations",
-      "collapsed": true,
       "pages": [
         {
           "group": "Data Sources",
@@ -105,7 +101,6 @@
     },
     {
       "group": "Account & Billing",
-      "collapsed": true,
       "pages": [
         "plans-and-pricing",
         "managing/team-members"
@@ -113,14 +108,12 @@
     },
     {
       "group": "Overview",
-      "collapsed": true,
       "pages": [
         "features"
       ]
     },
     {
       "group": "Use Cases",
-      "collapsed": true,
       "pages": [
         "use-cases/ecommerce",
         "use-cases/saas",
