@@ -75,6 +75,8 @@
           "group": "Data Sources",
           "pages": [
             "integrations/google-drive",
+            "integrations/onedrive",
+            "integrations/sharepoint",
             "integrations/notion",
             "integrations/dropbox"
           ]

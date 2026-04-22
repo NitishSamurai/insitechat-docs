@@ -1,0 +1,81 @@
+---
+title: "SharePoint"
+description: "Connect Microsoft SharePoint to train your chatbot on documents stored across your organization's sites and document libraries."
+---
+
+# SharePoint
+
+Connect your Microsoft 365 organization's SharePoint and import documents from any site you have access to. InsiteChat walks you through site → drive → file selection so you only see what you're allowed to read, then handles extraction, chunking, and embedding automatically.
+
+## Connect and Train in Four Steps
+
+<Steps>
+  <Step title="Connect Microsoft account">
+    Open your chatbot → **Sources** tab → **Add source** → choose **SharePoint**. Click **Connect Microsoft account**. Sign in with your work/school Microsoft 365 account and grant InsiteChat read-only access.
+  </Step>
+  <Step title="Pick a SharePoint site">
+    InsiteChat lists every SharePoint site you can access (your tenant's root site, team sites, communication sites). Pick the one that holds the documents you want to train on.
+  </Step>
+  <Step title="Pick a document library (drive)">
+    Each SharePoint site has one or more *drives* — typically the default **Documents** library plus any custom libraries the site owners added. Choose the one containing the files you want.
+  </Step>
+  <Step title="Browse, select, import">
+    Browse folders inside the drive, click files to select them, then click **Import**. InsiteChat downloads the selected files via Microsoft Graph, extracts text, and trains your chatbot.
+  </Step>
+</Steps>
+
+<Note>
+SharePoint access requires the `Sites.Read.All` scope on top of the standard `Files.Read.All` and `User.Read offline_access` we request for OneDrive. You only see sites your Microsoft account already has permission to read — InsiteChat doesn't elevate your privileges.
+</Note>
+
+## Supported File Types
+
+- **Word** — `.doc`, `.docx`
+- **Excel** — `.xls`, `.xlsx`, `.csv`
+- **PowerPoint** — `.ppt`, `.pptx`
+- **PDF** — `.pdf`
+- **Plain text** — `.txt`, `.rtf`
+- **Markdown** — `.md`
+- **HTML** — `.html`, `.htm`
+
+Files in unsupported formats are visible in the browser but can't be selected for import.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Site → drive → file navigation" icon="building">
+    Mirrors how SharePoint actually organizes documents — you don't have to know paths or URLs ahead of time.
+  </Card>
+  <Card title="Read-only Microsoft Graph" icon="lock">
+    Standard OAuth 2.0 via Microsoft Identity, scoped to read-only access on sites and files you already own.
+  </Card>
+  <Card title="Tenant-wide reach" icon="globe">
+    Works across your organization's tenant — pull docs from sales, support, HR, or any team site you have access to.
+  </Card>
+  <Card title="Re-sync anytime" icon="rotate">
+    Re-import sources from the **Sources** tab whenever documents change. Or set a per-source [auto-sync](/training/syncing-content) cadence and let InsiteChat handle it.
+  </Card>
+</CardGroup>
+
+## Permissions Model
+
+InsiteChat respects SharePoint's permissions exactly:
+
+- You only see sites your Microsoft account can already access
+- You only see drives within those sites that you have at least *read* permission on
+- You only see files within those drives that you can already open in SharePoint
+- A document hidden by a SharePoint permission level (e.g. *Visitors* group can't see it) won't appear in InsiteChat's browser either
+
+If a teammate shares a new site with your account *after* you connected, click **Refresh sites** on the source card to pick it up.
+
+## Token Refresh
+
+Microsoft tokens expire roughly hourly. InsiteChat stores the refresh token granted via the `offline_access` scope and silently rotates the access token in the background — no re-login required. If a tenant admin revokes the app's permissions, InsiteChat surfaces a **Reconnect** prompt and pauses auto-sync until you re-authorize.
+
+## Keep Your Chatbot Current
+
+Your chatbot's answers reflect what was in each file *at the time of the last import*. When SharePoint documents change, re-sync the source manually or set a per-source [auto-sync](/training/syncing-content) cadence to keep the knowledge base current automatically.
+
+## Disconnecting
+
+Click **Disconnect** on the SharePoint card in your **Sources** tab. InsiteChat removes its stored Microsoft credentials immediately and stops accessing your SharePoint. Already-imported sources stay in your chatbot's knowledge base — disconnecting doesn't remove the documents you've already trained on. To revoke access from Microsoft's side as well, visit your [Microsoft 365 My Apps](https://myapps.microsoft.com/) page or ask your tenant admin to remove the InsiteChat app.

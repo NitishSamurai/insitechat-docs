@@ -1,0 +1,69 @@
+---
+title: "OneDrive"
+description: "Connect Microsoft OneDrive to train your chatbot on Word docs, Excel sheets, PowerPoint decks, PDFs, and more from your personal or work account."
+---
+
+# OneDrive
+
+Connect your Microsoft OneDrive — personal *or* work/school account — and import any supported file with a single click. InsiteChat handles authentication via Microsoft Graph, file browsing, text extraction, and embedding generation. No copy-pasting, no manual uploads.
+
+## Connect and Train in Three Steps
+
+<Steps>
+  <Step title="Connect OneDrive">
+    Open your chatbot → **Sources** tab → **Add source** → choose **OneDrive**. Click **Connect Microsoft account**. You'll be redirected to Microsoft to sign in and grant InsiteChat read-only access to your files.
+  </Step>
+  <Step title="Browse and select files">
+    Navigate your OneDrive folders. Click any supported file to add it to your selection — pick one file or many. Folder browsing supports deep nesting, so files in any sub-folder are reachable.
+  </Step>
+  <Step title="Import and train">
+    Click **Import**. InsiteChat downloads the files via Microsoft Graph, extracts text, splits it into searchable chunks, and embeds them into your knowledge base. Your chatbot starts answering from the new content as soon as the import completes.
+  </Step>
+</Steps>
+
+<Note>
+We request the minimum scopes needed: `Files.Read.All`, `User.Read`, and `offline_access` (to silently refresh tokens). InsiteChat never modifies, deletes, or shares your OneDrive files.
+</Note>
+
+## Supported File Types
+
+- **Word** — `.doc`, `.docx`
+- **Excel** — `.xls`, `.xlsx`, `.csv`
+- **PowerPoint** — `.ppt`, `.pptx`
+- **PDF** — `.pdf`
+- **Plain text** — `.txt`, `.rtf`
+- **Markdown** — `.md`
+- **HTML** — `.html`, `.htm`
+
+Files in unsupported formats are skipped during import — you'll see them in the file browser but they can't be selected.
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="Personal & work accounts" icon="microsoft">
+    Works with consumer OneDrive and OneDrive for Business (Microsoft 365). Same flow, same scopes.
+  </Card>
+  <Card title="Microsoft Graph OAuth" icon="lock">
+    Standard OAuth 2.0 via Microsoft Identity. Tokens auto-refresh in the background — no re-login surprises.
+  </Card>
+  <Card title="Browse nested folders" icon="folder-tree">
+    Click into any folder, any depth. The browser remembers where you were as you select files.
+  </Card>
+  <Card title="Re-sync anytime" icon="rotate">
+    When a document changes, re-import the source from the **Sources** tab to pull the latest version into your chatbot.
+  </Card>
+</CardGroup>
+
+## Token Refresh
+
+Microsoft access tokens expire after roughly an hour. InsiteChat stores the refresh token (granted via the `offline_access` scope) and silently swaps in a fresh access token whenever needed — you don't have to reconnect periodically.
+
+If your refresh token is revoked (e.g. you revoked the app's permission in the Microsoft account portal, or your tenant admin pulled it), InsiteChat surfaces a **Reconnect** prompt on the source card and stops auto-syncing until you re-authorize.
+
+## Keep Your Chatbot Current
+
+Your chatbot's answers reflect the file contents *at the time of the last import*. When you edit documents in OneDrive, re-sync the source from your InsiteChat dashboard to refresh the knowledge base. Per-source [auto-sync](/training/syncing-content) keeps this fully hands-off if you'd rather not click anything.
+
+## Disconnecting
+
+Click **Disconnect** on the OneDrive card in your **Sources** tab. InsiteChat removes its stored Microsoft credentials immediately and stops accessing your OneDrive. Imported sources stay in your chatbot's knowledge base — disconnecting doesn't delete the documents you've already trained on. To revoke access from Microsoft's side as well, visit your [Microsoft account apps page](https://account.live.com/consent/Manage).

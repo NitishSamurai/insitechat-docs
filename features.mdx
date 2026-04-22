@@ -26,7 +26,7 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
     Train on video content — paste a YouTube URL and the transcript is imported automatically.
   </Card>
   <Card title="Cloud Storage Connectors" icon="cloud">
-    Google Drive, Notion, Dropbox, OneDrive, and SharePoint pickers with OAuth.
+    [Google Drive](/integrations/google-drive), [Notion](/integrations/notion), [Dropbox](/integrations/dropbox), [OneDrive](/integrations/onedrive), and [SharePoint](/integrations/sharepoint) pickers with OAuth.
   </Card>
   <Card title="Custom Q&A — Override AI Answers" icon="circle-question" href="/training/custom-qa">
     Pre-written question/answer pairs that **always override** auto-extracted content. Top 2 matches injected first into the AI's context — guaranteed.
@@ -61,7 +61,7 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
     Save and switch between named instruction profiles without retraining.
   </Card>
   <Card title="13 Built-in Personas">
-    Default, Professional, Informative, Engaging, Inspirational, Playful, Sales Expert, Consultant, Problem Solver, Urgent, Empathetic, Neutral, Default Classic.
+    Default, Default (Classic), Neutral, Professional / Formal, Informative, Engaging, Inspirational, Playful / Funny, Sales Expert, Consultant, Problem Solver, Urgent & Action-Oriented, Empathetic Support.
   </Card>
   <Card title="Custom Personas">
     Create unlimited personas with title, description, and prompt. Switch the active persona in one click.
@@ -163,7 +163,7 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
     Show the form at conversation start, after N messages, or before escalation.
   </Card>
   <Card title="Lead Status Tracking">
-    Open, New, Contacted, Qualified, Converted, Archived.
+    New, Contacted, Qualified, Converted, Archived.
   </Card>
   <Card title="Star Important Leads">
     One-click star with a dedicated filter view.
@@ -210,17 +210,9 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
 
 ## Team & Collaboration
 
-<CardGroup cols={2}>
-  <Card title="Team Invites" href="/managing/team-members">
-    Invite teammates by email; manage pending invitations.
-  </Card>
-  <Card title="Role-Based Access">
-    Admin, Editor, and Viewer permission levels.
-  </Card>
-  <Card title="Member Management">
-    View, change roles, revoke access, or remove members.
-  </Card>
-</CardGroup>
+<Note>
+Team workspaces are **coming soon**. Per-plan seat counts (1 / 1 / 4 / 10) are reserved in the billing system today; the invite UX, role-based access, and member management ship in a follow-up release. See [Team Members](/managing/team-members) for the planned scope.
+</Note>
 
 ## Integrations
 
@@ -245,8 +237,8 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
   <Card title="One-Line Embed Snippet" href="/deployment/embed-widget">
     Single `<script>` tag works on any site — WordPress, Shopify, Wix, Webflow, custom HTML.
   </Card>
-  <Card title="Hosted Chat Page">
-    Public direct-link URL for standalone chatbot access (no embedding required).
+  <Card title="Direct-Link Chat URL">
+    Every chatbot has a public direct-link URL (`/embed/<id>`) you can share without embedding it.
   </Card>
   <Card title="Chatbot ID & Key">
     One-click copy of the IDs you need for installation or API use.
@@ -279,14 +271,14 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
   <Card title="Google OAuth Sign-in">
     One-click signup and login with a Google account.
   </Card>
-  <Card title="7-Day Free Trial">
-    Full access, no credit card required.
+  <Card title="Free Plan — No Credit Card">
+    Start on the Free plan with 1 chatbot, 50 messages / month, and 30 pages — no card required.
   </Card>
   <Card title="Tiered Plans" href="/plans-and-pricing">
     Starter, Growth, Scale, Enterprise — with per-tier chatbot, message, and page limits.
   </Card>
-  <Card title="Monthly or Annual Billing">
-    Annual plans get a 40% discount.
+  <Card title="Razorpay Payments (INR)">
+    Monthly subscriptions billed in INR via Razorpay. Enterprise pricing available on request.
   </Card>
   <Card title="Usage Tracking">
     Real-time message and page-quota usage against the active plan.
@@ -303,7 +295,7 @@ Every capability InsiteChat.ai ships with today, organized by area. Use this as 
 
 <CardGroup cols={2}>
   <Card title="6 Chatbot Templates">
-    Start from a pre-built template (support, sales, docs, ecommerce, education, healthcare).
+    Start from a pre-built template — Customer Support, Sales Assistant, Technical Help Desk, Education / Onboarding, Enterprise / B2B, or FAQ Bot.
   </Card>
   <Card title="Inline URL Crawl">
     Paste a URL during signup and the first crawl kicks off automatically.
