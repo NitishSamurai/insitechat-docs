@@ -15,12 +15,7 @@
       "to": "#7c3aed"
     }
   },
-  "topbarLinks": [
-    {
-      "name": "Documentation",
-      "url": "https://docs.insitechat.ai"
-    }
-  ],
+  "topbarLinks": [],
   "topbarCtaButton": {
     "name": "Get Started Free",
     "url": "https://insitechat.ai/register"
@@ -40,18 +35,12 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "quickstart",
-        "plans-and-pricing"
-      ]
-    },
-    {
-      "group": "Features",
-      "pages": [
-        "features"
+        "quickstart"
       ]
     },
     {
       "group": "Training Your Chatbot",
+      "collapsed": true,
       "pages": [
         "training/website-crawler",
         "training/document-upload",
@@ -62,6 +51,7 @@
     },
     {
       "group": "Customization & Deployment",
+      "collapsed": true,
       "pages": [
         "deployment/customization",
         "deployment/embed-widget",
@@ -70,43 +60,65 @@
       ]
     },
     {
-      "group": "Dashboard & Analytics",
+      "group": "Dashboard & Conversations",
+      "collapsed": true,
       "pages": [
         "managing/analytics",
-        "managing/conversations",
+        "managing/conversations"
+      ]
+    },
+    {
+      "group": "Integrations",
+      "collapsed": true,
+      "pages": [
+        {
+          "group": "Data Sources",
+          "pages": [
+            "integrations/google-drive",
+            "integrations/notion",
+            "integrations/dropbox"
+          ]
+        },
+        {
+          "group": "Platforms",
+          "pages": [
+            "integrations/wordpress",
+            "integrations/shopify",
+            "integrations/whatsapp",
+            "integrations/telegram",
+            "integrations/slack",
+            "integrations/zapier",
+            "integrations/hubspot"
+          ]
+        },
+        {
+          "group": "Live Chat",
+          "pages": [
+            "integrations/crisp",
+            "integrations/freshchat",
+            "integrations/zendesk-chat"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Account & Billing",
+      "collapsed": true,
+      "pages": [
+        "plans-and-pricing",
         "managing/team-members"
       ]
     },
     {
-      "group": "Data Source Integrations",
+      "group": "Overview",
+      "collapsed": true,
       "pages": [
-        "integrations/google-drive",
-        "integrations/notion",
-        "integrations/dropbox"
-      ]
-    },
-    {
-      "group": "Platform Integrations",
-      "pages": [
-        "integrations/wordpress",
-        "integrations/shopify",
-        "integrations/whatsapp",
-        "integrations/telegram",
-        "integrations/slack",
-        "integrations/zapier",
-        "integrations/hubspot"
-      ]
-    },
-    {
-      "group": "Live Chat Integrations",
-      "pages": [
-        "integrations/crisp",
-        "integrations/freshchat",
-        "integrations/zendesk-chat"
+        "features"
       ]
     },
     {
       "group": "Use Cases",
+      "collapsed": true,
       "pages": [
         "use-cases/ecommerce",
         "use-cases/saas",
