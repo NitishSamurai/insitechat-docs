@@ -18,7 +18,6 @@ Document upload lets you add files from your existing content library directly t
 | Markdown | `.md` |
 | CSV | `.csv` |
 | YouTube transcript | Paste a YouTube URL |
-| Zendesk articles | Connect via integration |
 
 ## Upload a Document
 
@@ -56,12 +55,8 @@ The quality of your chatbot's answers depends heavily on the quality of the docu
 
 ## File Size Limits
 
-InsiteChat supports most standard document sizes. For unusually large files, consider splitting them into smaller sections to ensure reliable processing. Specific limits appear in the upload interface.
+Each upload is capped at **50 MB**. Files above the cap are rejected at upload time with a clear error. For large reference manuals or multi-hundred-page PDFs, split them into smaller sections — both for reliable processing and for better answer quality (smaller, topic-focused documents retrieve more accurately).
 
 ## YouTube Transcripts
 
 To index a YouTube video, select **YouTube** as the source type and paste the video URL. InsiteChat retrieves the transcript and indexes the spoken content for videos with captions.
-
-## Zendesk Articles
-
-Connect your Zendesk account from the **Sources** tab to import help center articles directly. InsiteChat indexes article content immediately after import.

@@ -32,16 +32,29 @@ Replaces the old WhatsApp-only `wa_paused:*` Redis key with a unified `agent_han
 - Cleared instantly on **Mark resolved** or **Hand back to AI**
 
 ### Unified Escalation Webhook
-The `conversation.escalated` event now fires for **every channel** (was web-only), with two new fields:
+The `conversation.escalated` event now fires for **every channel** (was web-only), with one new field:
 
-- **`channel`** — `web` / `whatsapp` / `telegram`
-- **`trigger`** — `cta` / `keyword` / `smart_intent` / `manual`
+- **`channel`** — inferred from the `session_id` prefix: `web` / `whatsapp` / `telegram` / `unknown`
 
-Existing webhook handlers continue to work; new ones can route on `channel`.
+Existing webhook handlers continue to work; new ones can route on `data.channel`.
 
 ---
 
 ## April 2026
+
+### Persona Library Expansion
+The persona picker grew from 5 built-ins to **13** — Default, Default (Classic), Neutral, Professional / Formal, Informative, Engaging, Inspirational, Playful / Funny, Sales Expert, Consultant, Problem Solver, Urgent & Action-Oriented, Empathetic Support — plus a **Custom** option for hand-written instructions. Switch personas without retraining.
+
+### WhatsApp Cloud API (BYOK)
+Deploy your chatbot on WhatsApp using **your own** Meta Business credentials — no per-message markup, no reseller middleman.
+
+- Bring your own App ID, Phone Number ID, WABA ID, and permanent access token
+- InsiteChat validates against Meta's API at connect time
+- Same RAG pipeline as web chat; messages count against your monthly quota only
+- Read receipts, conversation history, plan-quota enforcement, deduplication on Meta `message_id`
+
+### OneDrive + SharePoint Backend (UI Coming Soon)
+Microsoft Graph integration is live in the backend — OAuth, file picker API, and ingestion all work end-to-end. The dashboard picker UI is rolling out shortly; contact support to enable manually in the meantime.
 
 ### Live Chat Integrations
 - **Crisp** — AI auto-reply for Crisp live chat
