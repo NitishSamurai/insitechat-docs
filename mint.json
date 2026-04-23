@@ -107,21 +107,6 @@
       ]
     },
     {
-      "group": "Overview",
-      "pages": [
-        "features"
-      ]
-    },
-    {
-      "group": "Use Cases",
-      "pages": [
-        "use-cases/ecommerce",
-        "use-cases/saas",
-        "use-cases/education",
-        "use-cases/healthcare"
-      ]
-    },
-    {
       "group": "API Reference",
       "pages": [
         "api-reference/overview",
