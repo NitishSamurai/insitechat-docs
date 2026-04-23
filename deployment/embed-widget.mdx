@@ -50,19 +50,11 @@ Add your InsiteChat chatbot to any website with a single code snippet. The widge
     **Code snippet:**
 
     ```html
-    <script>
-      (function(){
-        var d=document,s=d.createElement('iframe');
-        s.src='https://insitechat.ai/embed/YOUR_CHATBOT_ID';
-        s.style.cssText='position:fixed;bottom:0;right:0;width:420px;height:650px;border:none;z-index:9999;';
-        s.allow='clipboard-write';
-        d.body.appendChild(s);
-      })();
-    </script>
+    <script src="https://insitechat.ai/widget.js" data-chatbot-id="YOUR_CHATBOT_ID"></script>
     ```
 
     <Note>
-    Replace `YOUR_CHATBOT_ID` with your actual Chatbot ID. The Embed tab provides this code pre-filled with your ID.
+    Replace `YOUR_CHATBOT_ID` with your actual Chatbot ID. The **Embed → Install** tab provides this snippet pre-filled with your ID — just copy and paste.
     </Note>
   </Tab>
 
@@ -72,7 +64,7 @@ Add your InsiteChat chatbot to any website with a single code snippet. The widge
     ```html
     <iframe
       src="https://insitechat.ai/embed/YOUR_CHATBOT_ID"
-      style="position:fixed;bottom:0;right:0;width:420px;height:650px;border:none;z-index:9999;"
+      style="position:fixed;bottom:24px;right:24px;width:430px;height:640px;border:1px solid #e5e7eb;border-radius:16px;z-index:2147483647;background:#fff;"
       allow="clipboard-write"
     ></iframe>
     ```
@@ -256,15 +248,7 @@ Add your InsiteChat chatbot to any website with a single code snippet. The widge
         <h1>Welcome to my website</h1>
 
         <!-- InsiteChat embed — paste before </body> -->
-        <script>
-          (function(){
-            var d=document,s=d.createElement('iframe');
-            s.src='https://insitechat.ai/embed/YOUR_CHATBOT_ID';
-            s.style.cssText='position:fixed;bottom:0;right:0;width:420px;height:650px;border:none;z-index:9999;';
-            s.allow='clipboard-write';
-            d.body.appendChild(s);
-          })();
-        </script>
+        <script src="https://insitechat.ai/widget.js" data-chatbot-id="YOUR_CHATBOT_ID"></script>
     </body>
     </html>
     ```

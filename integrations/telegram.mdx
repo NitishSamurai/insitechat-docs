@@ -49,7 +49,7 @@ Telegram conversations escalate to a human just like WhatsApp ones do — and on
 
 The same multilingual classifier that powers WhatsApp handoff runs on Telegram messages. Three layers, in order:
 
-1. **Literal keyword pre-filter** — catches "talk to a human", "speak to an agent", "real person", "live agent", "customer service", and similar.
+1. **Literal keyword pre-filter** — catches "talk to a human", "speak to a human", "speak to someone", "speak to an agent", "real person", "live agent", "human please", "connect me to a human", "connect me to an agent".
 2. **Non-ASCII bypass** — non-Latin messages (Russian, Hindi, Arabic, Korean, etc.) skip the keyword filter and go straight to the LLM, so language never blocks handoff.
 3. **LLM intent classifier** — Gemini 2.5 Flash Lite picks up frustration, implicit asks, and ambiguous phrasing the keyword filter misses. SHA-256 cached, so duplicates are free.
 

@@ -38,7 +38,7 @@ Visitors don't always say "talk to a human" verbatim. They say "this bot is usel
 
 **Three layers, in order:**
 
-1. **Literal keyword pre-filter** — fast, free, English-only. Catches "talk to human", "speak to agent", "real person", "live agent", "customer service", etc.
+1. **Literal keyword pre-filter** — fast, free, English-only. Catches phrases like "talk to a human", "speak to a human", "speak to someone", "speak to an agent", "real person", "live agent", "human please", "connect me to a human", "connect me to an agent".
 2. **Non-ASCII bypass** — if the message contains non-Latin characters (e.g. Devanagari, Hangul, Arabic, Japanese), we **skip** the keyword pre-filter and go straight to the LLM. This avoids false negatives in any language.
 3. **LLM intent classifier** — Gemini 2.5 Flash Lite runs a tiny prompt: *"Does this visitor want to speak to a human? Yes/No."* Cached by SHA-256 hash of the text so duplicate messages cost nothing.
 
@@ -70,11 +70,11 @@ Web and Telegram have no such restriction — reply whenever you want.
 
 ### Agent identity privacy
 
-Visitors see the agent's display name (`User.name`) if it's set, otherwise just **"Support team"**. Email addresses are never exposed.
+Visitors see the system bubble *"A human has joined the chat"* — the dashboard does not surface individual agent names or email addresses to the visitor. Internally, every agent reply is attributed to the user who sent it so your team can see who handled what.
 
 ## Configuration
 
-Open your chatbot → **Embed** tab → **Human Support** sub-tab.
+Open your chatbot → **Embed** tab → **Escalation** sub-tab.
 
 <Steps>
   <Step title="Enable inline escalation CTA">
@@ -96,7 +96,7 @@ Open your chatbot → **Embed** tab → **Human Support** sub-tab.
     Enter up to **10 email addresses** that receive escalation alerts. The chatbot owner is always notified — recipients here are *added* on top. Press Enter or click **Add** to add an address; click the × on any chip to remove.
   </Step>
   <Step title="Save">
-    Click **Save Customization**. Settings take effect on the live widget within a few seconds.
+    Click **Save Changes**. Settings take effect on the live widget within a few seconds.
   </Step>
 </Steps>
 
@@ -146,38 +146,40 @@ Recipients are deduplicated case-insensitively and capped at 10 (plus the owner)
 
 ## Unified Webhook Payload
 
-A single `conversation.escalated` event fires for every channel — web widget, WhatsApp, *and* Telegram. The new `channel` field tells you where it came from so you can route accordingly:
+A single `conversation.escalated` event fires for every channel — web widget, WhatsApp, *and* Telegram. The `channel` field tells you where it came from so you can route accordingly. The event uses the standard webhook envelope:
 
 ```json
 {
   "event": "conversation.escalated",
+  "chatbot_id": "0a1b2c3d-4e5f-6789-abcd-ef0123456789",
+  "timestamp": "2026-04-22T10:23:45.123456+00:00",
   "data": {
-    "conversation_id": "uuid",
+    "conversation_id": "f1e2d3c4-...",
     "session_id": "wa_15551234567",
-    "chatbot_id": "uuid",
     "channel": "whatsapp",
-    "escalated_at": "2026-04-22T10:23:45Z",
-    "last_message": "this isn't helping, can someone real help me?",
-    "message_count": 7,
-    "trigger": "smart_intent"
+    "escalated_at": "2026-04-22T10:23:45+00:00"
   }
 }
 ```
 
-### Field reference
+### Field reference (under `data`)
 
 | Field | Type | Meaning |
 |-------|------|---------|
-| `channel` | string | One of `web`, `whatsapp`, `telegram` |
-| `trigger` | string | One of `cta` (in-widget button), `keyword` (literal pre-filter), `smart_intent` (LLM classifier), `manual` (dashboard take-over) |
+| `conversation_id` | UUID | The Conversation record ID |
 | `session_id` | string | Channel-prefixed (`embed-…`, `wa_…`, `tg_…`) — useful for joining with your own logs |
-| `last_message` | string | The visitor's most recent message — handy for routing rules ("if it mentions billing → finance team") |
+| `channel` | string | Inferred from `session_id` prefix: `web`, `whatsapp`, `telegram`, or `unknown` |
+| `escalated_at` | string | ISO 8601 timestamp of the escalation |
+
+<Note>
+Web-channel escalations may include an extra `message_count` field; WhatsApp / Telegram do not. The payload deliberately stays minimal so consumers don't get tied to channel-specific shapes — pull the full transcript via the dashboard or a `message.received` history if you need more.
+</Note>
 
 <Tip>
-Pre-`channel` payloads (web-only) are still backward-compatible — the field is **added**, never replacing existing fields. Existing webhook handlers continue to work; new ones can opt-in by reading `channel`.
+Fires **once** per conversation — the first escalation locks in `escalated_at` atomically; subsequent triggers on an already-escalated conversation are no-ops, so you won't get duplicate webhooks even under concurrent visitor messages.
 </Tip>
 
-See [Webhooks](/managing/conversations) for delivery, signing, and retry details.
+See [Webhooks](/api-reference/webhooks) for the full envelope, signature verification, headers, and retry policy.
 
 ## Tips
 
