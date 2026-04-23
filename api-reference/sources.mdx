@@ -1,56 +1,96 @@
 ---
 title: "Sources"
-description: "List training sources for a chatbot via the API."
+description: "List the training sources on a chatbot via the InsiteChat API."
 ---
+
+# Sources
+
+A read-only endpoint that lists every active training source on a chatbot. Use it to inspect what your chatbot is trained on, monitor crawl status, or build sync dashboards.
 
 ## List Sources
 
-Retrieve all training sources for a chatbot.
+Returns every source on the chatbot (excluding soft-deleted ones), newest first.
+
+### Request
 
 ```
 GET /v1/chatbots/{chatbot_id}/sources
 ```
 
-### Headers
+| Path parameter | Type | Required | Description |
+|---|---|---|---|
+| `chatbot_id` | UUID | yes | The chatbot's UUID. Must be owned by the API key's user. |
 
-| Header | Value |
-|---|---|
-| Authorization | `Bearer YOUR_API_KEY` |
+```bash
+curl https://backend.insitechat.ai/api/v1/chatbots/0a1b2c3d-4e5f-6789-abcd-ef0123456789/sources \
+  -H "Authorization: Bearer ic_your-api-key"
+```
 
 ### Response
 
+A bare JSON array (no wrapping envelope):
+
 ```json
-{
-  "sources": [
-    {
-      "id": "uuid",
-      "type": "url",
-      "title": "https://example.com",
-      "url": "https://example.com",
-      "status": "done",
-      "page_count": 42,
-      "last_synced_at": "2026-04-10T12:00:00Z",
-      "created_at": "2026-04-01T10:00:00Z"
-    }
-  ]
-}
+[
+  {
+    "id": "ab12cd34-5e6f-7890-abcd-ef1234567890",
+    "type": "url",
+    "title": "Acme Help Center",
+    "url": "https://help.acme.com",
+    "status": "done",
+    "page_count": 42,
+    "created_at": "2026-04-01T10:00:00.123456+00:00"
+  },
+  {
+    "id": "cd34ef56-7890-abcd-ef12-3456789012cd",
+    "type": "file",
+    "title": "Product Datasheet.pdf",
+    "url": "",
+    "status": "processing",
+    "page_count": 0,
+    "created_at": "2026-04-10T14:22:00.654321+00:00"
+  }
+]
 ```
+
+### Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | UUID | Source identifier. |
+| `type` | string | One of the source types listed below. |
+| `title` | string | Display title (filename for files, page title for URLs, user-supplied label for text). May be empty if not yet set. |
+| `url` | string | The crawled URL (for `url` sources) or empty for non-URL types. |
+| `status` | string | `pending`, `crawling`, `processing`, `done`, or `failed`. |
+| `page_count` | integer | Pages successfully indexed (URL crawls and multi-page files); `0` for single-document or pre-ingest sources. |
+| `created_at` | string | ISO 8601 timestamp. |
 
 ### Source Types
 
 | Type | Description |
 |---|---|
 | `url` | Website URL (crawled) |
-| `file` | Uploaded file (PDF, Word, etc.) |
-| `text` | Raw text content |
+| `file` | Uploaded file (PDF, DOCX, PPTX, TXT, MD, CSV) |
+| `text` | Raw text snippet |
 | `youtube` | YouTube video transcript |
-| `google_drive` | Google Drive files |
-| `notion` | Notion pages |
-| `dropbox` | Dropbox files |
+| `google_drive` | Google Drive file |
+| `notion` | Notion page |
+| `dropbox` | Dropbox file |
+| `onedrive` | OneDrive file *(backend type only — not yet exposed in the dashboard's Add Source picker)* |
+| `sharepoint` | SharePoint file *(backend type only — not yet exposed in the dashboard's Add Source picker)* |
+| `zendesk` | Zendesk Help Center article *(backend type only — not yet exposed in the dashboard's Add Source picker)* |
+| `gitbook` | GitBook page *(backend type only — not yet exposed in the dashboard's Add Source picker)* |
 
-### Example
+<Info>
+The "backend type only" rows above mean the type can appear in API responses on accounts where support has manually enabled the source, but you can't add new sources of those types from the dashboard yet. See [Source Management](/managing/source-management) for the current UI inventory.
+</Info>
 
-```bash
-curl https://backend.insitechat.ai/api/v1/chatbots/{chatbot_id}/sources \
-  -H "Authorization: Bearer sk-your-api-key"
-```
+## Error Responses
+
+Error bodies use Django Ninja's default `{"detail": "..."}` shape.
+
+| Status | When |
+|---|---|
+| `401` | Missing, invalid, or revoked API key |
+| `404` | No chatbot exists with that UUID, or it belongs to a different user |
+| `429` | Per-key rate limit exceeded |

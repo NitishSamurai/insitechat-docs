@@ -1,15 +1,15 @@
 ---
 title: "Chatbots"
-description: "List and retrieve chatbot details using the InsiteChat API."
+description: "List your chatbots and retrieve a single chatbot's details via the InsiteChat API."
 ---
 
 # Chatbots
 
-Use these endpoints to list your chatbots and retrieve details for a specific chatbot.
+Two read-only endpoints for inspecting the chatbots on your account.
 
 ## List Chatbots
 
-Returns a list of all chatbots in your account.
+Returns every chatbot owned by the API key's user (excluding soft-deleted ones).
 
 ### Request
 
@@ -19,99 +19,102 @@ GET /v1/chatbots
 
 ```bash
 curl https://backend.insitechat.ai/api/v1/chatbots \
-  -H "Authorization: Bearer sk-your-api-key-here"
+  -H "Authorization: Bearer ic_your-api-key"
 ```
 
 ### Response
 
+A bare JSON array (no wrapping envelope):
+
 ```json
-{
-  "chatbots": [
-    {
-      "id": "bot_abc123",
-      "name": "Support Bot",
-      "description": "Customer support chatbot",
-      "status": "active",
-      "source_count": 5,
-      "message_count": 1240,
-      "created_at": "2026-03-15T10:30:00Z",
-      "updated_at": "2026-04-01T14:20:00Z"
-    },
-    {
-      "id": "bot_def456",
-      "name": "Sales Assistant",
-      "description": "Pre-sales Q&A bot",
-      "status": "active",
-      "source_count": 3,
-      "message_count": 870,
-      "created_at": "2026-03-20T09:00:00Z",
-      "updated_at": "2026-04-05T11:15:00Z"
-    }
-  ]
-}
+[
+  {
+    "id": "0a1b2c3d-4e5f-6789-abcd-ef0123456789",
+    "name": "Support Bot",
+    "slug": "support-bot",
+    "provider": "gemini",
+    "is_active": true,
+    "created_at": "2026-03-15T10:30:00.123456+00:00"
+  },
+  {
+    "id": "1b2c3d4e-5f67-89ab-cdef-0123456789ab",
+    "name": "Sales Assistant",
+    "slug": "sales-assistant",
+    "provider": "chatgpt",
+    "is_active": true,
+    "created_at": "2026-03-20T09:00:00.654321+00:00"
+  }
+]
 ```
+
+### Response Fields
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | UUID | Unique chatbot identifier (bare UUID, no prefix). |
+| `name` | string | Display name. |
+| `slug` | string | URL-friendly slug derived from the name. |
+| `provider` | string | LLM backend: `gemini`, `chatgpt`, or `ollama`. |
+| `is_active` | boolean | `false` if the owner paused the chatbot from the dashboard. |
+| `created_at` | string | ISO 8601 timestamp. |
 
 ## Get Chatbot Details
 
-Returns full details for a single chatbot.
+Returns the configuration for a single chatbot.
 
 ### Request
 
 ```
-GET /v1/chatbots/{id}
+GET /v1/chatbots/{chatbot_id}
 ```
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `id` | string | **Required.** The chatbot ID (e.g., `bot_abc123`). |
+| Path parameter | Type | Required | Description |
+|---|---|---|---|
+| `chatbot_id` | UUID | yes | The chatbot's UUID (from the list response). |
 
 ```bash
-curl https://backend.insitechat.ai/api/v1/chatbots/bot_abc123 \
-  -H "Authorization: Bearer sk-your-api-key-here"
+curl https://backend.insitechat.ai/api/v1/chatbots/0a1b2c3d-4e5f-6789-abcd-ef0123456789 \
+  -H "Authorization: Bearer ic_your-api-key"
 ```
 
 ### Response
 
 ```json
 {
-  "id": "bot_abc123",
+  "id": "0a1b2c3d-4e5f-6789-abcd-ef0123456789",
   "name": "Support Bot",
-  "description": "Customer support chatbot",
-  "status": "active",
-  "model": "gpt-4o-mini",
-  "temperature": 0.7,
+  "slug": "support-bot",
+  "provider": "gemini",
   "system_prompt": "You are a helpful customer support assistant for Acme Inc.",
-  "source_count": 5,
-  "message_count": 1240,
-  "lead_capture_enabled": true,
-  "quick_prompts": [
-    "What's your return policy?",
-    "How do I track my order?",
-    "Talk to a human"
-  ],
-  "created_at": "2026-03-15T10:30:00Z",
-  "updated_at": "2026-04-01T14:20:00Z"
+  "fallback_message": "I'm sorry, I don't have enough information to answer that.",
+  "is_active": true,
+  "created_at": "2026-03-15T10:30:00.123456+00:00"
 }
 ```
 
 ### Response Fields
 
 | Field | Type | Description |
-|-------|------|-------------|
-| `id` | string | Unique chatbot identifier. |
-| `name` | string | Display name of the chatbot. |
-| `description` | string | Short description. |
-| `status` | string | `active` or `paused`. |
-| `model` | string | The AI model used for responses. |
-| `temperature` | number | Response creativity (0.0 to 1.0). |
-| `system_prompt` | string | The chatbot's system instructions. |
-| `source_count` | integer | Number of training sources. |
-| `message_count` | integer | Total messages received. |
-| `lead_capture_enabled` | boolean | Whether the lead capture form is active. |
-| `quick_prompts` | array | List of quick prompt strings. |
-| `created_at` | string | ISO 8601 creation timestamp. |
-| `updated_at` | string | ISO 8601 last-updated timestamp. |
+|---|---|---|
+| `id` | UUID | Unique chatbot identifier. |
+| `name` | string | Display name. |
+| `slug` | string | URL-friendly slug. |
+| `provider` | string | LLM backend (`gemini`, `chatgpt`, `ollama`). |
+| `system_prompt` | string | The persona / system prompt the chatbot uses. |
+| `fallback_message` | string | The reply used when the LLM can't answer (or returns empty). |
+| `is_active` | boolean | Paused state. |
+| `created_at` | string | ISO 8601 timestamp. |
 
 <Info>
-Chatbot IDs are prefixed with `bot_` followed by a unique alphanumeric string. You can find a chatbot's ID in the dashboard URL or in the list response above.
+Chatbot IDs are bare UUIDs — there is no `bot_` prefix. You can also find a chatbot's UUID in the dashboard URL (`/dashboard/chatbots/{uuid}/...`).
 </Info>
+
+## Error Responses
+
+Error bodies use Django Ninja's default `{"detail": "..."}` shape.
+
+| Status | When |
+|---|---|
+| `401` | Missing, invalid, or revoked API key |
+| `404` | No chatbot exists with that UUID, or it belongs to a different user |
+| `429` | Per-key rate limit exceeded |

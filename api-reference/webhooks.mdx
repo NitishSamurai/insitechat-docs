@@ -1,40 +1,155 @@
 ---
 title: "Webhooks"
-description: "Receive real-time events from your chatbot via outgoing webhooks."
+description: "Subscribe to real-time chatbot events — leads captured, messages received, conversations started, and human-handoff escalations — via outgoing HTTP webhooks."
 ---
 
-## Overview
+# Webhooks
 
-InsiteChat sends HTTP POST requests to your webhook URL when events occur. Use webhooks to integrate with Zapier, Make.com, n8n, or your own backend.
+InsiteChat fires HTTP `POST` requests to URLs you configure whenever specific events happen on a chatbot. Use webhooks to push leads into your CRM, mirror conversations into a data warehouse, or trigger Zapier / Make.com / n8n workflows.
+
+Set up webhooks in **Dashboard** → your chatbot → **Webhooks** → **Add Webhook**. Pick the events you care about, set a destination URL, and InsiteChat does the rest.
 
 ## Events
 
-| Event | Description |
+| Event | When it fires |
 |---|---|
 | `lead.captured` | A visitor submitted the lead form |
-| `message.received` | A visitor sent a message |
-| `conversation.started` | A new chat session began |
-| `conversation.escalated` | A visitor requested human help |
+| `conversation.started` | The first message of a brand-new conversation |
+| `message.received` | Every visitor message (after `conversation.started` on the first turn) |
+| `conversation.escalated` | The visitor (or smart-intent / CTA) requested human help — fires **once** per conversation |
 
-## Payload Format
+## Common Envelope
+
+Every event uses the same outer envelope. The event-specific payload lives under `data`:
 
 ```json
 {
   "event": "lead.captured",
-  "chatbot_id": "uuid",
-  "timestamp": "2026-04-10T12:00:00Z",
+  "chatbot_id": "0a1b2c3d-4e5f-6789-abcd-ef0123456789",
+  "timestamp": "2026-04-23T12:00:00.123456+00:00",
+  "data": { /* event-specific shape — see below */ }
+}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `event` | string | Event name (one of the four above). |
+| `chatbot_id` | UUID | The chatbot the event belongs to. |
+| `timestamp` | string | ISO 8601 timestamp of when the event was queued. |
+| `data` | object | Event-specific payload. See the per-event shapes below. |
+
+## Per-Event Payloads
+
+### `lead.captured`
+
+```json
+{
+  "event": "lead.captured",
+  "chatbot_id": "0a1b2c3d-...",
+  "timestamp": "2026-04-23T12:00:00.123456+00:00",
   "data": {
-    "lead_id": "uuid",
-    "name": "John Doe",
-    "email": "john@example.com",
-    "phone": "+1234567890"
+    "lead_id": "ab12cd34-5e6f-7890-abcd-ef1234567890",
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "phone": "+1234567890",
+    "custom_data": { "company": "Acme Corp", "role": "VP Engineering" }
   }
 }
 ```
 
+| Field | Type | Notes |
+|---|---|---|
+| `lead_id` | UUID | The Lead record ID. |
+| `name` / `email` / `phone` | string | May be empty strings if the form didn't collect them or the visitor skipped the field. |
+| `custom_data` | object | Any custom fields configured on the lead form, keyed by field name. Empty object if no custom fields. |
+
+### `conversation.started`
+
+```json
+{
+  "event": "conversation.started",
+  "chatbot_id": "0a1b2c3d-...",
+  "timestamp": "2026-04-23T12:00:01.123456+00:00",
+  "data": {
+    "conversation_id": "f1e2d3c4-...",
+    "session_id": "embed-abc123",
+    "source": "embed"
+  }
+}
+```
+
+| Field | Type | Notes |
+|---|---|---|
+| `conversation_id` | UUID | The Conversation record ID. |
+| `session_id` | string | Channel-prefixed: `embed-…` (web widget), `wa_…` (WhatsApp), `tg_…` (Telegram), or `api-…` (REST API). |
+| `source` | string | Origin channel: `embed`, `whatsapp`, `telegram`, or `api`. |
+
+### `message.received`
+
+```json
+{
+  "event": "message.received",
+  "chatbot_id": "0a1b2c3d-...",
+  "timestamp": "2026-04-23T12:00:01.456789+00:00",
+  "data": {
+    "conversation_id": "f1e2d3c4-...",
+    "session_id": "embed-abc123",
+    "content": "Hi! Do you ship to Canada?",
+    "source": "embed"
+  }
+}
+```
+
+| Field | Type | Notes |
+|---|---|---|
+| `conversation_id` | UUID | The Conversation record ID. |
+| `session_id` | string | Same channel-prefixed format as `conversation.started`. |
+| `content` | string | The visitor's raw message text. |
+| `source` | string | Origin channel. |
+
+### `conversation.escalated`
+
+Fires **once per conversation** the first time the visitor (or a smart-intent / CTA / agent rule) flips the conversation into "needs a human" mode. Subsequent triggers on an already-escalated conversation are no-ops.
+
+```json
+{
+  "event": "conversation.escalated",
+  "chatbot_id": "0a1b2c3d-...",
+  "timestamp": "2026-04-23T12:00:30.123456+00:00",
+  "data": {
+    "conversation_id": "f1e2d3c4-...",
+    "session_id": "embed-abc123",
+    "channel": "web",
+    "escalated_at": "2026-04-23T12:00:30.000000+00:00"
+  }
+}
+```
+
+| Field | Type | Notes |
+|---|---|---|
+| `conversation_id` | UUID | The Conversation record ID. |
+| `session_id` | string | Channel-prefixed: `embed-…`, `wa_…`, `tg_…`. |
+| `channel` | string | Inferred from `session_id` prefix: `web`, `whatsapp`, `telegram`, or `unknown`. |
+| `escalated_at` | string | ISO 8601 timestamp of the escalation. |
+
+<Info>
+Web escalations may include an additional `message_count` field; WhatsApp / Telegram escalations don't. Treat any field beyond the four above as optional and channel-specific.
+</Info>
+
+## Headers
+
+Every webhook request carries:
+
+| Header | Value |
+|---|---|
+| `Content-Type` | `application/json` |
+| `X-InsiteChat-Signature` | HMAC-SHA256 of the raw request body, hex-encoded — use this to verify authenticity |
+| `X-InsiteChat-Event` | The event name (also present in the body's `event` field) — convenient for fast routing |
+| `User-Agent` | `InsiteChat-Webhook/1.0` |
+
 ## Signature Verification
 
-Every webhook is signed with **HMAC-SHA256**. The signature is in the `X-InsiteChat-Signature` header.
+Every payload is signed with HMAC-SHA256 using the per-webhook secret you'll see when you create or view the webhook in the dashboard. Always verify the signature before trusting the body.
 
 ### Python
 
@@ -42,12 +157,8 @@ Every webhook is signed with **HMAC-SHA256**. The signature is in the `X-InsiteC
 import hmac
 import hashlib
 
-def verify_signature(payload_bytes, signature, secret):
-    expected = hmac.new(
-        secret.encode(),
-        payload_bytes,
-        hashlib.sha256
-    ).hexdigest()
+def verify_signature(payload_bytes: bytes, signature: str, secret: str) -> bool:
+    expected = hmac.new(secret.encode(), payload_bytes, hashlib.sha256).hexdigest()
     return hmac.compare_digest(expected, signature)
 ```
 
@@ -63,23 +174,27 @@ function verifySignature(payloadBuffer, signature, secret) {
     .digest('hex');
   return crypto.timingSafeEqual(
     Buffer.from(expected),
-    Buffer.from(signature)
+    Buffer.from(signature),
   );
 }
 ```
 
+<Warning>
+Verify against the **raw request bytes**, not the parsed JSON. Re-serializing changes whitespace and breaks the signature. Most frameworks expose a `req.rawBody` or `request.body()` (bytes) helper.
+</Warning>
+
 ## Retry Policy
 
-Failed deliveries are retried up to 3 times with exponential backoff:
+A delivery is **failed** if the response is non-2xx or the request times out (10 seconds). Failed deliveries are retried up to 3 times with fixed backoff:
 
-| Attempt | Delay |
+| Attempt | Delay after previous failure |
 |---|---|
 | 1st retry | 1 minute |
 | 2nd retry | 5 minutes |
 | 3rd retry | 15 minutes |
 
-A delivery is considered failed if the response status code is not 2xx or the request times out (10 seconds).
+After the 3rd failed retry the delivery is marked permanently failed.
 
 ## Delivery Log
 
-All webhook deliveries are logged in the dashboard. Go to your chatbot -> Webhooks tab -> click "Delivery log" on any webhook to see status, HTTP codes, and retry attempts.
+Every webhook attempt is logged. Open **Dashboard** → your chatbot → **Webhooks**, click **Delivery log** on any webhook to see status code, response body, and retry attempts.

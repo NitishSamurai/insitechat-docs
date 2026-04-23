@@ -120,6 +120,23 @@
         "use-cases/education",
         "use-cases/healthcare"
       ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/overview",
+        "api-reference/authentication",
+        "api-reference/chatbots",
+        "api-reference/chat",
+        "api-reference/sources",
+        "api-reference/webhooks"
+      ]
+    },
+    {
+      "group": "Changelog",
+      "pages": [
+        "changelog/overview"
+      ]
     }
   ],
   "footerSocials": {

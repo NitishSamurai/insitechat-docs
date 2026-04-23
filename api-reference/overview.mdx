@@ -1,11 +1,11 @@
 ---
 title: "API Overview"
-description: "Learn how to integrate InsiteChat into your application using the REST API."
+description: "Programmatically manage chatbots, list sources, send chat messages, and receive webhook events using the InsiteChat REST API."
 ---
 
 # API Overview
 
-The InsiteChat API lets you programmatically manage chatbots, send messages, retrieve sources, and configure webhooks. It follows REST conventions and returns JSON responses.
+The InsiteChat public API lets you list chatbots, retrieve sources, and send chat messages programmatically. Webhooks deliver real-time events (lead captured, message received, conversation started, conversation escalated) to a URL of your choice.
 
 ## Base URL
 
@@ -17,94 +17,109 @@ https://backend.insitechat.ai/api/v1
 
 ## Authentication
 
-Every request must include your API key in the `Authorization` header:
+Every request must include your API key as a Bearer token in the `Authorization` header:
 
 ```bash
-Authorization: Bearer sk-your-api-key-here
+Authorization: Bearer ic_<your-api-key>
 ```
 
-See the [Authentication](/api-reference/authentication) page for details on creating and managing API keys.
+API keys are prefixed with `ic_` followed by a URL-safe random token. See [Authentication](/api-reference/authentication) for how to create, list, and revoke keys.
 
 ## Response Format
 
-All responses are returned as JSON. Successful responses include the requested data at the top level:
+All responses are JSON.
+
+**Successful list endpoints return a bare array:**
 
 ```json
-{
-  "id": "bot_abc123",
-  "name": "My Chatbot",
-  "created_at": "2026-03-15T10:30:00Z"
-}
-```
-
-Error responses include a consistent error object:
-
-```json
-{
-  "error": {
-    "code": "invalid_api_key",
-    "message": "The API key provided is invalid or has been revoked."
+[
+  {
+    "id": "0a1b2c3d-4e5f-6789-abcd-ef0123456789",
+    "name": "Support Bot",
+    "slug": "support-bot",
+    "provider": "gemini",
+    "is_active": true,
+    "created_at": "2026-03-15T10:30:00+00:00"
   }
+]
+```
+
+**Single-object endpoints return the object directly** (no wrapping envelope).
+
+**Error responses** use Django Ninja's default shape — a single `detail` field describing what went wrong:
+
+```json
+{
+  "detail": "API rate limit exceeded. Max 60 requests per minute."
 }
 ```
+
+There are no machine-readable `code` fields on errors today; branch on the HTTP status code instead.
 
 ## HTTP Status Codes
 
-| Code | Description |
-|------|-------------|
+| Code | Meaning |
+|------|---------|
 | `200` | Success |
-| `201` | Resource created |
-| `400` | Bad request — check your request body |
-| `401` | Unauthorized — invalid or missing API key |
-| `403` | Forbidden — API key lacks permission |
-| `404` | Resource not found |
-| `429` | Rate limit exceeded |
-| `500` | Internal server error |
+| `400` | Bad request (malformed body, missing required field, or hit account limit such as max 5 active API keys) |
+| `401` | Unauthorized — missing, invalid, or revoked API key |
+| `404` | Resource not found, or chatbot not owned by the API key's user |
+| `429` | Rate limit exceeded **or** plan message quota exhausted (the `detail` text distinguishes them) |
+| `500` | Server error |
 
 ## Rate Limits
 
-API requests are rate-limited to **100 requests per minute** per API key.
+Per API key: **60 requests per minute** (rolling 60-second window). When you exceed it, the API returns:
 
-When you exceed the limit, the API returns a `429` status code. The response includes a `Retry-After` header indicating how many seconds to wait before retrying.
+```http
+HTTP/1.1 429 Too Many Requests
+Content-Type: application/json
+
+{"detail": "API rate limit exceeded. Max 60 requests per minute."}
+```
+
+There is **no `Retry-After` header** today — back off on a fixed schedule (e.g. wait 60 seconds, then retry).
+
+Separately, the `POST /v1/chatbots/{id}/chat` endpoint counts against your **plan's monthly message quota** (see [plans & pricing](/plans-and-pricing)). When the quota is exhausted, the same endpoint also returns `429`, but with a quota-specific `detail` message (e.g. `"Monthly message limit reached."`). Branch on the message text if you need to distinguish the two.
 
 <Info>
-If you need higher rate limits for your use case, contact us at [support@insitechat.ai](mailto:support@insitechat.ai).
+Need higher rate limits or quota? [Contact support](mailto:support@insitechat.ai).
 </Info>
 
 ## How to Get an API Key
 
 <Steps>
-  <Step title="Log in to InsiteChat">
-    Go to [insitechat.ai](https://insitechat.ai) and log in to your account.
+  <Step title="Log in">
+    Sign in at [insitechat.ai](https://insitechat.ai).
   </Step>
-  <Step title="Open Developer settings">
+  <Step title="Open the Developer page">
     Navigate to **Dashboard** → **Developer** → **API Keys**.
   </Step>
-  <Step title="Create a new key">
-    Click **Create API Key**, give it a descriptive name, and click **Generate**.
+  <Step title="Create a key">
+    Click **Create API Key**, give it a descriptive name (e.g. *Production Server*), and click **Generate**.
   </Step>
-  <Step title="Copy your key">
-    Copy the key immediately. For security, the full key is only shown once.
+  <Step title="Copy and store it">
+    The full key is shown **only once** at creation time. Copy it to a secure store; if you lose it, revoke it and create a new one.
   </Step>
 </Steps>
 
 <Warning>
-Treat your API key like a password. Do not expose it in client-side code, public repositories, or browser requests. Always make API calls from your server.
+Each user account is limited to **5 active API keys**. Revoke unused keys before creating new ones if you hit the cap. Treat keys like passwords — never expose them in client-side JavaScript, mobile bundles, or public repos. Always call the API from your backend.
 </Warning>
 
 ## Available Endpoints
 
 <CardGroup cols={2}>
   <Card title="Chatbots" href="/api-reference/chatbots">
-    List and retrieve your chatbots.
+    List chatbots and retrieve a single chatbot's details.
   </Card>
   <Card title="Chat" href="/api-reference/chat">
-    Send messages and get AI responses.
+    Send a message to a chatbot and receive an AI-generated reply.
   </Card>
   <Card title="Sources" href="/api-reference/sources">
-    List training sources for a chatbot.
+    List the training sources on a chatbot.
   </Card>
   <Card title="Webhooks" href="/api-reference/webhooks">
-    Receive real-time event notifications.
+    Configure outgoing webhooks to receive real-time events.
   </Card>
 </CardGroup>

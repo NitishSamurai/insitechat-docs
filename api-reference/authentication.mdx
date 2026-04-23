@@ -1,29 +1,39 @@
 ---
 title: "Authentication"
-description: "Create and manage API keys to authenticate with the InsiteChat API."
+description: "Create, list, and revoke API keys for the InsiteChat REST API."
 ---
 
 # Authentication
 
-All InsiteChat API requests require a valid API key sent in the `Authorization` header. API keys are tied to your account and have access to all chatbots you own.
+The InsiteChat API uses **Bearer token authentication**. Every request must include a valid API key in the `Authorization` header. Keys are tied to your user account and grant access to all chatbots you own.
 
 ## Creating an API Key
 
 <Steps>
   <Step title="Open the Developer page">
-    In your InsiteChat dashboard, navigate to **Developer** → **API Keys**.
+    From your dashboard, navigate to **Developer** → **API Keys**.
   </Step>
-  <Step title="Generate a key">
-    Click **Create API Key**. Enter a descriptive name (e.g., "Production Server" or "Staging") and click **Generate**.
+  <Step title="Create a key">
+    Click **Create API Key**, give it a descriptive name (e.g. *Production Server*, *Staging*, *Zapier Integration*), and click **Generate**.
   </Step>
-  <Step title="Copy the key">
-    Your new API key is displayed once. Copy it and store it securely — you will not be able to see it again.
+  <Step title="Copy and store it">
+    The full key is displayed **only once**. Copy it to a secure store immediately.
   </Step>
 </Steps>
 
 <Warning>
-If you lose your API key, you cannot retrieve it. Revoke the lost key and create a new one.
+You can have at most **5 active API keys** per account. If you hit the cap, revoke an unused key before creating a new one. If you lose a key, revoke it and create a fresh one — there is no way to retrieve a key after the creation screen closes.
 </Warning>
+
+## Key Format
+
+API keys are URL-safe random tokens prefixed with `ic_`:
+
+```
+ic_aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789AbCdEfGh
+```
+
+The first 8 characters (the `prefix`, which always starts with `ic_`) are shown in the dashboard so you can identify which key is which. The full key is never stored on InsiteChat servers — only its SHA-256 hash — which is why we can't show it back to you after creation.
 
 ## Using Your API Key
 
@@ -31,74 +41,63 @@ Include the API key in the `Authorization` header of every request:
 
 ```bash
 curl https://backend.insitechat.ai/api/v1/chatbots \
-  -H "Authorization: Bearer sk-your-api-key-here"
-```
-
-API keys follow the format `sk-` followed by a random string. For example:
-
-```
-sk-abc123def456ghi789jkl012mno345
+  -H "Authorization: Bearer ic_your-full-api-key-here"
 ```
 
 <Warning>
-Never expose your API key in client-side JavaScript, mobile app bundles, or public repositories. Always make API calls from your backend server.
+Never expose your API key in browser JavaScript, mobile app bundles, public Git repos, or anywhere a customer could read it. Always call the API from a server you control.
 </Warning>
 
-## Key Management
+## Listing Your Keys
 
-### List Your Keys
+`Dashboard` → **Developer** → **API Keys** shows every key on your account with:
 
-View all active API keys from **Dashboard** → **Developer** → **API Keys**. Each key shows:
+- **Name** — the label you gave the key at creation
+- **Prefix** — the first 8 characters (e.g. `ic_aBcDeF`) so you can spot which key is which
+- **Last used** — the timestamp of the most recent successful API call (or *Never* if unused)
+- **Created** — when the key was generated
+- **Active / Revoked** — current state
 
-- **Name** — the label you gave the key
-- **Created** — when the key was created
-- **Last used** — the most recent API call made with this key
-- **Prefix** — the first 8 characters of the key (e.g., `sk-abc123...`)
+## Revoking a Key
 
-### Revoke a Key
+1. Find the key on the **API Keys** page.
+2. Click **Revoke** and confirm.
 
-To revoke an API key:
-
-1. Go to **Dashboard** → **Developer** → **API Keys**.
-2. Find the key you want to revoke.
-3. Click the **Revoke** button and confirm.
-
-Revoked keys stop working immediately. Any requests using a revoked key receive a `401 Unauthorized` response.
+Revoked keys stop working immediately. Any subsequent request using a revoked key returns `401 Unauthorized` (the same response as a malformed or unknown key — there is no separate error code distinguishing the two).
 
 <Info>
-You can create multiple API keys to separate access between environments (production, staging, development). Revoke keys individually without affecting others.
+Use separate keys for each environment (production, staging, dev) and each integration (Zapier, your CRM sync, internal scripts). That way revoking a leaked key only impacts one consumer.
 </Info>
 
 ## Rate Limiting
 
-API requests are rate-limited per API key:
+Each API key is rate-limited to **60 requests per minute** on a rolling 60-second window.
 
-| Limit | Value |
-|-------|-------|
-| Requests per minute | 100 |
-| Burst (short window) | 20 requests in 5 seconds |
+When you exceed the limit, the API returns:
 
-When you exceed the rate limit, the API returns:
+```http
+HTTP/1.1 429 Too Many Requests
+Content-Type: application/json
 
-```json
-{
-  "error": {
-    "code": "rate_limit_exceeded",
-    "message": "Too many requests. Please retry after 12 seconds."
-  }
-}
+{"detail": "API rate limit exceeded. Max 60 requests per minute."}
 ```
 
-The response includes a `Retry-After` header with the number of seconds to wait.
+There is **no `Retry-After` header** — back off on a fixed schedule (e.g. wait 60 seconds before retrying).
 
 <Tip>
-Implement exponential backoff in your integration. When you receive a `429` response, wait the number of seconds specified in `Retry-After` before retrying.
+Implement client-side throttling so you stay well under 60/min. If you genuinely need more headroom, [contact support](mailto:support@insitechat.ai).
 </Tip>
 
 ## Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| `401` | `invalid_api_key` | The API key is missing, malformed, or invalid. |
-| `401` | `revoked_api_key` | The API key has been revoked. |
-| `429` | `rate_limit_exceeded` | Too many requests — slow down. |
+The API returns standard HTTP status codes. Error bodies follow the Django Ninja default shape — a single `detail` field describing what went wrong:
+
+| Status | Typical `detail` | Cause |
+|---|---|---|
+| `401` | (Ninja default `Unauthorized`) | Missing, malformed, or revoked API key |
+| `400` | `Maximum 5 active API keys allowed.` | Hit the per-account key cap when calling the create-key endpoint |
+| `404` | `API key not found.` | Tried to revoke a key that doesn't exist or isn't yours |
+| `429` | `API rate limit exceeded. Max 60 requests per minute.` | Per-key rate limit |
+| `429` | `Monthly message limit reached.` (or similar quota text) | Plan message quota exhausted (only on the chat endpoint) |
+
+There is **no machine-readable `code` field** today — branch on the HTTP status (and on the `detail` text if you need to distinguish rate-limit `429`s from quota `429`s).

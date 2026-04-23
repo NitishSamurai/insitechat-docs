@@ -1,38 +1,40 @@
 ---
 title: "Chat"
-description: "Send messages to a chatbot and receive AI-generated responses via the InsiteChat API."
+description: "Send a message to a chatbot and receive an AI-generated reply via the InsiteChat API."
 ---
 
 # Chat
 
-Use the chat endpoint to send a message to a chatbot and receive an AI-generated response. This is the core endpoint for integrating InsiteChat conversations into your application.
+The chat endpoint runs your message through the same RAG pipeline as the web embed (hybrid vector + BM25 retrieval, RRF fusion, system-prompt + identity rules + history) and returns the chatbot's reply as a single JSON response. Streaming is not supported.
 
 ## Send a Message
 
 ### Request
 
 ```
-POST /v1/chatbots/{id}/chat
+POST /v1/chatbots/{chatbot_id}/chat
 ```
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `id` | string | **Required.** The chatbot ID (e.g., `bot_abc123`). |
+| Path parameter | Type | Required | Description |
+|---|---|---|---|
+| `chatbot_id` | UUID | yes | The chatbot to message. Must be owned by the API key's user. |
 
-### Request Body
+### Body
 
 | Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `message` | string | Yes | The user's message to the chatbot. |
-| `session_id` | string | No | A session identifier to maintain conversation context. If omitted, a new session is created. |
+|---|---|---|---|
+| `message` | string | yes | The user's message. |
+| `session_id` | string | no | A session identifier so the chatbot can track conversation history across multiple turns. If omitted, defaults to `api-<your-user-id>` (so all keyless calls share one conversation per user — usually not what you want for production). |
+
+### Example
 
 ```bash
-curl -X POST https://backend.insitechat.ai/api/v1/chatbots/bot_abc123/chat \
-  -H "Authorization: Bearer sk-your-api-key-here" \
+curl -X POST https://backend.insitechat.ai/api/v1/chatbots/0a1b2c3d-4e5f-6789-abcd-ef0123456789/chat \
+  -H "Authorization: Bearer ic_your-api-key" \
   -H "Content-Type: application/json" \
   -d '{
     "message": "What is your return policy?",
-    "session_id": "sess_user123"
+    "session_id": "user-42-session-abc"
   }'
 ```
 
@@ -40,54 +42,61 @@ curl -X POST https://backend.insitechat.ai/api/v1/chatbots/bot_abc123/chat \
 
 ```json
 {
-  "response": "Our return policy allows returns within 30 days of purchase. Items must be in their original condition with tags attached. To start a return, go to your order history and click \"Request Return\" on the item you'd like to send back.",
-  "conversation_id": "conv_a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  "response": "Our return policy allows returns within 30 days of purchase. Items must be in their original condition with tags attached. To start a return, go to your order history and click \"Request Return\" on the item you'd like to send back."
 }
 ```
 
-### Response Fields
-
 | Field | Type | Description |
-|-------|------|-------------|
-| `response` | string | The AI-generated reply to the user's message. |
-| `conversation_id` | string | A UUID identifying this conversation. Use this to track conversations in your system. |
+|---|---|---|
+| `response` | string | The chatbot's reply. |
+
+The endpoint **does not** return a `conversation_id` — the conversation is keyed by your `session_id`. If you need to correlate the reply with a server-side conversation record, subscribe to the [`conversation.started`](/api-reference/webhooks) webhook.
 
 ## Multi-Turn Conversations
 
-To maintain conversation context across multiple messages, pass the same `session_id` with each request:
+Pass the same `session_id` on every call to give the chatbot the last 10 turns of history:
 
 ```bash
-# First message
-curl -X POST https://backend.insitechat.ai/api/v1/chatbots/bot_abc123/chat \
-  -H "Authorization: Bearer sk-your-api-key-here" \
+# Turn 1
+curl -X POST https://backend.insitechat.ai/api/v1/chatbots/0a1b2c3d-.../chat \
+  -H "Authorization: Bearer ic_your-api-key" \
   -H "Content-Type: application/json" \
-  -d '{
-    "message": "What is your return policy?",
-    "session_id": "sess_user123"
-  }'
+  -d '{"message": "What is your return policy?", "session_id": "user-42-session-abc"}'
 
-# Follow-up message (same session_id)
-curl -X POST https://backend.insitechat.ai/api/v1/chatbots/bot_abc123/chat \
-  -H "Authorization: Bearer sk-your-api-key-here" \
+# Turn 2 — same session_id
+curl -X POST https://backend.insitechat.ai/api/v1/chatbots/0a1b2c3d-.../chat \
+  -H "Authorization: Bearer ic_your-api-key" \
   -H "Content-Type: application/json" \
-  -d '{
-    "message": "Does that apply to sale items too?",
-    "session_id": "sess_user123"
-  }'
+  -d '{"message": "Does that apply to sale items too?", "session_id": "user-42-session-abc"}'
 ```
 
 <Tip>
-Use a consistent `session_id` per user session (e.g., based on a user ID or browser session) to give the chatbot full conversation context. Without a `session_id`, each message is treated as a new, independent conversation.
+Use one `session_id` per end-user session (e.g. derived from your own user ID + a UUID per visit). Without a `session_id`, every request shares one default per-key conversation, which mixes up history.
 </Tip>
 
 ## Error Responses
 
-| Status | Code | Description |
-|--------|------|-------------|
-| `400` | `message_required` | The `message` field is missing or empty. |
-| `404` | `chatbot_not_found` | No chatbot found with the given ID. |
-| `429` | `rate_limit_exceeded` | Too many requests — slow down. |
+Error bodies use Django Ninja's default `{"detail": "..."}` shape — no machine-readable `code` field.
+
+| Status | When |
+|---|---|
+| `401` | Missing, invalid, or revoked API key |
+| `404` | No chatbot exists with that UUID **or** the chatbot belongs to a different user |
+| `429` | Per-key rate limit (`API rate limit exceeded. Max 60 requests per minute.`) **or** plan message quota exhausted (e.g. `Monthly message limit reached.`) — distinguish by reading the `detail` text |
+| `500` | LLM provider error or internal fault |
 
 <Info>
-The chat endpoint counts toward your plan's monthly message limit. Check your usage in **Dashboard** → **Analytics**.
+Every successful chat request counts toward your plan's **monthly message quota**. Only `role='user'` messages count — assistant replies are free. Track usage in **Dashboard** → **Analytics**, or upgrade your plan in **Plans & Pricing**.
 </Info>
+
+## What Happens Under the Hood
+
+Each call:
+
+1. Enforces your plan's monthly message quota and per-conversation rate limit (raises `429` if exceeded).
+2. Looks up or creates a `Conversation` keyed by `(chatbot_id, session_id)`.
+3. If a human agent has taken over this conversation, persists the inbound message but skips LLM generation (no reply is returned in that case — the dashboard surfaces it for the agent).
+4. Saves the user message and fires the `conversation.started` webhook (if newly created) and `message.received` webhook.
+5. Retrieves relevant context via hybrid vector + BM25 search with RRF fusion.
+6. Builds the prompt (your chatbot's system prompt + identity rules + retrieved context + last 10 turns).
+7. Calls the configured LLM provider (Gemini / OpenAI / Ollama) and saves + returns the reply.
