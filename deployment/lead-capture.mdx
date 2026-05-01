@@ -1,77 +1,199 @@
 ---
 title: "Lead Capture & Management"
-description: "Collect visitor information with customizable forms, manage leads with status tracking, tags, and bulk actions."
+description: "Collect visitor information with customizable forms, manage leads with status tracking, tags, bulk actions, and sync to email, Slack, HubSpot, or any webhook."
 ---
 
 # Lead Capture & Management
 
-Collect visitor names, emails, and phone numbers directly inside the chat widget. Manage leads with status tracking, tagging, starring, search, bulk actions, and CSV export.
+Capture leads from every chatbot conversation and route them to the surface your team works in — the dashboard, email, Slack, HubSpot, or any webhook endpoint. The lead module ships on every plan including Free, with no per-lead caps.
 
 ## Lead Collection
 
-### Set Up Lead Forms
+### Set Up the Lead Form
 
 <Steps>
-  <Step title="Go to Embed tab">
-    Select your chatbot and click the **Embed** tab.
+  <Step title="Open the Embed tab">
+    From your chatbot, click **Embed** → **Lead Capture**.
+  </Step>
+  <Step title="Pick a starting point">
+    Either start from scratch or click one of the **10 industry templates** to pre-fill fields, timing, and intent keywords:
+
+    Dental, HVAC, Legal, Real Estate, Automotive, Healthcare, SaaS, E-commerce, Consulting, or Reset (blank). Templates are starting points — every field is editable afterwards.
   </Step>
   <Step title="Configure timing">
-    Choose when the lead form appears:
-    - **After messages** — After a configurable number of visitor messages (default: 3)
-    - **At start** — Immediately when the chat opens
-    - **Before escalation** — When the visitor requests human assistance
-    - **On intent** — When the visitor signals buying intent (pricing, demo, contact, etc.)
-    - **On no answer** — When the AI can't answer (uses the fallback message path)
+    Choose when the lead form appears. **5 timing modes** are supported:
+
+    | Mode | When it fires |
+    |---|---|
+    | `at_start` | Immediately when the chat opens |
+    | `after_messages` | After a configurable number of visitor messages (default: 3) |
+    | `before_escalation` | When the visitor requests human assistance |
+    | `on_intent` | When the visitor's message matches one of your intent keywords |
+    | `on_no_answer` | When the AI couldn't answer (uses your fallback message path or a built-in catalogue of "I don't know" phrases) |
+
+    For `on_intent`, you can configure up to **30 keywords** (case-insensitive substring match). Common buying-intent phrases: `pricing`, `demo`, `schedule a call`, `talk to sales`, `quote`.
   </Step>
-  <Step title="Add custom fields">
-    Beyond the default name/email/phone fields, add custom fields with:
-    - **Text** input
-    - **Textarea** for multi-line free text
-    - **Email** with format validation
-    - **Phone** with format validation
-    - **Number** input
-    - **Select** (dropdown) with custom options
-    - Mark fields as required or optional
+  <Step title="Add fields">
+    Three built-in fields ship by default — **Name**, **Email**, **Phone**. Toggle each on/off, mark required/optional, or reorder them with drag-and-drop.
+
+    Add custom fields with any of these **6 input types**:
+
+    - **Text** — single-line free text
+    - **Textarea** — multi-line free text (max 1000 chars)
+    - **Email** — with format validation
+    - **Phone** — with country-code auto-detection (see below)
+    - **Number** — numeric input
+    - **Select** — dropdown with custom options
   </Step>
   <Step title="Save">
-    Click **Save Changes**. The lead form is now active on your widget.
+    Click **Save Changes**. The form is live on every page running your widget.
   </Step>
 </Steps>
 
+### Country Code Auto-Detection
+
+Phone fields detect the visitor's country from their browser timezone and pre-fill the correct dial code. **24 timezone-to-country mappings** are built in:
+
+| Region | Auto-detected codes |
+|---|---|
+| India | `+91` |
+| North America | `+1` |
+| UK & Ireland | `+44` |
+| Europe | `+33` (FR), `+49` (DE), `+34` (ES), `+39` (IT) |
+| APAC | `+81` (JP), `+86` (CN), `+852` (HK), `+65` (SG), `+82` (KR), `+62` (ID) |
+| Oceania | `+61` (AU), `+64` (NZ) |
+| Middle East | `+971` (AE), `+966` (SA), `+20` (EG) |
+| Latin America | `+55` (BR), `+52` (MX) |
+| Africa | `+234` (NG), `+27` (ZA) |
+
+If the timezone doesn't match any of the mappings the field falls back to `+91` (the default for Indian customers) and visitors can edit it manually.
+
+### Multilingual Forms
+
+The widget ships with full lead-form translations in:
+
+- **English** (`en`)
+- **Hindi** (Devanagari, `hi`)
+- **Hinglish** (Roman-script Hindi, `hi-en`)
+
+Right-to-left layout is supported via the `rtl` flag in widget branding settings. Every label — field placeholders, the submit button, the success message — can be overridden per chatbot via `branding.localization` for languages we don't bundle.
+
+### Auto-Captured Context
+
+In addition to the fields you collect, every lead is automatically tagged with:
+
+- **`page_url`** — the page the visitor was on when they submitted (truncated to 2048 chars). Stored under `custom_data.page_url`. Useful for attributing leads to specific landing pages or blog posts. You can override or replace this by defining your own `page_url` field.
+
+The full chat transcript (last 100 messages) is attached to every lead automatically — see [Conversation Context](#conversation-context).
+
 ## Lead Management Dashboard
 
-Access the **Leads** tab in your chatbot to manage all captured leads.
+Open **Dashboard** → your chatbot → **Leads**.
 
 ### Status Tracking
 
-Each lead has a status that you can update:
+Each lead has a status that you (or an automation) can update. Statuses are manual today — there's no AI-driven scoring yet.
 
-| Status | Description |
-|--------|-------------|
+| Status | Meaning |
+|--------|---------|
 | **New** | Just captured, not yet reviewed |
-| **Contacted** | You've reached out to the lead |
-| **Qualified** | Lead meets your criteria |
-| **Converted** | Lead became a customer |
+| **Contacted** | You've reached out |
+| **Qualified** | Meets your criteria |
+| **Converted** | Became a customer |
 | **Archived** | No longer active |
 
-### Features
+### Tags
 
-- **Search** — Find leads by name, email, or phone
-- **Filter** — Filter by status or starred leads
-- **Star** — Mark important leads for quick access
-- **Tags** — Create custom tags with colors and assign to leads
-- **Detail panel** — Click any lead to see full contact info, custom fields, tags, and the complete conversation transcript
-- **Bulk actions** — Select multiple leads to star, unstar, archive, or delete in batch
-- **CSV export** — Download all leads (including custom field columns) for use in CRM, email marketing, or analytics
+- **Up to 20 custom tags per chatbot**, in **8 colors**: gray, red, blue, green, yellow, purple, pink, indigo
+- Auto-tagging: leads are tagged with the conversation-starter title (the AI-generated session label) when one is set
+- Assign tags individually or in bulk
 
-### Conversation Context
+### Search, Filter, Star
 
-Each lead's detail panel shows the full conversation transcript from the chat session where the lead was captured. This gives your sales team complete context when following up.
+- **Search** by name, email, or phone (debounced after 2 characters)
+- **Filter** by status, starred, or any tag
+- **Star toggle** per lead — a fast "this matters" pin
+
+### Bulk Actions
+
+Select multiple leads and run any of **5 bulk actions**: star, unstar, archive, unarchive, delete.
+
+### Detail Panel
+
+Click any lead to open the full panel — contact info, every custom field, tags, status, capture timestamp, and the **complete conversation transcript** (last 100 messages with timestamps) from the chat session that produced the lead.
+
+### CSV Export
+
+Download leads as CSV — every column you've configured plus the built-in fields, status, tags, and timestamps. Export respects your active filters, so you can download just the segment you need. Capped at **10,000 rows per export**.
+
+### Soft Delete
+
+Deleted leads are recoverable. Nothing is permanently removed without an explicit re-deletion from the archived/deleted view.
 
 <Tip>
-Ask for less up front. Collecting just an email address reduces form abandonment. You can always follow up for additional details later.
+Ask for less up front. Collecting just an email reduces form abandonment by ~30% in our data — you can always follow up for additional details on the call.
 </Tip>
 
+## Notifications & Sync
+
+Every new lead fires a single `lead.captured` event that lands in **all four** of these surfaces in parallel — pick whichever your team works in:
+
+### Email Alerts
+
+A formatted email hits the chatbot owner's inbox the moment a lead is captured (toggle in **Settings** → **Notifications** → "New lead").
+
+- Add up to **10 additional recipient emails** per chatbot. Each address requires a one-click email-link verification before alerts start.
+- Rate-limited at **20 emails per hour** to prevent inbox flooding on busy days.
+
+### Slack Notifications
+
+If you've connected a Slack workspace via the Slack integration, every lead is posted as a formatted block (name, email, phone) to your chosen channel. See [Slack integration](/integrations/slack).
+
+### HubSpot CRM Sync
+
+Connect your HubSpot account once and every lead automatically creates a HubSpot contact — `firstname`, `lastname`, `email`, `phone`. OAuth tokens auto-refresh on 401. See [HubSpot integration](/integrations/hubspot).
+
+### Webhooks (Zapier, Make, n8n, custom)
+
+Configure an HTTP endpoint and we'll POST a signed JSON payload (HMAC-SHA256, header `X-InsiteChat-Signature`) on every `lead.captured` event. The full payload shape — including `custom_data`, signature verification snippets, and retry policy — is documented in [Webhooks → `lead.captured`](/api-reference/webhooks#lead-captured).
+
+Use this with [Zapier](/integrations/zapier) (6,000+ apps including Salesforce, Pipedrive, Zoho, Airtable, Google Sheets), Make, n8n, or any internal HTTP receiver.
+
 <Note>
-Leads are soft-deleted when removed — they can be recovered if needed. The lead capture endpoint has built-in rate limiting (10 submissions per IP per minute) and duplicate email detection (5-minute dedup window) to prevent spam.
+All four surfaces fire simultaneously from the same event. There's no "primary" sync — you can use one, two, or all four. Webhooks come with a built-in retry policy (3 retries with backoff at 1, 5, 15 minutes); the dashboard delivery log shows status codes and bodies for every attempt.
+</Note>
+
+## Spam & Abuse Protection
+
+Two safeguards run on every lead submission:
+
+- **Rate limiting** — `5 lead submissions per visitor IP per chatbot per minute`. Above that, the public lead endpoint returns HTTP `429 Too Many Requests`.
+- **Duplicate detection** — the same email submitted within a `5-minute window` for the same chatbot returns the existing lead instead of creating a duplicate row.
+
+There is no CAPTCHA / Turnstile in front of the lead form by design — friction kills conversion. The two safeguards above stop the most common abuse patterns without blocking real visitors.
+
+## REST API
+
+Programmatic access for everything the dashboard does:
+
+| Method | Endpoint | Auth | Purpose |
+|---|---|---|---|
+| `POST` | `/api/chatbots/public/{chatbot_id}/leads` | None | Submit a lead from any source (called by the widget) |
+| `GET` | `/api/chatbots/{chatbot_id}/leads` | JWT | List captured leads with filtering and pagination |
+| `GET` | `/api/chatbots/{chatbot_id}/leads/{lead_id}` | JWT | Fetch a single lead with full custom data |
+| `PATCH` | `/api/chatbots/{chatbot_id}/leads/{lead_id}` | JWT | Update status or fields |
+| `DELETE` | `/api/chatbots/{chatbot_id}/leads/{lead_id}` | JWT | Soft-delete |
+| `POST` | `/api/chatbots/{chatbot_id}/leads/bulk` | JWT | Bulk star/unstar/archive/unarchive/delete |
+| `POST` | `/api/chatbots/{chatbot_id}/leads/{lead_id}/tags` | JWT | Assign tags to a lead |
+| `GET` | `/api/chatbots/{chatbot_id}/leads/export` | JWT | CSV export, respects current filters |
+| `GET` `POST` `DELETE` | `/api/chatbots/{chatbot_id}/lead-tags` | JWT | Manage the chatbot's tag set |
+
+See [API authentication](/api-reference/authentication) for JWT details.
+
+## Roadmap
+
+The lead module today does **manual** lead qualification — you (or your CRM rules) move a lead between New / Contacted / Qualified / Converted / Archived. AI-driven lead scoring and automatic intent classification are on the public roadmap; track the [changelog](/changelog/overview) for release notes.
+
+<Note>
+Conversational field-by-field lead capture (collecting fields one-at-a-time inside the chat itself, instead of a single modal) is also on the roadmap. Today the lead form is a single panel that appears at the timing you configure.
 </Note>
