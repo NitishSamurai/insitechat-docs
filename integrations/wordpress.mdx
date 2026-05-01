@@ -11,7 +11,7 @@ The InsiteChat WordPress plugin lets you add an AI chatbot to any WordPress site
 
 <Steps>
   <Step title="Download the Plugin">
-    Download the InsiteChat WordPress plugin (`insitechat.zip`) from your InsiteChat dashboard or the WordPress Plugin Directory.
+    Download the InsiteChat WordPress plugin (`insitechat.zip`) from your InsiteChat dashboard → chatbot → **Embed** tab → **WordPress Plugin** card.
   </Step>
   <Step title="Install in WordPress">
     Go to your WordPress admin → **Plugins** → **Add New** → **Upload Plugin**. Upload the zip file and click **Install Now**, then **Activate**.
@@ -32,7 +32,7 @@ The InsiteChat WordPress plugin lets you add an AI chatbot to any WordPress site
 - **Page exclusion** — hide the chatbot on specific pages (e.g., `/checkout`, `/cart`)
 - **Settings page** — configure everything from the WordPress admin
 - **Works with any theme** — compatible with all WordPress themes
-- **Lightweight** — adds a single iframe, no performance impact
+- **Lightweight** — injects from the WordPress `wp_footer` hook (non-render-blocking) and adds a single position-fixed iframe, so no layout shift
 
 ## Exclude Pages
 
@@ -42,10 +42,9 @@ In **Settings** → **InsiteChat**, you can add URL paths to exclude (one per li
 /checkout
 /cart
 /thank-you
-/wp-admin
 ```
 
-The chatbot will not appear on these pages.
+The chatbot will not appear on these pages. (Note: WordPress admin pages are already excluded automatically — no need to list `/wp-admin`.)
 
 ## Finding Your Chatbot ID
 
@@ -55,4 +54,4 @@ The chatbot will not appear on these pages.
 
 ## Uninstalling
 
-Deactivate and delete the plugin from WordPress → **Plugins**. No data is left behind on your WordPress site.
+Deactivate and delete the plugin from WordPress → **Plugins**. The plugin's uninstall hook automatically deletes the four options it stored (`insitechat_chatbot_id`, `insitechat_position`, `insitechat_enabled`, `insitechat_exclude_pages`) — including across every site on a multisite install — so no leftover rows remain in `wp_options`.
