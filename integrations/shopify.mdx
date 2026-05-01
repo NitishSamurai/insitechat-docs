@@ -1,48 +1,117 @@
 ---
 title: "Shopify"
-description: "Add an AI chatbot to your Shopify store. Answer product questions and capture leads 24/7."
+description: "Add the InsiteChat AI chatbot to your Shopify store via our Theme App Extension. Works on any Online Store 2.0 theme — no code, no Liquid edits."
 ---
 
-## Overview
+# Shopify
 
-The InsiteChat Shopify app adds an AI chatbot to your Shopify store using a Theme App Extension. Visitors can ask product questions, get support, and submit leads — all powered by your trained knowledge base.
+The InsiteChat Shopify app installs as a **Theme App Extension** — you add the InsiteChat block through your theme editor and the AI chatbot appears in the bottom corner of every storefront page (with auto-hide on cart and checkout, on by default).
 
-## Installation
+The widget on a Shopify store is the same widget every other InsiteChat customer ships. Color, position, language, greeting, lead-capture fields, and every other behavior are configured from your InsiteChat dashboard at insitechat.ai — Shopify just hosts the script tag for you.
+
+<Note>
+The public Shopify App Store listing is currently in review. Until it appears in the App Store, install via the [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) against your dev/test store, or use the manual `<script>` install (see below). The Theme App Extension code lives in the InsiteChat repo at [`shopify-app/extensions/insitechat-widget/`](https://github.com/NitishSamurai/InsiteChat.ai/tree/prod/shopify-app/extensions/insitechat-widget).
+</Note>
+
+## Installation (App Store — recommended)
 
 <Steps>
-  <Step title="Install from Shopify App Store">
-    Search for **InsiteChat** in the Shopify App Store, or install directly from your InsiteChat dashboard.
+  <Step title="Install the InsiteChat app">
+    From your Shopify admin, search for **InsiteChat AI Chatbot** in the Shopify App Store and click **Add app**. Approve the requested permissions (we ask for `write_themes` so we can ship the chatbot block; we don't read or modify your products, orders, or customers).
   </Step>
-  <Step title="Enter Chatbot ID">
-    After installation, go to **Online Store** → **Themes** → **Customize**. Find the InsiteChat app block and enter your Chatbot ID.
+  <Step title="Open your theme editor">
+    After install, Shopify drops you into **Online Store** → **Themes** → **Customize** with the InsiteChat block ready to enable. The block is auto-added to your theme's body section on Online Store 2.0 themes (Dawn, Sense, Crave, Refresh, Prestige, Impulse, etc.).
   </Step>
-  <Step title="Configure Position">
-    Choose where the chatbot appears: **Bottom Right** or **Bottom Left**. Save and publish your theme.
+  <Step title="Paste your Chatbot ID">
+    Find your Chatbot ID on **insitechat.ai** → your chatbot → **Embed** tab. Format is a UUID like `0a1b2c3d-4e5f-6789-abcd-ef0123456789`. Paste it into the Chatbot ID field of the InsiteChat block in the theme editor.
+  </Step>
+  <Step title="Choose visibility (optional)">
+    Two checkboxes, both **on** by default:
+
+    | Setting | What it does |
+    |---|---|
+    | Hide on Cart & Checkout pages | Removes the chatbot from `/cart`, `/checkout`, and the Gift Card page so it never blocks a purchase. Recommended on. |
+    | Hide on the Password page | Removes the chatbot on the storefront password page used by pre-launch stores. |
+
+    Color, position (bottom-left vs bottom-right), language, and greeting are managed from your InsiteChat dashboard, not in the theme editor.
+  </Step>
+  <Step title="Save and preview">
+    Click **Save** in the theme editor, then **Preview** the storefront. You should see the InsiteChat bubble in the corner. Click it — the chat panel opens at 430 × 640 on desktop and fullscreen on mobile.
   </Step>
 </Steps>
 
-## Features
+## Installation (manual `<script>` tag — for vintage themes)
 
-- **Theme App Extension** — installs cleanly via Shopify's theme editor
-- **No code changes** — no Liquid template editing required
-- **Position control** — bottom-left or bottom-right
-- **Works on all pages** — product pages, collections, cart, homepage
-- **Shopify theme editor** — configure directly in your theme customizer
-- **Mobile responsive** — works on all devices
+If your theme isn't Online Store 2.0 (Debut, Brooklyn, Express, custom Liquid themes), the App Store install can't auto-add the block. Instead:
 
-## Finding Your Chatbot ID
+<Steps>
+  <Step title="Open theme.liquid">
+    **Online Store** → **Themes** → next to your active theme, **Edit code** → open `layout/theme.liquid`.
+  </Step>
+  <Step title="Paste the script tag">
+    Just before the closing `</body>` tag, paste:
 
-1. Log in to [insitechat.ai](https://insitechat.ai)
-2. Go to your chatbot → **Embed** tab
-3. Copy the Chatbot ID
+    ```liquid
+    <script src="https://insitechat.ai/widget.js" data-chatbot-id="YOUR_CHATBOT_ID" async></script>
+    ```
 
-## Best Practices for Shopify
+    Replace `YOUR_CHATBOT_ID` with the UUID from your **Embed** tab.
+  </Step>
+  <Step title="Save">
+    Save `theme.liquid`. The widget is live on every page that includes the layout.
+  </Step>
+</Steps>
 
-- **Train on product pages** — add your Shopify store URL as a source to train on all product descriptions
-- **Add FAQ content** — upload your FAQ or return policy as a text source
-- **Use Q&A pairs** — add common product questions with precise answers
-- **Enable lead capture** — collect visitor emails for abandoned cart follow-ups
+<Warning>
+Manual installs don't get the cart/checkout auto-hide behavior. If you need that on a vintage theme, wrap the `<script>` tag in a Liquid conditional: `{% unless template.name == 'cart' or template.name == 'checkout' %}…{% endunless %}`.
+</Warning>
 
-## Uninstalling
+## What the chatbot can do on Shopify
 
-Go to **Settings** → **Apps** in your Shopify admin and uninstall InsiteChat. The chatbot widget is removed immediately.
+The chatbot answers questions grounded in **the public content of your store** that you've added as a training source on InsiteChat. That includes:
+
+- Product titles, descriptions, variants, and prices
+- Collection pages
+- Shipping, returns, refund, privacy, and terms pages
+- Blog posts
+- Any custom URL you point InsiteChat's crawler at, even outside Shopify
+
+It does **not** currently:
+
+- Look up live inventory or order status from the Shopify Admin API. The chatbot answers from indexed page content only. (Live inventory checks are on the public roadmap.)
+- Modify cart contents, apply discount codes, or initiate checkouts. The widget is a pure assistant — it can recommend products with links, but never acts on the merchant's behalf.
+
+## Uninstall
+
+**Settings** → **Apps and sales channels** → **InsiteChat AI Chatbot** → **Uninstall**.
+
+The widget is removed from your storefront immediately. Shopify fires our `app/uninstalled` webhook so we mark your shop as uninstalled in our database. After 48 hours, Shopify fires the `shop/redact` webhook and we hard-delete the shop record per Shopify's GDPR policy.
+
+If you also want to delete your InsiteChat account, do that separately at insitechat.ai → Settings → Delete account.
+
+## Permissions we request
+
+The app requests **`write_themes`** only. That's the minimum scope Shopify accepts for an app that ships theme assets. We don't:
+
+- Read or modify products, variants, prices, inventory, collections
+- Read or modify orders, customers, transactions
+- Read store-level analytics or reports
+- Read marketing campaigns, discounts, or storefront passwords
+
+Concretely: at install time we receive an offline access token but never call any other Admin API endpoint. The chatbot is purely client-side.
+
+## Pricing
+
+Free to install. The chatbot itself is billed via your InsiteChat account, which has a free-forever tier (50 messages/month) and paid plans starting at ₹1,424/month. There is no Shopify-specific premium pricing.
+
+See [plans-and-pricing](/plans-and-pricing) for the full breakdown.
+
+## Troubleshooting
+
+**"The InsiteChat block isn't showing up after install."** Your theme might be Vintage rather than OS 2.0. Use the manual `<script>` tag method above. To confirm, **Online Store** → **Themes** — Vintage themes are flagged with a yellow "Vintage" badge.
+
+**"The widget appears on cart/checkout even though I enabled auto-hide."** Save the theme after enabling the toggle, and re-publish if the change was on a draft. Hard-refresh the storefront to bypass Shopify's CDN cache (a few minutes).
+
+**"I changed the chatbot's color in InsiteChat but the Shopify widget didn't update."** Color, position, and other branding are pulled by `widget.js` at chat-open time. Visitors who already had the chat open on your store before the change will still see the old color until they reload. New visitors see the new color immediately.
+
+**"Multi-store / multi-locale setup."** Install the app on each store. Use a separate InsiteChat chatbot ID per storefront so each store is trained on its own catalog. The widget itself supports per-store branding, language (English / Hindi / Hinglish out of the box), and RTL layouts.
