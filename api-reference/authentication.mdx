@@ -41,10 +41,41 @@ The first 8 characters (the `prefix`, which always starts with `ic_`) are shown 
 
 Include the API key in the `Authorization` header of every request:
 
-```bash
+<CodeGroup>
+
+```bash cURL
 curl https://backend.insitechat.ai/api/v1/chatbots \
   -H "Authorization: Bearer ic_your-full-api-key-here"
 ```
+
+```python Python
+import requests
+
+API_KEY = "ic_your-full-api-key-here"
+session = requests.Session()
+session.headers.update({"Authorization": f"Bearer {API_KEY}"})
+
+# Now every request via `session` is authenticated:
+chatbots = session.get("https://backend.insitechat.ai/api/v1/chatbots").json()
+```
+
+```javascript Node.js
+const API_KEY = process.env.INSITECHAT_API_KEY;
+const headers = { Authorization: `Bearer ${API_KEY}` };
+
+const res = await fetch("https://backend.insitechat.ai/api/v1/chatbots", {
+  headers,
+});
+const chatbots = await res.json();
+```
+
+```go Go
+req, _ := http.NewRequest("GET", "https://backend.insitechat.ai/api/v1/chatbots", nil)
+req.Header.Set("Authorization", "Bearer "+os.Getenv("INSITECHAT_API_KEY"))
+resp, err := http.DefaultClient.Do(req)
+```
+
+</CodeGroup>
 
 <Warning>
 Never expose your API key in browser JavaScript, mobile app bundles, public Git repos, or anywhere a customer could read it. Always call the API from a server you control.

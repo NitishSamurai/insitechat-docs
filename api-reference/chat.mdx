@@ -30,7 +30,9 @@ POST /v1/chatbots/{chatbot_id}/chat
 
 ### Example
 
-```bash
+<CodeGroup>
+
+```bash cURL
 curl -X POST https://backend.insitechat.ai/api/v1/chatbots/0a1b2c3d-4e5f-6789-abcd-ef0123456789/chat \
   -H "Authorization: Bearer ic_your-api-key" \
   -H "Content-Type: application/json" \
@@ -39,6 +41,131 @@ curl -X POST https://backend.insitechat.ai/api/v1/chatbots/0a1b2c3d-4e5f-6789-ab
     "session_id": "user-42-session-abc"
   }'
 ```
+
+```python Python
+import requests
+
+CHATBOT_ID = "0a1b2c3d-4e5f-6789-abcd-ef0123456789"
+API_KEY = "ic_your-api-key"
+
+response = requests.post(
+    f"https://backend.insitechat.ai/api/v1/chatbots/{CHATBOT_ID}/chat",
+    headers={
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json",
+    },
+    json={
+        "message": "What is your return policy?",
+        "session_id": "user-42-session-abc",
+    },
+    timeout=30,
+)
+response.raise_for_status()
+print(response.json()["response"])
+```
+
+```javascript Node.js
+const CHATBOT_ID = "0a1b2c3d-4e5f-6789-abcd-ef0123456789";
+const API_KEY = "ic_your-api-key";
+
+const res = await fetch(
+  `https://backend.insitechat.ai/api/v1/chatbots/${CHATBOT_ID}/chat`,
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      message: "What is your return policy?",
+      session_id: "user-42-session-abc",
+    }),
+  }
+);
+if (!res.ok) throw new Error(`InsiteChat ${res.status}: ${await res.text()}`);
+const { response } = await res.json();
+console.log(response);
+```
+
+```typescript TypeScript
+const CHATBOT_ID = "0a1b2c3d-4e5f-6789-abcd-ef0123456789";
+const API_KEY = process.env.INSITECHAT_API_KEY!;
+
+interface ChatResponse {
+  response: string;
+}
+
+export async function askChatbot(
+  message: string,
+  sessionId: string
+): Promise<string> {
+  const res = await fetch(
+    `https://backend.insitechat.ai/api/v1/chatbots/${CHATBOT_ID}/chat`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message, session_id: sessionId }),
+    }
+  );
+  if (!res.ok) {
+    throw new Error(`InsiteChat ${res.status}: ${await res.text()}`);
+  }
+  const data: ChatResponse = await res.json();
+  return data.response;
+}
+```
+
+```go Go
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io"
+    "net/http"
+)
+
+const (
+    chatbotID = "0a1b2c3d-4e5f-6789-abcd-ef0123456789"
+    apiKey    = "ic_your-api-key"
+)
+
+type chatRequest struct {
+    Message   string `json:"message"`
+    SessionID string `json:"session_id"`
+}
+
+type chatResponse struct {
+    Response string `json:"response"`
+}
+
+func main() {
+    body, _ := json.Marshal(chatRequest{
+        Message:   "What is your return policy?",
+        SessionID: "user-42-session-abc",
+    })
+    req, _ := http.NewRequest(
+        "POST",
+        fmt.Sprintf("https://backend.insitechat.ai/api/v1/chatbots/%s/chat", chatbotID),
+        bytes.NewReader(body),
+    )
+    req.Header.Set("Authorization", "Bearer "+apiKey)
+    req.Header.Set("Content-Type", "application/json")
+    resp, err := http.DefaultClient.Do(req)
+    if err != nil { panic(err) }
+    defer resp.Body.Close()
+    data, _ := io.ReadAll(resp.Body)
+    var out chatResponse
+    json.Unmarshal(data, &out)
+    fmt.Println(out.Response)
+}
+```
+
+</CodeGroup>
 
 ### Response
 

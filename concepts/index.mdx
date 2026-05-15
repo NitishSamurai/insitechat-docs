@@ -1,0 +1,56 @@
+---
+title: "Concepts — How InsiteChat Works Under the Hood"
+sidebarTitle: "Overview"
+description: "InsiteChat technical foundation: RAG, embeddings, hybrid search with Reciprocal Rank Fusion, system prompts, and vector databases. Plain-English explainers."
+author: "InsiteChat"
+datePublished: "2026-05-16"
+dateModified: "2026-05-16"
+---
+
+**InsiteChat** is built on retrieval-augmented generation (RAG) with a hybrid retrieval layer. The pages below explain — in plain English — how each piece works and why we made the architectural choices we did. Read them in order if you're new to RAG; skim individually if you're evaluating specific aspects.
+
+## The five core concepts
+
+<CardGroup cols={2}>
+  <Card title="What is RAG?" icon="brain-circuit" href="/concepts/what-is-rag">
+    Retrieval-Augmented Generation — how InsiteChat grounds AI answers in your content instead of relying on the LLM's frozen pre-training. The technique that makes chatbots factually accurate.
+  </Card>
+  <Card title="Embeddings" icon="vector-square" href="/concepts/embeddings">
+    How text becomes high-dimensional vectors that capture meaning. The foundation of semantic search — finds "cancel my subscription" matches "close my account" even though they share zero keywords.
+  </Card>
+  <Card title="Hybrid Search" icon="layer-group" href="/concepts/hybrid-search">
+    Why InsiteChat combines vector (semantic) and BM25 (keyword) search with Reciprocal Rank Fusion. Catches edge cases — error codes, currency symbols, brand names — that vector-only systems miss.
+  </Card>
+  <Card title="System Prompts" icon="message-pen" href="/concepts/system-prompts">
+    The standing instruction that defines your chatbot's persona, tone, and refusal behavior. One small block of text controls every response. InsiteChat ships 6 templates plus persona shaping.
+  </Card>
+  <Card title="Vector Databases" icon="database" href="/concepts/vector-databases">
+    Where embeddings live. InsiteChat runs on pgvector — PostgreSQL with the vector extension — for single-source-of-truth storage, ACID guarantees, and sub-15ms nearest-neighbor search at scale.
+  </Card>
+</CardGroup>
+
+## How the pieces fit together
+
+A single query flowing through InsiteChat touches all five concepts:
+
+1. Your content was previously chunked, **embedded**, and stored in the **vector database** at training time.
+2. A visitor types a question. Their question is also **embedded**.
+3. **Hybrid search** runs vector + BM25 retrieval and merges the rankings with RRF, returning the top-K most relevant chunks.
+4. The retrieved chunks plus your **system prompt** plus conversation history are sent to the LLM.
+5. The LLM generates an answer grounded in the retrieved context — this is **RAG**.
+
+The whole loop runs in 1-3 seconds and produces an answer that cites the source pages it came from.
+
+## Why these architectural choices
+
+- **RAG over fine-tuning**: lets you update knowledge by editing content (minutes, free) instead of retraining a model (hours, expensive). See [What is RAG?](/concepts/what-is-rag) § "RAG vs fine-tuning".
+- **Hybrid search over vector-only**: catches edge cases (error codes, GST numbers, ₹ symbols, technical terms) that pure semantic search misses. See [Hybrid Search](/concepts/hybrid-search).
+- **pgvector over a separate vector DB**: single source of truth with chatbot config, conversations, and leads. No two-store sync problems. See [Vector Databases](/concepts/vector-databases).
+- **Custom Q&A pairs override retrieval**: precise control on high-stakes answers (pricing, refunds, hours) without losing the flexibility of RAG. See [Custom Q&A](/training/custom-qa).
+
+## Related operational topics
+
+- [Website Crawler](/training/website-crawler) — how InsiteChat ingests content
+- [Document Upload](/training/document-upload) — file formats, OCR, chunking
+- [Syncing Content](/training/syncing-content) — keeping the chatbot current
+- [Custom Q&A](/training/custom-qa) — overriding AI-generated answers

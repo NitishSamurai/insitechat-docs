@@ -119,6 +119,7 @@
     {
       "group": "Concepts",
       "pages": [
+        "concepts/index",
         "concepts/what-is-rag",
         "concepts/embeddings",
         "concepts/hybrid-search",
