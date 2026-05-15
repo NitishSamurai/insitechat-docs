@@ -1,0 +1,87 @@
+---
+title: "What is Hybrid Search?"
+sidebarTitle: "Hybrid Search"
+description: "Hybrid search combines semantic (vector) search with keyword (BM25) search and merges results via Reciprocal Rank Fusion. How InsiteChat uses it for more accurate chatbot answers."
+author: "InsiteChat"
+datePublished: "2026-05-16"
+dateModified: "2026-05-16"
+---
+
+## Definition
+
+**Hybrid search combines two complementary retrieval methods — semantic (vector) search and keyword (BM25) search — and merges their results into a single ranked list.** It is the standard retrieval strategy for production-grade [RAG](/concepts/what-is-rag) systems because pure vector search has known weaknesses that keyword search fills, and vice versa.
+
+InsiteChat uses hybrid search with Reciprocal Rank Fusion (RRF) to retrieve content for every chatbot answer.
+
+## Why one method alone isn't enough
+
+### Semantic (vector) search
+
+Good at:
+- Paraphrase matching ("cancel my plan" → "close my subscription")
+- Cross-lingual matching ("price in rupees" → English pricing page)
+- Conceptual queries that don't share keywords with the source
+
+Weak at:
+- Proper nouns and brand names (everything looks "similar" to a tech term)
+- Numeric codes, error messages, version numbers
+- Rare industry-specific jargon the embedding model wasn't trained on
+
+### Keyword (BM25) search
+
+Good at:
+- Exact matches on proper nouns, product names, error codes
+- Numeric and code lookups ("HTTP 429", "₹1,424/mo")
+- Rare terminology specific to your industry
+
+Weak at:
+- Paraphrases (the user's words must overlap with the source)
+- Synonyms ("car" vs "vehicle")
+- Cross-lingual queries
+
+### The fix: run both, fuse the results
+
+If you run both methods independently and intelligently merge the rankings, you get the strengths of each and few of the weaknesses.
+
+## Reciprocal Rank Fusion (RRF)
+
+RRF is a simple, effective algorithm to combine two ranked lists. For each item, its RRF score is:
+
+```
+RRF_score(item) = 1 / (k + rank_vector) + 1 / (k + rank_keyword)
+```
+
+Where `k` is a small constant (60 is standard) and `rank_x` is the item's position in each ranked list. Items that appear high in *either* list get a high combined score. Items that appear in both lists get the highest scores of all.
+
+The beauty of RRF is that it requires no tuning of weights between vector and keyword scores — only ranks matter — which makes it robust across very different query types.
+
+## How InsiteChat uses hybrid search
+
+Every chatbot query in InsiteChat runs through this pipeline:
+
+1. **Embed the question** with the same model used to embed your content.
+2. **Vector search** over your indexed chunks for semantic similarity (top 20).
+3. **BM25 search** over the same chunks for keyword overlap (top 20).
+4. **Reciprocal Rank Fusion** merges the two lists into a final top-K.
+5. **Q&A pair override**: if a custom Q&A pair you defined matches with high confidence, it takes priority over both retrieval lists.
+6. **LLM generation**: the top-K results are formatted into the model's context window. The LLM generates the answer.
+
+This is why InsiteChat's answers are accurate on edge cases that trip pure-vector systems — error messages, brand names, pricing in specific currencies, exact phrases from your docs.
+
+## Hybrid search vs vector-only competitors
+
+Many AI chatbot platforms ship with vector-only retrieval because it is simpler to implement. The trade-off is visible in production:
+
+| Scenario | Vector-only | Hybrid (InsiteChat) |
+|---|---|---|
+| "What is your refund policy?" | ✅ Both work | ✅ Both work |
+| "I got error 429 — what does it mean?" | ⚠️ May miss exact code match | ✅ BM25 catches "429" |
+| "How much is the Growth plan in ₹?" | ⚠️ ₹ symbol may confuse | ✅ BM25 catches exact symbol |
+| "GST invoice for SaaS plan" | ⚠️ "GST" may dilute meaning | ✅ BM25 ranks GST page first |
+| "Cancel subscription" → "Close account" page | ✅ Vector catches paraphrase | ✅ Both methods catch it |
+
+## Learn more
+
+- [What is RAG?](/concepts/what-is-rag) — the full retrieval-augmented generation pipeline
+- [Embeddings](/concepts/embeddings) — how text becomes vectors
+- [Vector databases](/concepts/vector-databases) — storage and search at scale

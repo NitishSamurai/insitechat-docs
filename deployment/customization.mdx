@@ -1,9 +1,12 @@
 ---
 title: "Widget Customization"
 description: "Fully customize your chatbot's appearance — colors, fonts, icon, auto-open, RTL, personas, localization, and branding."
+author: "InsiteChat"
+datePublished: "2026-01-15"
+dateModified: "2026-05-16"
 ---
 
-# Widget Customization
+# Widget customization
 
 Customize every aspect of your chat widget to match your brand and user experience needs. All customization is done from the **Embed** tab in your chatbot dashboard.
 
@@ -19,7 +22,7 @@ Customize every aspect of your chat widget to match your brand and user experien
 | **Input placeholder** | Placeholder text in the message input field. |
 | **Chat icon / logo** | Upload a custom image (PNG, JPG, WebP, SVG, max 2MB) to replace the default chat bubble icon. |
 
-## Position & Icon
+## Position & icon
 
 | Setting | Description |
 |---------|-------------|
@@ -28,7 +31,7 @@ Customize every aspect of your chat widget to match your brand and user experien
 | **Bottom distance** | Pixels from the bottom edge of the screen. |
 | **Side distance** | Pixels from the left or right edge. |
 
-## Auto-Open
+## Auto-open
 
 Automatically open the chat widget after a configurable delay.
 
@@ -39,7 +42,7 @@ Automatically open the chat widget after a configurable delay.
 
 Auto-open triggers once per browser session (uses `sessionStorage`). Visitors who manually close the widget won't see it auto-open again until they start a new session.
 
-## Chat Modes
+## Chat modes
 
 | Mode | Behavior |
 |------|----------|
@@ -49,30 +52,16 @@ Auto-open triggers once per browser session (uses `sessionStorage`). Visitors wh
 
 ## Personas
 
-Pick the personality that best matches how your brand should sound. We ship **13 built-in personas** plus a **Custom** option where you write your own instructions.
+Define your chatbot's personality:
 
-| Persona | Tone |
-|---------|------|
-| **Default** | Helpful, balanced — works for most use cases |
-| **Default (Classic)** | The original InsiteChat tone, kept for parity with older bots |
-| **Neutral** | Plain, factual, no flourish |
-| **Professional / Formal** | Buttoned-up, business-appropriate |
-| **Informative** | Detailed, explanatory, teaching-style |
-| **Engaging** | Warm, conversational, keeps the visitor reading |
-| **Inspirational** | Enthusiastic, motivational, uplifting |
-| **Playful / Funny** | Light, witty, occasional humor |
-| **Sales Expert** | Persuasive, value-driven, closes confidently |
-| **Consultant** | Strategic, thoughtful, asks clarifying questions |
-| **Problem Solver** | Methodical, troubleshooting-first |
-| **Urgent & Action-Oriented** | Direct, action verbs, no fluff |
-| **Empathetic Support** | Warm, validating, customer-care voice |
-| **Custom** | Write your own personality / instructions |
+- **Default** — Neutral, helpful tone
+- **Friendly** — Warm, welcoming, empathetic
+- **Professional** — Formal, precise, business-appropriate
+- **Casual** — Relaxed, conversational, approachable
+- **Inspirational** — Enthusiastic, motivational, uplifting
+- **Custom** — Write your own personality description
 
-<Tip>
-The persona only adjusts *how* the AI talks — it never changes the answers themselves. Facts always come from your knowledge base.
-</Tip>
-
-## RTL Mode
+## RTL mode
 
 Enable right-to-left text direction for Arabic, Hebrew, Urdu, and other RTL languages. When enabled, the entire widget layout flips — text alignment, message bubbles, and input direction all adjust automatically.
 
@@ -97,7 +86,7 @@ Customize all 14 UI text strings for any language:
 | Error message | "Sorry, something went wrong." | Generic error |
 | Branding prefix | "Powered by" | Watermark |
 
-## Quick Prompts (Starter Questions & Links)
+## Quick prompts (starter questions & links)
 
 Add up to **5 starter items** that appear as clickable buttons before the visitor sends their first message. Each item is one of two types:
 
@@ -107,10 +96,10 @@ Add up to **5 starter items** that appear as clickable buttons before the visito
 These reduce the "blank page" problem and guide visitors toward what matters most.
 
 <Steps>
-  <Step title="Go to the Embed tab">
+  <Step title="Go to the embed tab">
     Select your chatbot and open the **Embed** tab, then switch to the **Content** sub-tab.
   </Step>
-  <Step title="Find Starter Questions & Links">
+  <Step title="Find starter questions & links">
     Scroll to **Starter Questions & Links**.
   </Step>
   <Step title="Pick a type">
@@ -123,13 +112,13 @@ These reduce the "blank page" problem and guide visitors toward what matters mos
     Click the **×** button next to any item to remove it. You can mix questions and links freely up to 5 total.
   </Step>
   <Step title="Save">
-    Click **Save Changes**. Starter items appear immediately in your chat widget.
+    Click **Save Customization**. Starter items appear immediately in your chat widget.
   </Step>
 </Steps>
 
 Starter items appear **only before the first message**. Once the visitor sends their first message, AI-generated follow-up suggestions take over (if Smart Follow-ups are enabled).
 
-### Recommended Action Items
+### Recommended action items
 
 <AccordionGroup>
   <Accordion title="Use 3 to 5 starter items — not more, not fewer" icon="list-ol">
@@ -156,7 +145,7 @@ Starter items appear **only before the first message**. Once the visitor sends t
 Pair starter items with **Smart Follow-ups** (below). Starter items handle the first click; smart follow-ups carry the conversation from there.
 </Tip>
 
-## Follow-up Buttons (persistent CTAs)
+## Follow-up buttons (persistent ctas)
 
 Add up to **3 buttons** that appear after **every** bot reply, not just the first message. Use these for the call-to-action you want available throughout the entire conversation. Each button is one of three types:
 
@@ -167,10 +156,10 @@ Add up to **3 buttons** that appear after **every** bot reply, not just the firs
 Unlike starter questions (which only appear before the first message) and smart follow-ups (which the AI invents per-reply), follow-up buttons are **operator-controlled and persistent** — visitors always see them, on every turn.
 
 <Steps>
-  <Step title="Go to the Embed → Content tab">
+  <Step title="Go to the embed → content tab">
     Open your chatbot's **Embed** tab and switch to the **Content** sub-tab.
   </Step>
-  <Step title="Find Follow-up Buttons">
+  <Step title="Find follow-up buttons">
     Scroll past **Starter Questions & Links** to the **Follow-up Buttons** section.
   </Step>
   <Step title="Pick a type">
@@ -211,19 +200,19 @@ Follow-up buttons are guaranteed to appear and behave the way you set them — t
 For a turn-key escalation experience — inline "Connect to an agent" CTA after every reply, multi-recipient email alerts, a dedicated triage dashboard, and analytics — see [Human Support & Escalation](/deployment/human-support).
 </Note>
 
-## Smart Follow-ups
+## Smart follow-ups
 
 When enabled, the AI generates relevant follow-up questions after each response, displayed as clickable suggestion buttons. Configure the number of suggestions (1–5).
 
-## Source Citations
+## Source citations
 
 Toggle to show clickable source links below bot responses, so visitors can verify answers against the original content.
 
-## Hide Feedback
+## Hide feedback
 
 Toggle off the thumbs-up / thumbs-down feedback buttons on bot messages. Useful if you prefer a cleaner interface or don't need per-message feedback.
 
-## Watermark / Branding
+## Watermark / branding
 
 | Plan | Watermark behavior |
 |------|--------------------|
@@ -233,10 +222,10 @@ Toggle off the thumbs-up / thumbs-down feedback buttons on bot messages. Useful 
 
 Growth and above can set a custom watermark text (e.g., "Powered by Your Company") and a custom link URL.
 
-## Session Timeout
+## Session timeout
 
 Auto-expire conversations after a period of inactivity (0–1440 minutes). When a visitor returns after the timeout, they start a fresh conversation. Set to 0 to disable.
 
-## Conversation History
+## Conversation history
 
 When enabled, visitors can see and resume their past conversations via a clock icon in the header. Past sessions are stored in the visitor's browser (localStorage, max 10 sessions).

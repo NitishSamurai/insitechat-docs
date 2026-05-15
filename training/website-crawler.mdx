@@ -1,19 +1,22 @@
 ---
 title: "Website Crawler"
 description: "Automatically crawl and index your website content with advanced controls — CSS selectors, URL filters, depth, and custom headers."
+author: "InsiteChat"
+datePublished: "2026-01-15"
+dateModified: "2026-05-16"
 ---
 
-# Website Crawler
+# Website crawler
 
 The website crawler allows you to train your chatbot by pointing InsiteChat at a website URL. It automatically crawls, extracts, and indexes all accessible pages. Configure advanced options like CSS selectors, URL path filters, recursion depth, and custom HTTP headers.
 
-## Add a Website Source
+## Add a website source
 
 <Steps>
   <Step title="Open your dashboard">
     Log in to InsiteChat and select the chatbot you want to train.
   </Step>
-  <Step title="Go to Sources">
+  <Step title="Go to sources">
     Click the **Sources** tab, then click **Add source**.
   </Step>
   <Step title="Choose URL">
@@ -30,11 +33,11 @@ The website crawler allows you to train your chatbot by pointing InsiteChat at a
   </Step>
 </Steps>
 
-## Advanced Crawling Options
+## Advanced crawling options
 
 Click **Advanced options** when adding a URL source to access these controls:
 
-### Recursion Depth
+### Recursion depth
 
 Control how deep the crawler follows links from your starting URL.
 
@@ -47,7 +50,7 @@ Control how deep the crawler follows links from your starting URL.
 Use depth 1–2 for targeted crawls (e.g., just your pricing page and its subpages). Use 0 for full-site indexing.
 </Tip>
 
-### URL Path Filters
+### URL path filters
 
 Control which pages get crawled based on their URL path.
 
@@ -67,7 +70,7 @@ Control which pages get crawled based on their URL path.
 
 Patterns match as substrings in the URL path. One pattern per line.
 
-### CSS Selectors
+### CSS selectors
 
 Extract content from specific parts of your pages, or exclude unwanted sections.
 
@@ -90,7 +93,7 @@ nav
 If you specify include selectors, only those elements are extracted. If you only specify exclude selectors, everything except those elements is extracted. If both are specified, includes take priority.
 </Note>
 
-### Custom HTTP Headers
+### Custom HTTP headers
 
 Add custom headers for accessing protected or authenticated content:
 
@@ -106,22 +109,22 @@ One header per line, format: `Header-Name: value`.
 Be careful with authentication tokens. Only use this for content you own or have permission to access.
 </Warning>
 
-### Auto-Sync Frequency
+### Auto-sync frequency
 
 Set how often this source automatically re-syncs:
 
 | Option | Minimum Plan Required |
 |--------|----------------------|
 | Never (manual only) | All plans |
-| Monthly (every 30 days) | Starter |
-| Weekly (every 7 days) | Growth |
-| Daily (every 24 hours) | Scale |
+| Monthly | Starter |
+| Weekly | Growth |
+| Daily | Scale |
 
 <Note>
-You cannot select a frequency higher than your plan allows. For example, Growth plan users can choose never, monthly, or weekly — but not the daily option (Scale only).
+You cannot select a frequency higher than your plan allows. For example, Growth plan users can choose never, monthly, or weekly — but not daily.
 </Note>
 
-## Bulk Source Management
+## Bulk source management
 
 The Sources page includes tools for managing multiple sources at once:
 
@@ -131,7 +134,7 @@ The Sources page includes tools for managing multiple sources at once:
 - **Bulk re-sync** — Re-sync all selected sources at once
 - **Bulk delete** — Delete all selected sources at once
 
-## What Gets Indexed
+## What gets indexed
 
 The crawler captures product pages, blog posts, FAQs, and informational pages. It extracts the main text content from each page (or only the content matching your CSS selectors, if configured).
 

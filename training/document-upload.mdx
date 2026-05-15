@@ -1,13 +1,16 @@
 ---
 title: "Document Upload"
 description: "Train your chatbot from PDFs, Word documents, PowerPoint files, spreadsheets, and more."
+author: "InsiteChat"
+datePublished: "2026-01-15"
+dateModified: "2026-05-16"
 ---
 
-# Document Upload
+# Document upload
 
 Document upload lets you add files from your existing content library directly to your chatbot's knowledge base. InsiteChat extracts the text and indexes it alongside any other sources you've added.
 
-## Supported File Formats
+## Supported file formats
 
 | Format | Extensions |
 |--------|-----------|
@@ -18,17 +21,18 @@ Document upload lets you add files from your existing content library directly t
 | Markdown | `.md` |
 | CSV | `.csv` |
 | YouTube transcript | Paste a YouTube URL |
+| Zendesk articles | Connect via integration |
 
-## Upload a Document
+## Upload a document
 
 <Steps>
   <Step title="Open your dashboard">
     Log in to InsiteChat and select the chatbot you want to train.
   </Step>
-  <Step title="Go to Sources">
+  <Step title="Go to sources">
     Click the **Sources** tab, then click **Add source**.
   </Step>
-  <Step title="Choose File upload">
+  <Step title="Choose file upload">
     Select **File upload** from the list of source types.
   </Step>
   <Step title="Select your file">
@@ -43,7 +47,7 @@ Document upload lets you add files from your existing content library directly t
 Documents with clear, descriptive headings produce better chatbot answers. InsiteChat uses headings to understand document structure and organize relevant content.
 </Tip>
 
-## Best Practices for Document Quality
+## Best practices for document quality
 
 The quality of your chatbot's answers depends heavily on the quality of the documents you upload. Follow these guidelines to get the best results:
 
@@ -53,10 +57,14 @@ The quality of your chatbot's answers depends heavily on the quality of the docu
 - **One topic per document** — Focused documents are easier for AI analysis. Split large multi-topic documents into separate files.
 - **Check for accuracy** — Remove outdated information, correct errors, and delete obsolete sections before uploading.
 
-## File Size Limits
+## File size limits
 
-Each upload is capped at **50 MB**. Files above the cap are rejected at upload time with a clear error. For large reference manuals or multi-hundred-page PDFs, split them into smaller sections — both for reliable processing and for better answer quality (smaller, topic-focused documents retrieve more accurately).
+InsiteChat supports most standard document sizes. For unusually large files, consider splitting them into smaller sections to ensure reliable processing. Specific limits appear in the upload interface.
 
-## YouTube Transcripts
+## YouTube transcripts
 
 To index a YouTube video, select **YouTube** as the source type and paste the video URL. InsiteChat retrieves the transcript and indexes the spoken content for videos with captions.
+
+## Zendesk articles
+
+Connect your Zendesk account from the **Sources** tab to import help center articles directly. InsiteChat indexes article content immediately after import.

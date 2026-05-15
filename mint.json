@@ -117,6 +117,32 @@
       ]
     },
     {
+      "group": "Concepts",
+      "pages": [
+        "concepts/what-is-rag",
+        "concepts/embeddings",
+        "concepts/hybrid-search",
+        "concepts/system-prompts",
+        "concepts/vector-databases"
+      ]
+    },
+    {
+      "group": "Compare",
+      "pages": [
+        "compare/index",
+        "compare/chatbase",
+        "compare/sitegpt",
+        "compare/tidio",
+        "alternatives"
+      ]
+    },
+    {
+      "group": "About",
+      "pages": [
+        "trust"
+      ]
+    },
+    {
       "group": "API Reference",
       "pages": [
         "api-reference/overview",

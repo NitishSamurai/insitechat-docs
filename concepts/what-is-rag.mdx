@@ -1,0 +1,58 @@
+---
+title: "What is RAG (Retrieval-Augmented Generation)?"
+sidebarTitle: "What is RAG?"
+description: "RAG (Retrieval-Augmented Generation) combines a vector search step with an LLM to ground answers in your own content. Plain-English explanation + how InsiteChat uses it."
+author: "InsiteChat"
+datePublished: "2026-05-16"
+dateModified: "2026-05-16"
+---
+
+## Definition
+
+**RAG (Retrieval-Augmented Generation) is a technique that lets a large language model (LLM) answer questions using information it was never trained on.** Instead of relying solely on what the LLM "knows" from pre-training, RAG retrieves relevant passages from a custom knowledge base at query time and feeds them to the model as context.
+
+The result: factually grounded answers, fewer hallucinations, and the ability to update the chatbot's knowledge by simply updating the source content — without retraining the model.
+
+## How RAG works (in 4 steps)
+
+1. **Ingest**: Your content (website pages, PDFs, Google Docs, etc.) is broken into small chunks — typically 200-800 tokens each.
+2. **Embed**: Each chunk is converted into a high-dimensional vector using an embedding model (e.g., OpenAI's `text-embedding-3-small`). Vectors that represent similar meaning end up close together in vector space.
+3. **Retrieve**: When a visitor asks a question, the question is also embedded into a vector. The system searches for the chunks whose vectors are closest to the question's vector.
+4. **Generate**: The top-N retrieved chunks are inserted into the LLM's prompt as context. The LLM generates an answer grounded in that context, optionally with citations back to the source chunks.
+
+## Why RAG matters
+
+Without RAG, an LLM-powered chatbot can only answer using its frozen pre-training knowledge — which is months or years out of date and has zero information about your specific product, prices, or policies. The chatbot will either decline ("I don't have access to that information") or hallucinate plausible-sounding nonsense.
+
+With RAG, the chatbot becomes domain-aware. It can quote your refund policy verbatim, cite the exact page in your documentation, and reflect content you published yesterday.
+
+## How InsiteChat uses RAG
+
+InsiteChat is built on a RAG pipeline tuned specifically for chatbot use cases:
+
+- **Chunking**: Content is split into 512-token chunks with 50-token overlap, ensuring that information spanning chunk boundaries is still retrievable.
+- **Embeddings**: We use modern embedding models suitable for 95+ languages, so a Hindi question can match content originally written in English.
+- **Hybrid retrieval**: InsiteChat combines vector (semantic) search with keyword (BM25) search and merges results via **Reciprocal Rank Fusion**. This catches both meaning-based matches ("how do I cancel") and exact-term matches ("invoice", "GST"). See [Hybrid search](/concepts/hybrid-search).
+- **Q&A pair priority**: Custom Q&A pairs you define always rank above auto-extracted content, so high-stakes answers (pricing, refunds, hours) are precisely the words you intend.
+- **Citations**: Every InsiteChat answer includes a link back to the source page so visitors can verify and read more.
+
+## RAG vs fine-tuning
+
+Many newcomers ask whether they should fine-tune an LLM on their content instead of using RAG. RAG wins for almost every business chatbot use case:
+
+| | RAG | Fine-tuning |
+|---|---|---|
+| **Update knowledge** | Re-crawl the site (minutes) | Retrain the model (hours+, expensive) |
+| **Cost per change** | ~$0 | Hundreds to thousands of dollars |
+| **Citations** | Yes — natural | No — model just "knows" |
+| **Hallucinations** | Lower (grounded retrieval) | Higher (knowledge becomes implicit) |
+| **Compliance** | Easy to remove specific content | Hard to "unlearn" |
+
+Fine-tuning is appropriate for changing model *behavior* (tone, format, persona) — not for adding new factual knowledge. InsiteChat handles tone via system prompts and personas without any fine-tuning required.
+
+## Learn more
+
+- [Embeddings](/concepts/embeddings) — how content becomes vectors
+- [Hybrid search](/concepts/hybrid-search) — why semantic search alone isn't enough
+- [Vector databases](/concepts/vector-databases) — where embeddings live
+- [Website crawler](/training/website-crawler) — InsiteChat's content ingestion in practice

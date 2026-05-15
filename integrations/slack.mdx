@@ -1,6 +1,9 @@
 ---
 title: "Slack"
 description: "Get real-time notifications for leads, conversations, and escalations in your Slack channels."
+author: "InsiteChat"
+datePublished: "2026-01-15"
+dateModified: "2026-05-16"
 ---
 
 ## Overview
@@ -10,16 +13,16 @@ Connect your Slack workspace to InsiteChat and receive instant notifications whe
 ## Setup
 
 <Steps>
-  <Step title="Create a Slack App">
+  <Step title="Create a Slack app">
     Go to your chatbot's **Webhooks** tab in the InsiteChat dashboard and click **Connect Slack**.
   </Step>
   <Step title="Authorize InsiteChat">
     You'll be redirected to Slack. Select your workspace and click **Allow** to grant InsiteChat permission to post messages.
   </Step>
-  <Step title="Pick a Channel">
+  <Step title="Pick a channel">
     After connecting, click **Change channel** to select which Slack channel receives notifications. Make sure to invite the InsiteChat bot to the channel with `/invite @InsiteChat`.
   </Step>
-  <Step title="Choose Events">
+  <Step title="Choose events">
     Select which events trigger Slack notifications:
     - **Lead Captured** — when a visitor submits the lead form
     - **Message Received** — when a visitor sends a message
@@ -28,7 +31,7 @@ Connect your Slack workspace to InsiteChat and receive instant notifications whe
   </Step>
 </Steps>
 
-## Notification Format
+## Notification format
 
 Slack notifications use rich Block Kit formatting:
 
@@ -48,4 +51,4 @@ Click **Disconnect** on the Slack card to remove the integration. Notifications 
 ## Requirements
 
 - A Slack workspace where you have permission to install apps
-- Available on all InsiteChat plans, including Free
+- InsiteChat Starter plan or above (free plan supported for testing)

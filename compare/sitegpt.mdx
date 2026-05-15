@@ -1,0 +1,101 @@
+---
+title: "InsiteChat vs SiteGPT — Honest Comparison (2026)"
+sidebarTitle: "vs SiteGPT"
+description: "InsiteChat vs SiteGPT compared on pricing, features, India support, integrations, and retrieval quality. Where each wins and how to pick."
+author: "InsiteChat"
+datePublished: "2026-05-16"
+dateModified: "2026-05-16"
+---
+
+## TL;DR
+
+**SiteGPT** is one of the original "train a chatbot on your website" tools. Mature product, US/UK focused, no free plan (only a 7-day trial), starts at $49/month.
+
+**InsiteChat** is a newer alternative built for the same core use case with a different pricing philosophy: forever-Free plan, native INR billing, full feature parity on Free, hybrid retrieval, and Hindi/Hinglish localization.
+
+Pick **SiteGPT** if you've been on it for years and the migration cost outweighs the price difference, or if you have a specific SiteGPT integration that we don't support yet.
+
+Pick **InsiteChat** for everything else — lower cost, free plan that's actually usable, INR billing, WhatsApp Business via BYOK, and better retrieval quality on technical content.
+
+## Feature comparison
+
+| | **InsiteChat** | SiteGPT |
+|---|---|---|
+| **Starting price** | **₹0 / $0** forever | $49 / mo (Starter) |
+| **Free plan?** | ✅ Real Free | ❌ 7-day trial |
+| **India pricing (INR)** | ✅ Native ₹ billing | ❌ USD only |
+| **Lead capture on Free** | ✅ | n/a — no Free plan |
+| **CSV export** | ✅ on Free | ✅ Paid |
+| **WhatsApp Business** | ✅ BYOK (Growth+) | ❌ |
+| **Hindi/Hinglish UI** | ✅ | ❌ |
+| **Custom branding** | ✅ Growth plan | ✅ Starter plan |
+| **HubSpot integration** | ✅ Free | ⚠️ Via Zapier |
+| **Slack notifications** | ✅ Free | ✅ Paid |
+| **Telegram integration** | ✅ | ⚠️ Via Zapier |
+| **Google Drive / Notion / Dropbox** | ✅ All 3 | ⚠️ Notion only |
+| **Hybrid retrieval (vector + BM25)** | ✅ | ⚠️ Vector-only |
+| **Multilingual** | ✅ 95+ languages | ✅ Many languages |
+| **API access** | ✅ Scale plan | ✅ Top tier |
+| **Embed widget** | ✅ Highly customizable | ✅ |
+
+## Where SiteGPT wins
+
+Honestly:
+
+- **Maturity** — SiteGPT has been in market longer and the product has more rounded edges in the long-tail use cases.
+- **Brand recognition in the US/UK** — established name; if your team Googles "AI chatbot from website" SiteGPT is in the first page of results.
+- **Native English content depth** — their docs and blog cover English-language use cases extensively.
+
+## Where InsiteChat wins
+
+- **A free plan that does real work** — SiteGPT only offers a 7-day trial. InsiteChat's Free plan supports 1 chatbot, 200 messages/mo, 30 pages of content, lead capture, CSV export, HubSpot sync, all integrations. You can run a small business on Free.
+- **Massive price gap** — InsiteChat Starter at $29/mo gives you 4,000 messages and 1,000 pages. SiteGPT Starter at $49/mo gives you 5,000 messages and 1 chatbot. Per-message, InsiteChat is ~50% cheaper.
+- **India pricing in ₹ with GST invoices** — SiteGPT charges USD only. Indian businesses pay forex markup and have to deal with GST manually. InsiteChat handles it natively.
+- **WhatsApp Business via BYOK** — bring your own Meta credentials, pay Meta directly. SiteGPT does not currently ship WhatsApp.
+- **More native data integrations** — InsiteChat ships Google Drive + Notion + Dropbox natively. SiteGPT supports Notion natively; for Drive/Dropbox you need Zapier (extra cost, more brittle).
+- **Hybrid retrieval** — vector + keyword + Reciprocal Rank Fusion catches edge cases that vector-only systems miss (error codes, currency symbols, GST numbers, brand names). See [hybrid search](/concepts/hybrid-search).
+- **Hindi + Hinglish localization** — fully translated widget UI. Useful for the Indian SMB market.
+
+## Specific scenarios
+
+### "I'm a US/UK SaaS that just needs a docs chatbot"
+
+Either works. SiteGPT is more established; InsiteChat is cheaper. If you only care about English and don't care about India support, the choice comes down to brand preference and budget.
+
+### "I'm an Indian SaaS, Indian agency, or India-serving business"
+
+**Pick InsiteChat.** SiteGPT has no India story — USD only, no Hindi, no WhatsApp. InsiteChat was built with the Indian market as a first-class concern.
+
+### "I need WhatsApp Business integration"
+
+**Pick InsiteChat.** SiteGPT doesn't ship WhatsApp. InsiteChat's WhatsApp BYOK lets you bring your own Meta credentials and pay Meta directly — no per-message markup.
+
+### "I'm a developer who wants to extend via API"
+
+Both gate API at top tier. InsiteChat's Scale is $199/mo, SiteGPT's top tier is similar. Roughly comparable.
+
+### "My content is technical / has lots of code, error codes, version numbers"
+
+**Pick InsiteChat.** Hybrid retrieval handles exact-string matches (error codes, version strings, function names) more reliably than vector-only. SiteGPT's vector-only retrieval will sometimes miss precise technical lookups.
+
+## Migration path from SiteGPT
+
+If you're currently on SiteGPT and want to switch:
+
+1. Sign up for InsiteChat (Free plan, no credit card).
+2. Note your SiteGPT chatbot's system prompt — InsiteChat has 6 templates; one will be close to your current setup.
+3. Add the same source URLs to InsiteChat — our crawler indexes the same content.
+4. Recreate any custom Q&A pairs (typically 10-30 of these for most teams).
+5. Update embed code on your website.
+6. Run both in parallel for a week, compare a few questions.
+7. Cancel SiteGPT.
+
+Migration takes 30-60 minutes for most teams. Email **support@insitechat.ai** for migration help.
+
+## Learn more
+
+- [InsiteChat vs Chatbase](/compare/chatbase)
+- [InsiteChat vs Tidio](/compare/tidio)
+- [Full alternatives list](/alternatives)
+- [Why hybrid retrieval matters](/concepts/hybrid-search)
+- [InsiteChat pricing](/plans-and-pricing)

@@ -1,0 +1,57 @@
+---
+title: "What are Embeddings?"
+sidebarTitle: "Embeddings"
+description: "Embeddings turn text into vectors so a chatbot can find semantically similar passages. Plain-English explanation + how InsiteChat uses embeddings."
+author: "InsiteChat"
+datePublished: "2026-05-16"
+dateModified: "2026-05-16"
+---
+
+## Definition
+
+**An embedding is a list of numbers (a vector) that represents the meaning of a piece of text.** Two texts with similar meaning produce vectors that are close together in vector space; two unrelated texts produce vectors that are far apart.
+
+Embeddings are the foundation of modern semantic search and [retrieval-augmented generation (RAG)](/concepts/what-is-rag) — they let a computer find content that *means* what the user asked, even when the exact words don't match.
+
+## How embeddings work
+
+An embedding model is a neural network trained to compress the meaning of any sentence, paragraph, or document into a fixed-length vector — typically 384, 768, or 1,536 numbers. The training objective is simple: similar sentences should produce vectors that are mathematically close (low cosine distance), and dissimilar sentences should produce vectors that are far apart.
+
+Once content is embedded, finding relevant passages becomes a math problem: given a question vector, find the K stored vectors with the smallest distance. This is fast even at scale — modern [vector databases](/concepts/vector-databases) can search millions of vectors in milliseconds.
+
+## Example
+
+Imagine these three sentences become embeddings:
+
+- "How do I cancel my subscription?" → `[0.21, -0.04, 0.81, ...]`
+- "Where can I close my account?" → `[0.19, -0.06, 0.79, ...]`
+- "What is your refund policy?" → `[-0.11, 0.42, 0.05, ...]`
+
+The first two vectors are nearly identical (close in vector space) even though they share **zero** common keywords. A keyword search would miss this match entirely. An embedding-based search catches it instantly.
+
+## How InsiteChat uses embeddings
+
+When you add content to InsiteChat, this happens behind the scenes:
+
+1. **Chunking**: Long documents are split into 512-token chunks with 50-token overlap.
+2. **Embedding**: Each chunk is passed through a modern multilingual embedding model.
+3. **Storage**: The vectors are stored in a dedicated vector store, indexed for fast nearest-neighbor search.
+4. **Search at query time**: A visitor's question is embedded with the same model and matched against the stored vectors.
+
+InsiteChat's embedding model supports 95+ languages including English, Hindi, Spanish, French, Arabic, Mandarin, and Japanese. A visitor can ask in Hindi and match content originally written in English — the embeddings capture meaning, not surface form.
+
+## Why embeddings alone aren't enough
+
+Pure embedding-based search is excellent for paraphrase matching but weaker on:
+
+- **Proper nouns and product names** ("Vercel", "GST", "Shopify") — these embed close to many other tech terms
+- **Numbers and codes** ("error 429", "$199", "v2.1") — semantic models treat these as noise
+- **Rare terminology** specific to your industry
+
+InsiteChat solves this by combining embeddings with **keyword (BM25) search** and fusing results via Reciprocal Rank Fusion — see [Hybrid search](/concepts/hybrid-search) for details.
+
+## Learn more
+
+- [What is RAG?](/concepts/what-is-rag) — the bigger picture
+- [Hybrid search](/concepts/hybrid-search) — why InsiteChat doesn't rely on embeddings alone
+- [Vector databases](/concepts/vector-databases) — where embeddings are stored

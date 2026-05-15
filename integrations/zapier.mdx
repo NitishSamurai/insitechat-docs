@@ -1,6 +1,9 @@
 ---
 title: "Zapier"
 description: "Connect your AI chatbot to 6,000+ apps via Zapier webhooks. Automate leads, notifications, and workflows."
+author: "InsiteChat"
+datePublished: "2026-01-15"
+dateModified: "2026-05-16"
 ---
 
 ## Overview
@@ -12,25 +15,25 @@ InsiteChat integrates with Zapier using **Webhooks by Zapier** — an instant tr
 ## Setup
 
 <Steps>
-  <Step title="Create a Zap in Zapier">
+  <Step title="Create a zap in Zapier">
     Go to [zapier.com](https://zapier.com) and create a new Zap. For the trigger, search for **"Webhooks by Zapier"** and choose **"Catch Hook"**. Zapier will give you a unique webhook URL.
   </Step>
-  <Step title="Add Webhook in InsiteChat">
+  <Step title="Add webhook in InsiteChat">
     Go to your chatbot → **Webhooks** tab → click **Add Webhook**. Paste the Zapier webhook URL.
   </Step>
-  <Step title="Select Events">
+  <Step title="Select events">
     Choose which events to send to Zapier:
     - `lead.captured` — visitor submits lead form
     - `message.received` — visitor sends a message
     - `conversation.started` — new chat session begins
     - `conversation.escalated` — visitor requests human help
   </Step>
-  <Step title="Test & Connect">
+  <Step title="Test & connect">
     Click **Send Test** in InsiteChat, then go back to Zapier and click **Test trigger**. Zapier should receive the test payload. Add any action (Google Sheets, email, CRM, etc.) to complete your Zap.
   </Step>
 </Steps>
 
-## Payload Format
+## Payload format
 
 Every webhook sends a JSON payload:
 
@@ -52,14 +55,14 @@ Every webhook sends a JSON payload:
 
 All webhook payloads are signed with **HMAC-SHA256**. The signature is sent in the `X-InsiteChat-Signature` header. Your signing secret is shown on the webhook card in the dashboard.
 
-## Retry Policy
+## Retry policy
 
 Failed deliveries are retried up to 3 times with exponential backoff:
 - 1st retry: after 1 minute
 - 2nd retry: after 5 minutes
 - 3rd retry: after 15 minutes
 
-## Popular Automations
+## Popular automations
 
 | Trigger | Action | Use Case |
 |---|---|---|
@@ -69,6 +72,6 @@ Failed deliveries are retried up to 3 times with exponential backoff:
 | Lead Captured | Mailchimp → Add Subscriber | Add leads to email list |
 | Message Received | Notion → Create Page | Log conversations for review |
 
-## Delivery Log
+## Delivery log
 
 Every webhook delivery is logged. Click **Delivery log** on any webhook card to see status, HTTP response codes, and retry attempts.

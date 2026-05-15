@@ -1,0 +1,126 @@
+---
+title: "Trust, Security & Data Handling"
+sidebarTitle: "Trust"
+description: "How InsiteChat handles your data — encryption, retention, compliance posture, infrastructure. Operated transparently with public commitments."
+author: "InsiteChat"
+datePublished: "2026-05-16"
+dateModified: "2026-05-16"
+---
+
+## What this page is
+
+A factual, public statement of how InsiteChat operates: who owns your data, where it lives, how it's encrypted, how long it's retained, and what we commit to. Updated each time something changes.
+
+If you're evaluating InsiteChat for a business that handles regulated data (healthcare, finance, education), read this carefully and email **support@insitechat.ai** with any questions.
+
+## Who we are
+
+InsiteChat is operated by **Nitish Yadav** as a sole-proprietorship business based in India. The company is in the process of formalizing legal entity registration; current entity status is reflected in invoices. All commercial relationships, payment processing, and customer support are handled by this entity.
+
+Founder contact: **nitish@insitechat.ai**.
+General support: **support@insitechat.ai**.
+Privacy contact: **support@insitechat.ai** (same address; we will appoint a dedicated DPO when EU customer load justifies it).
+
+## Where your data lives
+
+**Production infrastructure**: Oracle Cloud Infrastructure (OCI), Mumbai region (`ap-mumbai-1`). All customer data — chatbot configuration, training content, conversation transcripts, leads, embeddings — is stored on OCI compute and managed PostgreSQL within India.
+
+**LLM providers**: Inference calls are sent to commercial LLM APIs (currently OpenAI and Anthropic). These providers do not train on our API traffic per their published policies. Specific model and provider routing changes with capacity and quality.
+
+**Embedding model**: Calls to a commercial embedding API (OpenAI's `text-embedding-3-small` at time of writing). Same no-training-on-our-traffic policy applies.
+
+**Static assets** (uploaded images, logos): Oracle Object Storage in the same Mumbai region, served through Cloudflare CDN.
+
+**No data leaves India** for primary storage. Inference traffic transits to US-based LLM APIs because no equivalent India-region inference endpoint exists for the models we use. We are tracking the announcements from Anthropic and OpenAI on India presence.
+
+## Encryption
+
+- **In transit**: All traffic between visitors, the InsiteChat backend, and storage uses TLS 1.2 or higher. The chatbot widget on customer sites enforces HTTPS.
+- **At rest**: Database storage encrypted via OCI Block Volume encryption (AES-256). Backups encrypted with the same key infrastructure.
+- **Secrets** (API tokens, OAuth refresh tokens, WhatsApp access tokens): stored with application-level encryption on top of the database encryption.
+
+## What we collect and why
+
+### From you (account owner)
+- Email, name, hashed password (for account login)
+- Billing identifiers from Razorpay (we do not store card numbers — Razorpay tokenizes)
+- Chatbot configuration: system prompt, integrations, branding choices
+- Training content: anything you upload or point our crawler at
+
+### From your website visitors
+- Chat messages they send and the bot's responses
+- IP address (rate-limit purposes, retained 30 days)
+- Lead form submissions if they choose to fill the form
+- Browser timezone (for country-code auto-detection on phone fields)
+
+We do not place tracking cookies on your visitors via the chatbot widget.
+
+## Retention
+
+| Data | Retention |
+|---|---|
+| Account profile | Until you delete the account |
+| Training content + embeddings | Until you delete the source or chatbot |
+| Conversation transcripts | Until you delete them or the chatbot |
+| Leads | Until you delete them or the chatbot |
+| Payment records | 7 years (legal/tax requirement, no card numbers) |
+| IP addresses (rate limit logs) | 30 days |
+| Webhook delivery logs | 30 days |
+| Database backups | 14 days rolling, then deleted |
+
+When you delete your account, all associated data is purged within 30 days. Backups roll off within 60 days.
+
+## Your rights
+
+Under GDPR (EU visitors) and India's DPDPA 2023:
+- **Access** — request a copy of your data
+- **Correction** — fix inaccurate data
+- **Erasure** — delete your data
+- **Portability** — receive your data in a portable format
+- **Withdraw consent** at any time
+
+Exercise any of these by emailing **support@insitechat.ai** from the address on your account. We respond within 7 business days.
+
+You can also self-serve account deletion from **Dashboard → Settings → Account → Delete account**.
+
+For Meta/Facebook-derived data (if you signed in with Facebook): see [Data deletion instructions](https://insitechat.ai/data-deletion).
+
+## Compliance posture (honest version)
+
+| Standard | Status |
+|---|---|
+| **GDPR** | Compliant by design (data subject rights, DPA available on request) |
+| **India DPDPA 2023** | Compliant (data fiduciary obligations met; consent capture explicit) |
+| **CCPA** | Compliant (sale-of-data is N/A; deletion rights honored) |
+| **SOC 2 Type II** | ❌ **Not certified yet.** Working on it; no published timeline. |
+| **ISO 27001** | ❌ Not certified. Not on the near-term roadmap. |
+| **HIPAA** | ❌ **Not a Business Associate.** Do not use InsiteChat for PHI. |
+| **PCI DSS** | N/A — Razorpay handles all cardholder data |
+
+We will update this page when any of these statuses change.
+
+## What we will tell enterprise buyers
+
+If your procurement team needs answers to standard security questionnaires (CAIQ, SIG-Lite, vendor assessments), we will fill them out honestly. Email **support@insitechat.ai** with your questionnaire and we'll return it within 5 business days.
+
+## Public commitments
+
+1. **No training on customer content.** Your training data is never used to fine-tune any model — our own or a vendor's.
+2. **No data sale.** We do not sell, license, or barter customer data with any third party.
+3. **Inference providers must commit to no-training.** We will only route inference traffic through providers that contractually agree their models won't train on our API traffic.
+4. **Transparent infrastructure.** This page lists where data lives. If we change regions, we will email account owners 30 days before the change.
+5. **Public security incidents.** If we suffer a material breach, customers are notified within 72 hours of confirmation.
+
+## When you should not use InsiteChat
+
+Honest:
+- For PHI (HIPAA-regulated health information) — we are not a Business Associate
+- For full payment card data (PAN, CVV) — use Razorpay or Stripe directly; never paste card data into the chatbot
+- As a system of record for regulated financial data
+- If your jurisdiction requires data residency outside India for the relevant data class
+
+For everything else — SMB support, sales qualification, lead capture, docs Q&A, internal team Q&A — InsiteChat is appropriate.
+
+## Reporting a security issue
+
+Email **support@insitechat.ai** with subject `SECURITY:` and a description of the issue. We acknowledge within 24 hours and will work with you on responsible disclosure. We do not currently have a paid bug bounty but we will publicly credit researchers (with permission).

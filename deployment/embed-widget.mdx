@@ -1,19 +1,22 @@
 ---
 title: "Embed Widget"
 description: "Add your AI chatbot to any website — JavaScript embed, iFrame, or direct link. Platform-specific instructions for WordPress, Shopify, Wix, Squarespace, Webflow, and custom HTML."
+author: "InsiteChat"
+datePublished: "2026-01-15"
+dateModified: "2026-05-16"
 ---
 
-# Embed Widget
+# Embed widget
 
-Add your InsiteChat chatbot to any website with a single code snippet. The widget adds a chat icon to the corner of your page — visitors click it to open a full chat interface. No plugins or developers required.
+Add your InsiteChat chatbot to any website with a single embed code. The widget adds a chat icon to the corner of your page — visitors click it to open a full chat interface. No plugins or developers required.
 
-## Getting Started
+## Getting started
 
 <Steps>
   <Step title="Open your chatbot">
     Log in to InsiteChat and select the chatbot you want to deploy.
   </Step>
-  <Step title="Copy your Chatbot ID">
+  <Step title="Copy your chatbot ID">
     Go to the **Overview** tab. Your unique Chatbot ID is displayed with a **Copy** button. You'll need this for integrations and API calls.
   </Step>
   <Step title="Choose an embed method">
@@ -35,7 +38,7 @@ Add your InsiteChat chatbot to any website with a single code snippet. The widge
 - Third-party platform setup
 </Info>
 
-## Embed Options
+## Embed options
 
 <Tabs>
   <Tab title="Script Tag (Recommended)">
@@ -50,11 +53,19 @@ Add your InsiteChat chatbot to any website with a single code snippet. The widge
     **Code snippet:**
 
     ```html
-    <script src="https://insitechat.ai/widget.js" data-chatbot-id="YOUR_CHATBOT_ID"></script>
+    <script>
+      (function(){
+        var d=document,s=d.createElement('iframe');
+        s.src='https://insitechat.ai/embed/YOUR_CHATBOT_ID';
+        s.style.cssText='position:fixed;bottom:0;right:0;width:420px;height:650px;border:none;z-index:9999;';
+        s.allow='clipboard-write';
+        d.body.appendChild(s);
+      })();
+    </script>
     ```
 
     <Note>
-    Replace `YOUR_CHATBOT_ID` with your actual Chatbot ID. The **Embed → Install** tab provides this snippet pre-filled with your ID — just copy and paste.
+    Replace `YOUR_CHATBOT_ID` with your actual Chatbot ID. The Embed tab provides this code pre-filled with your ID.
     </Note>
   </Tab>
 
@@ -64,7 +75,7 @@ Add your InsiteChat chatbot to any website with a single code snippet. The widge
     ```html
     <iframe
       src="https://insitechat.ai/embed/YOUR_CHATBOT_ID"
-      style="position:fixed;bottom:24px;right:24px;width:430px;height:640px;border:1px solid #e5e7eb;border-radius:16px;z-index:2147483647;background:#fff;"
+      style="position:fixed;bottom:0;right:0;width:420px;height:650px;border:none;z-index:9999;"
       allow="clipboard-write"
     ></iframe>
     ```
@@ -85,7 +96,7 @@ Add your InsiteChat chatbot to any website with a single code snippet. The widge
   </Tab>
 </Tabs>
 
-## Platform-Specific Instructions
+## Platform-specific instructions
 
 <AccordionGroup>
   <Accordion title="WordPress" icon="wordpress">
@@ -248,14 +259,22 @@ Add your InsiteChat chatbot to any website with a single code snippet. The widge
         <h1>Welcome to my website</h1>
 
         <!-- InsiteChat embed — paste before </body> -->
-        <script src="https://insitechat.ai/widget.js" data-chatbot-id="YOUR_CHATBOT_ID"></script>
+        <script>
+          (function(){
+            var d=document,s=d.createElement('iframe');
+            s.src='https://insitechat.ai/embed/YOUR_CHATBOT_ID';
+            s.style.cssText='position:fixed;bottom:0;right:0;width:420px;height:650px;border:none;z-index:9999;';
+            s.allow='clipboard-write';
+            d.body.appendChild(s);
+          })();
+        </script>
     </body>
     </html>
     ```
   </Accordion>
 </AccordionGroup>
 
-## Verifying Installation
+## Verifying installation
 
 <Steps>
   <Step title="Clear browser cache">
@@ -312,7 +331,7 @@ Add your InsiteChat chatbot to any website with a single code snippet. The widge
   </Accordion>
 </AccordionGroup>
 
-## Widget Features Reference
+## Widget features reference
 
 All these features are configured in the **Embed** tab and work automatically once the widget is embedded:
 

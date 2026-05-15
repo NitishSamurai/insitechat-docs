@@ -1,6 +1,9 @@
 ---
 title: "Zendesk Chat"
 description: "AI-powered auto-replies for Zendesk tickets and chat. Reduce first response time with your trained knowledge base."
+author: "InsiteChat"
+datePublished: "2026-01-15"
+dateModified: "2026-05-16"
 ---
 
 ## Overview
@@ -10,7 +13,7 @@ Connect Zendesk to InsiteChat and let AI handle first responses to support ticke
 ## Setup
 
 <Steps>
-  <Step title="Get Zendesk API Token">
+  <Step title="Get Zendesk API token">
     Go to your Zendesk Admin Center → **Apps & Integrations** → **APIs** → **Zendesk API**. Create a new API token. You also need your admin email and subdomain.
   </Step>
   <Step title="Connect in InsiteChat">
@@ -21,7 +24,7 @@ Connect Zendesk to InsiteChat and let AI handle first responses to support ticke
 
     Click **Connect Zendesk**.
   </Step>
-  <Step title="Set Up Trigger in Zendesk">
+  <Step title="Set up trigger in Zendesk">
     In Zendesk Admin → **Business Rules** → **Triggers**, create a trigger that fires on new tickets or comments:
 
     **Conditions:** Ticket is created / Comment is added (by end-user)
@@ -33,12 +36,12 @@ Connect Zendesk to InsiteChat and let AI handle first responses to support ticke
 
     Send the ticket ID and comment text in the webhook body.
   </Step>
-  <Step title="Test It">
+  <Step title="Test it">
     Create a test ticket. InsiteChat should post an AI reply within seconds.
   </Step>
 </Steps>
 
-## How It Works
+## How it works
 
 1. A customer creates a ticket or adds a comment
 2. Zendesk trigger sends the ticket data to InsiteChat

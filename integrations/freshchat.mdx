@@ -1,6 +1,9 @@
 ---
 title: "Freshchat"
 description: "AI-powered auto-replies for Freshworks Freshchat. Automate first-line support with your trained knowledge base."
+author: "InsiteChat"
+datePublished: "2026-01-15"
+dateModified: "2026-05-16"
 ---
 
 ## Overview
@@ -10,7 +13,7 @@ Connect Freshchat (by Freshworks) to InsiteChat for AI-powered auto-replies. You
 ## Setup
 
 <Steps>
-  <Step title="Get Freshchat API Token">
+  <Step title="Get Freshchat API token">
     Go to your Freshchat dashboard → **Admin** → **API Tokens**. Generate a new API token with messaging permissions.
   </Step>
   <Step title="Connect in InsiteChat">
@@ -20,19 +23,19 @@ Connect Freshchat (by Freshworks) to InsiteChat for AI-powered auto-replies. You
 
     Click **Connect Freshchat**.
   </Step>
-  <Step title="Set Up Webhook in Freshchat">
+  <Step title="Set up webhook in Freshchat">
     In your Freshchat dashboard → **Admin** → **Webhooks**, create a webhook pointing to:
     ```
     https://backend.insitechat.ai/api/integrations/livechat/freshchat/webhook/YOUR_CHATBOT_ID
     ```
     Subscribe to the `message_create` event.
   </Step>
-  <Step title="Test It">
+  <Step title="Test it">
     Send a test message via your Freshchat widget. InsiteChat should reply automatically.
   </Step>
 </Steps>
 
-## How It Works
+## How it works
 
 1. A visitor sends a message in your Freshchat widget
 2. Freshchat forwards the message to InsiteChat via webhook

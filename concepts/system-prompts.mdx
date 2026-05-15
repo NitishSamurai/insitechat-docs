@@ -1,0 +1,76 @@
+---
+title: "What is a System Prompt?"
+sidebarTitle: "System Prompts"
+description: "A system prompt is the standing instruction that defines an AI chatbot's persona, tone, and behavior. How to write effective system prompts in InsiteChat."
+author: "InsiteChat"
+datePublished: "2026-05-16"
+dateModified: "2026-05-16"
+---
+
+## Definition
+
+**A system prompt is the standing instruction sent to a large language model before every conversation, defining the chatbot's persona, tone, knowledge boundaries, and behavior.** It is the single most important configuration in any LLM-powered chatbot — it determines how the bot introduces itself, what it refuses to do, how it handles questions it can't answer, and what voice it speaks in.
+
+In InsiteChat, the system prompt is set per chatbot in the Instructions tab.
+
+## What a system prompt controls
+
+| Aspect | Example instruction |
+|---|---|
+| **Identity** | "You are Sage, the AI assistant for Acme Dental." |
+| **Tone** | "Friendly and professional. Use plain language; avoid jargon." |
+| **Scope** | "Only answer questions about Acme Dental services and policies. Do not advise on legal or medical matters." |
+| **Refusal style** | "If you don't know the answer, say so honestly and offer to connect the visitor with a human." |
+| **Format** | "Keep answers under 3 sentences unless asked for detail. Use bullet lists for steps." |
+| **Language** | "Respond in the language the visitor uses." |
+| **Brand voice** | "Reference our 'patients-first' philosophy when relevant." |
+
+## How a system prompt is used at query time
+
+When a visitor sends a message, InsiteChat composes a prompt like this and sends it to the LLM:
+
+```
+[SYSTEM PROMPT — your standing instructions]
+[RETRIEVED CONTEXT — top-K chunks from your content]
+[CONVERSATION HISTORY — last N turns]
+[VISITOR MESSAGE — the current question]
+```
+
+The system prompt always comes first. It governs every response — even ones that fall back to the LLM's own knowledge when retrieval fails.
+
+## Writing an effective system prompt
+
+InsiteChat ships with **6 pre-built templates** to save you starting from a blank page:
+
+- **Customer Support** — friendly, helpful, escalates to humans gracefully
+- **Sales** — enthusiastic, persuasive, captures leads at the right moment
+- **Technical** — precise, code-aware, links to documentation
+- **Education** — patient, explanatory, uses examples and analogies
+- **Enterprise** — formal, compliance-aware, careful with claims
+- **FAQ** — direct, factual, minimal embellishment
+
+Each template is a starting point — edit it to match your brand. Most teams customize 3-5 sentences and ship.
+
+### Guidelines
+
+1. **Open with identity**: "You are [Name], the AI assistant for [Company]."
+2. **Set tone in one line**: "Tone: warm, professional, no jargon."
+3. **State scope explicitly**: "Answer questions about [X, Y, Z]. Decline questions about [A, B, C]."
+4. **Handle the unknown**: "If you don't know, say 'I'm not sure — let me connect you with someone who can help' and trigger a lead form."
+5. **Stay under 300 words** — the LLM weighs every instruction, so brevity helps.
+
+## What system prompts cannot do
+
+- They cannot teach the model facts about your business — that's what [RAG](/concepts/what-is-rag) is for.
+- They cannot override pricing or product info encoded in retrieved content.
+- They cannot fully suppress hallucinations on questions where retrieval returns nothing — for those, you need [custom Q&A pairs](/training/custom-qa) with precise answers.
+
+## InsiteChat's persona system
+
+In addition to the system prompt, InsiteChat lets you pick a **persona** (Friendly, Professional, Casual, or custom) that adds tone-shaping instructions to every response. Personas are a fast way to enforce voice without rewriting the full system prompt. See [Widget customization](/deployment/customization) for the full list.
+
+## Learn more
+
+- [Custom Q&A pairs](/training/custom-qa) — precise answers for high-stakes questions
+- [Reply length controls](/managing/reply-length) — limit verbosity per chatbot
+- [What is RAG?](/concepts/what-is-rag) — how retrieved context combines with the system prompt
