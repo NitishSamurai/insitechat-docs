@@ -1,11 +1,13 @@
 ---
-title: "Chat"
-description: "Send a message to a chatbot and receive an AI-generated reply via the InsiteChat API."
+title: "Chat API — Send Messages Programmatically"
+sidebarTitle: "Chat"
+description: "Send a message to an InsiteChat chatbot via the REST API and receive an AI-generated reply grounded in your training content. Hybrid retrieval, RRF fusion, JSON response."
+author: "InsiteChat"
+datePublished: "2026-01-15"
+dateModified: "2026-05-16"
 ---
 
-# Chat
-
-The chat endpoint runs your message through the same RAG pipeline as the web embed (hybrid vector + BM25 retrieval, RRF fusion, system-prompt + identity rules + history) and returns the chatbot's reply as a single JSON response. Streaming is not supported.
+The InsiteChat **Chat API** runs your message through the same [RAG](/concepts/what-is-rag) pipeline as the web embed — [hybrid vector + BM25 retrieval](/concepts/hybrid-search) with Reciprocal Rank Fusion, [system prompt](/concepts/system-prompts), identity rules, and conversation history — then returns the chatbot's reply as a single JSON response. Streaming is not supported.
 
 ## Send a Message
 
